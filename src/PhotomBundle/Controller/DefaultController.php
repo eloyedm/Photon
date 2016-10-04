@@ -14,10 +14,10 @@ class DefaultController extends Controller
     public function indexAction()
     {
         $photon = "hola a todos";
-        $conn =$this->get('database_connection');;
-        $users = $conn->fetchAll("SELECT * FROM Usuario");
-        dump($users);
-        die();
+        // $conn =$this->get('database_connection');;
+        // $users = $conn->fetchAll("SELECT * FROM Usuario");
+        // dump($users);
+        // die();
         return $this->render('PhotomBundle:Default:index.html.twig', array("photon" => $photon));
     }
 }
