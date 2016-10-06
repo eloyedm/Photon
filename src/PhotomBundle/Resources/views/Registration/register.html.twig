@@ -1,0 +1,24 @@
+
+{% block head %}
+<title>Pagina de prueba de photon</title>
+{% endblock %}
+{% block stylesheets %}
+<link href="{{ asset('bundles/frontend/games/crucigrama/css/MDCrossword.css') }}" rel="stylesheet" type="text/css" />
+<link href="{{ asset('bundles/photom/css/Login.css')}}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block content %}
+<body class="background">
+<section class="background-overlay">
+</section>
+<section class="box-login">
+    <span>
+        <div> <img src="" id="logo-image" alt="no-image"></div>
+        {% include "FOSUserBundle:Registration:register_content.html.twig" %}
+    </span>
+       <div class ="box-register">
+            <span class="style-pregunta"><label>¿Aun no estas en la familia photon?</label></span>
+          <span class="style-register"><a href = "" style="color:#a8c545"> ¡Registrate! </a></span>
+        </div>
+</section>
+</body>
+{% endblock %}
