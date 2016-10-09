@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="PhotomBundle\Entity\Usuario" table="Usuario">
+    <indexes>
+      <index name="idPaisUsuario" columns="idPaisUsuario"/>
+    </indexes>
+    <id name="idusuario" type="integer" column="idUsuario">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="nombreusuario" type="string" column="nombreUsuario" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="apellidousuario" type="string" column="apellidoUsuario" length="20" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="usuariousuario" type="string" column="usuarioUsuario" length="30" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="contraseñausuario" type="string" column="contraseñaUsuario" length="20" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="correousuario" type="string" column="correoUsuario" length="30" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="generousuario" type="integer" column="generoUsuario" nullable="true">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <field name="fechanacimiento" type="date" column="fechaNacimiento" nullable="true"/>
+    <field name="domiciliousuario" type="string" column="domicilioUsuario" length="30" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="bannerusuario" type="blob" column="bannerUsuario" length="16777215" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="perfilusuario" type="blob" column="perfilUsuario" length="16777215" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <field name="privacidadusuario" type="boolean" column="privacidadUsuario" nullable="false"/>
+    <field name="descripcionusuario" type="string" column="descripcionUsuario" length="50" nullable="true">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+    <many-to-one field="idpaisusuario" target-entity="Pais" fetch="LAZY">
+      <join-columns>
+        <join-column name="idPaisUsuario" referenced-column-name="idPais"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

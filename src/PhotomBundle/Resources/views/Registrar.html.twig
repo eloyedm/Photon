@@ -1,21 +1,19 @@
-<DOCTYPE html>
-<html>
-<head><title></title>
-    <meta utf-8>
-<link href="../Estilos/Registrar.css" rel="stylesheet" type="text/css"/>
-</head>
+{% block stylesheets %}
+<link href="{{ asset('bundles/photom/css/Registrar.css')}}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block Body %}
 <body class="background">
-<section class="background-overlay">    
+<section class="background-overlay">
 </section>
 <section class="box-login">
     <span>
         <form method="post" action="">
-            <div class="style-profiled"> <img src="../Imagenes/female.png" class="style-profile"/></div>
+            <div class="style-profiled"> <img src="{{ asset('bundles/photom/images/female.png')}}" class="style-profile"/></div>
              <div class="conteiner-text"><input type="username" id ="style-name" placeholder = "NOMBRE"></div>
             <div class="conteiner-text"><input type="username" id ="style-username" placeholder = "USUARIO"></div>
               <div class="conteiner-text"><input type="email" id ="style-email" placeholder = "EMAIL"></div>
               <div class="conteiner-text"><input type="password" class ="style-password" placeholder = "CONTRASEÑA"></div>
-            <div class="conteiner-text"><input type="password" class="style-password" placeholder = "CONTRASEÑA"></div> 
+            <div class="conteiner-text"><input type="password" class="style-password" placeholder = "CONTRASEÑA"></div>
             <span class="style-remember"><input type = "radio" id="remember-check" name ="Genero" value="Hombre"><span id="hombre"><label>Hombre</label></span></span>
             <span class="style-forget"><input type = "radio" id="remember-check" name ="Genero" value="Mujer"><span id="mujer"><label>Mujer</label></span></span>
             <div><input type="submit" value ="¡Photon!" class="style-submit"></div>
@@ -27,4 +25,4 @@
         </div>
 </section>
 </body>
-</html>
+{% endblock %}

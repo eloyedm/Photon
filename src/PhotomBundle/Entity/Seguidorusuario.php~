@@ -1,0 +1,53 @@
+<?php
+
+namespace PhotomBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Seguidorusuario
+ *
+ * @ORM\Table(name="SeguidorUsuario", indexes={@ORM\Index(name="idUsuarioSeguidor", columns={"idUsuarioSeguidor"}), @ORM\Index(name="idUsuarioSeguido", columns={"idUsuarioSeguido"})})
+ * @ORM\Entity
+ */
+class Seguidorusuario
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="aceptado", type="integer", nullable=false)
+     */
+    private $aceptado;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idSeguidorUsuario", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idseguidorusuario;
+
+    /**
+     * @var \PhotomBundle\Entity\Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idUsuarioSeguidor", referencedColumnName="idUsuario")
+     * })
+     */
+    private $idusuarioseguidor;
+
+    /**
+     * @var \PhotomBundle\Entity\Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idUsuarioSeguido", referencedColumnName="idUsuario")
+     * })
+     */
+    private $idusuarioseguido;
+
+
+}
+

@@ -1,0 +1,70 @@
+<?php
+
+namespace PhotomBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Reportarusuario
+ *
+ * @ORM\Table(name="ReportarUsuario", indexes={@ORM\Index(name="idContenidoReportado", columns={"idContenidoReportado"}), @ORM\Index(name="idUsuarioReportador", columns={"idUsuarioReportador"}), @ORM\Index(name="idRazonReportado", columns={"idRazonReportado"})})
+ * @ORM\Entity
+ */
+class Reportarusuario
+{
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="tiempoReporte", type="datetime", nullable=true)
+     */
+    private $tiemporeporte;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="aceptadoReporte", type="boolean", nullable=true)
+     */
+    private $aceptadoreporte;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idReporte", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idreporte;
+
+    /**
+     * @var \PhotomBundle\Entity\Contenido
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Contenido")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idContenidoReportado", referencedColumnName="idContenido")
+     * })
+     */
+    private $idcontenidoreportado;
+
+    /**
+     * @var \PhotomBundle\Entity\Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idUsuarioReportador", referencedColumnName="idUsuario")
+     * })
+     */
+    private $idusuarioreportador;
+
+    /**
+     * @var \PhotomBundle\Entity\Razon
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Razon")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idRazonReportado", referencedColumnName="idRazon")
+     * })
+     */
+    private $idrazonreportado;
+
+
+}
+

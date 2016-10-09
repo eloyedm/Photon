@@ -1,0 +1,120 @@
+<?php
+
+namespace PhotomBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Usuario
+ *
+ * @ORM\Table(name="Usuario", indexes={@ORM\Index(name="idPaisUsuario", columns={"idPaisUsuario"})})
+ * @ORM\Entity
+ */
+class Usuario
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombreUsuario", type="string", length=50, nullable=false)
+     */
+    private $nombreusuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="apellidoUsuario", type="string", length=20, nullable=true)
+     */
+    private $apellidousuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="usuarioUsuario", type="string", length=30, nullable=false)
+     */
+    private $usuariousuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contraseñaUsuario", type="string", length=20, nullable=false)
+     */
+    private $contraseñausuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correoUsuario", type="string", length=30, nullable=false)
+     */
+    private $correousuario;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="generoUsuario", type="integer", nullable=true)
+     */
+    private $generousuario;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaNacimiento", type="date", nullable=true)
+     */
+    private $fechanacimiento;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="domicilioUsuario", type="string", length=30, nullable=true)
+     */
+    private $domiciliousuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="bannerUsuario", type="blob", length=16777215, nullable=true)
+     */
+    private $bannerusuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="perfilUsuario", type="blob", length=16777215, nullable=true)
+     */
+    private $perfilusuario;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="privacidadUsuario", type="boolean", nullable=false)
+     */
+    private $privacidadusuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcionUsuario", type="string", length=50, nullable=true)
+     */
+    private $descripcionusuario;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idUsuario", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idusuario;
+
+    /**
+     * @var \PhotomBundle\Entity\Pais
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Pais")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idPaisUsuario", referencedColumnName="idPais")
+     * })
+     */
+    private $idpaisusuario;
+
+
+}
+

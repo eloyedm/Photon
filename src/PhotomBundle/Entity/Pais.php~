@@ -1,0 +1,43 @@
+<?php
+
+namespace PhotomBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Pais
+ *
+ * @ORM\Table(name="Pais", indexes={@ORM\Index(name="idCiudadPais", columns={"idCiudadPais"})})
+ * @ORM\Entity
+ */
+class Pais
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombrePais", type="string", length=20, nullable=true)
+     */
+    private $nombrepais;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idPais", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idpais;
+
+    /**
+     * @var \PhotomBundle\Entity\Ciudad
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Ciudad")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idCiudadPais", referencedColumnName="idCiudad")
+     * })
+     */
+    private $idciudadpais;
+
+
+}
+

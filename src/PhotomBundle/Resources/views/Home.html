@@ -1,37 +1,6 @@
-<DOCTYPE html>
-<html>
-<head><title></title>
-<link href="../Estilos/Home.css" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-    <nav>
-        <ul>
-            <li class="container-logo">
-                <label>LOGO</label>
-            </li>
-            <li id="container-form">
-                <div>
-                    <form method="get" id="find-user">
-                        <div class="container-search"><input type="text" id="style-search" placeholder="Buscar"></div>
-                    </form>
-                </div>
-            </li>
-       <li id="style-user">
-        <label>
-            Usuario
-        </label>
-    </li>
-    <li id="style-profile">
-        <img src="../Imagenes/thumbnail.png" >
-    </li>
-    <li id="style-notification">
-        <img src="../Imagenes/photon.png"><a href="LogIn.html"></a>
-    </li>
-      <li id="style-friendship">
-                <img src="../Imagenes/friends.png"><a href="LogIn.html"></a>
-            </li>
-        </ul>
-    </nav>
+{% extends  PhotomBundle:MenuSuperior.html.twig %}
+{% block head %}
+
     <section class = "user-publication">
         <div class="phrase-publication"><span id="user-name">Usuario</span><tr><span id="user-phrase">dile al mundo lo que sientes...</span></div>
         <div class="container-publication"><form method="get" name="user-publication-user" id="user-post"><input type="text" placeholder="Comparte tu dia" id="text-public"></form></div>
@@ -58,5 +27,3 @@
 </div>
         </div>
     </section>
-</body>
-</html>

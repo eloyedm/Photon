@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="PhotomBundle\Entity\Seguidorusuario" table="SeguidorUsuario">
+    <indexes>
+      <index name="idUsuarioSeguidor" columns="idUsuarioSeguidor"/>
+      <index name="idUsuarioSeguido" columns="idUsuarioSeguido"/>
+    </indexes>
+    <id name="idseguidorusuario" type="integer" column="idSeguidorUsuario">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="aceptado" type="integer" column="aceptado" nullable="false">
+      <options>
+        <option name="unsigned"/>
+      </options>
+    </field>
+    <many-to-one field="idusuarioseguidor" target-entity="Usuario" fetch="LAZY">
+      <join-columns>
+        <join-column name="idUsuarioSeguidor" referenced-column-name="idUsuario"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idusuarioseguido" target-entity="Usuario" fetch="LAZY">
+      <join-columns>
+        <join-column name="idUsuarioSeguido" referenced-column-name="idUsuario"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

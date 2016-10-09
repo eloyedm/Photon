@@ -1,5 +1,5 @@
 .background {
-    background-image: url(../Imagenes/register2.jpg); 
+    background-image: url('/bundles/photom/images/register2.jpg'); 
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin: 0;
@@ -95,7 +95,7 @@
 }
 
 .style-forget{
-    
+
     font-style: italic;
     font-family: "Rockwell";
     margin-left: 19%;
@@ -123,7 +123,7 @@
     font-style: italic
 }
 
-.style-profile{ 
+.style-profile{
     margin-left: 40%;
 }
 
@@ -170,13 +170,13 @@ input[type="text"],[type="username"],[type="email"],[type="number"],[type="passw
 }
 
 .style-gender{
-    
+
     margin-top: 5%;
     padding-left: 30%;
 }
 
 .style-profiled{
-    
+
     margin-top: 3%;
 }
 
@@ -194,7 +194,7 @@ label{
 }
 
 .style-remember{
-    
+
     display: inline;
     /*! margin-top: 11%; */
     margin-left: 8%;

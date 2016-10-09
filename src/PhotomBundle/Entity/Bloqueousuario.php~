@@ -1,0 +1,46 @@
+<?php
+
+namespace PhotomBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Bloqueousuario
+ *
+ * @ORM\Table(name="BloqueoUsuario", indexes={@ORM\Index(name="idUsuarioBloqueado", columns={"idUsuarioBloqueado"}), @ORM\Index(name="idUsuarioBloqueador", columns={"idUsuarioBloqueador"})})
+ * @ORM\Entity
+ */
+class Bloqueousuario
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idBloqueo", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idbloqueo;
+
+    /**
+     * @var \PhotomBundle\Entity\Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idUsuarioBloqueado", referencedColumnName="idUsuario")
+     * })
+     */
+    private $idusuariobloqueado;
+
+    /**
+     * @var \PhotomBundle\Entity\Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idUsuarioBloqueador", referencedColumnName="idUsuario")
+     * })
+     */
+    private $idusuariobloqueador;
+
+
+}
+

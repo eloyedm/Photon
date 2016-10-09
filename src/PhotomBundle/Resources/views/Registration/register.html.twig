@@ -1,8 +1,8 @@
-
 {% block head %}
 <title>Pagina de prueba de photon</title>
 {% endblock %}
 {% block stylesheets %}
+{{ parent() }}
 <link href="{{ asset('bundles/frontend/games/crucigrama/css/MDCrossword.css') }}" rel="stylesheet" type="text/css" />
 <link href="{{ asset('bundles/photom/css/Login.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}

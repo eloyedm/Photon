@@ -1,0 +1,74 @@
+<?php
+
+namespace PhotomBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Notificacion
+ *
+ * @ORM\Table(name="Notificacion", indexes={@ORM\Index(name="idContenidoNotificacion", columns={"idContenidoNotificacion"}), @ORM\Index(name="idUsuarioNotificador", columns={"idUsuarioNotificador"})})
+ * @ORM\Entity
+ */
+class Notificacion
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comentarioNotificacion", type="string", length=140, nullable=true)
+     */
+    private $comentarionotificacion;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="gustaNotificacion", type="boolean", nullable=true)
+     */
+    private $gustanotificacion;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="fechaNotificacion", type="datetime", nullable=false)
+     */
+    private $fechanotificacion = 'CURRENT_TIMESTAMP';
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="leidaNotificacion", type="boolean", nullable=true)
+     */
+    private $leidanotificacion;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idNotificacion", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idnotificacion;
+
+    /**
+     * @var \PhotomBundle\Entity\Contenido
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Contenido")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idContenidoNotificacion", referencedColumnName="idContenido")
+     * })
+     */
+    private $idcontenidonotificacion;
+
+    /**
+     * @var \PhotomBundle\Entity\Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="idUsuarioNotificador", referencedColumnName="idUsuario")
+     * })
+     */
+    private $idusuarionotificador;
+
+
+}
+

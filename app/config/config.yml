@@ -77,4 +77,4 @@ assetic:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: PhotomBundle\Entity\User
+    user_class: PhotomBundle\Entity\Usuario

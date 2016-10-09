@@ -1,0 +1,47 @@
+<?php
+
+namespace PhotomBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Pregunta
+ *
+ * @ORM\Table(name="Pregunta")
+ * @ORM\Entity
+ */
+class Pregunta
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preguntaUno", type="string", length=30, nullable=false)
+     */
+    private $preguntauno;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preguntaDos", type="string", length=30, nullable=false)
+     */
+    private $preguntados;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="preguntaTres", type="string", length=30, nullable=false)
+     */
+    private $preguntatres;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idPregunta", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idpregunta;
+
+
+}
+

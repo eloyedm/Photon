@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="PhotomBundle\Entity\Reportarusuario" table="ReportarUsuario">
+    <indexes>
+      <index name="idContenidoReportado" columns="idContenidoReportado"/>
+      <index name="idUsuarioReportador" columns="idUsuarioReportador"/>
+      <index name="idRazonReportado" columns="idRazonReportado"/>
+    </indexes>
+    <id name="idreporte" type="integer" column="idReporte">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="tiemporeporte" type="datetime" column="tiempoReporte" nullable="true"/>
+    <field name="aceptadoreporte" type="boolean" column="aceptadoReporte" nullable="true"/>
+    <many-to-one field="idcontenidoreportado" target-entity="Contenido" fetch="LAZY">
+      <join-columns>
+        <join-column name="idContenidoReportado" referenced-column-name="idContenido"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idusuarioreportador" target-entity="Usuario" fetch="LAZY">
+      <join-columns>
+        <join-column name="idUsuarioReportador" referenced-column-name="idUsuario"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idrazonreportado" target-entity="Razon" fetch="LAZY">
+      <join-columns>
+        <join-column name="idRazonReportado" referenced-column-name="idRazon"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

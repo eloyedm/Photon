@@ -1,0 +1,33 @@
+{% block stylesheets %}
+<link href="{{ asset('bundles/photom/css/MenuSuperior.css')}}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block Body %}
+<nav>
+    <ul>
+        <li class="container-logo">
+            <label>LOGO</label>
+        </li>
+        <li id="container-form">
+            <div>
+                <form method="get" id="find-user">
+                    <div class="container-search"><input type="text" id="style-search" placeholder="Buscar"></div>
+                </form>
+            </div>
+        </li>
+   <li id="style-user">
+    <label>
+        Usuario
+    </label>
+</li>
+<li id="style-profile">
+    <img src="{{ asset('bundles/photom/images/thumbnail.png')}}" >
+</li>
+<li id="style-notification">
+    <img src="{{ asset('bundles/photom/images/photon.png')}}"><a href="LogIn.html"></a>
+</li>
+  <li id="style-friendship">
+            <img src="{{ asset('bundles/photom/images/friends.png')}}"><a href="LogIn.html"></a>
+        </li>
+    </ul>
+</nav>
+{% endblock %}

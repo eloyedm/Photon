@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="PhotomBundle\Entity\Bloqueousuario" table="BloqueoUsuario">
+    <indexes>
+      <index name="idUsuarioBloqueado" columns="idUsuarioBloqueado"/>
+      <index name="idUsuarioBloqueador" columns="idUsuarioBloqueador"/>
+    </indexes>
+    <id name="idbloqueo" type="integer" column="idBloqueo">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <many-to-one field="idusuariobloqueado" target-entity="Usuario" fetch="LAZY">
+      <join-columns>
+        <join-column name="idUsuarioBloqueado" referenced-column-name="idUsuario"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="idusuariobloqueador" target-entity="Usuario" fetch="LAZY">
+      <join-columns>
+        <join-column name="idUsuarioBloqueador" referenced-column-name="idUsuario"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,40 @@
+<?php
+
+namespace PhotomBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Razon
+ *
+ * @ORM\Table(name="Razon")
+ * @ORM\Entity
+ */
+class Razon
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="nombreRazon", type="string", length=20, nullable=false)
+     */
+    private $nombrerazon;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="descripcionRazon", type="string", length=50, nullable=false)
+     */
+    private $descripcionrazon;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="idRazon", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idrazon;
+
+
+}
+
