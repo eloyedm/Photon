@@ -218,3 +218,28 @@ body{
     font-family: "Rockwell";
     font-style: italic;
 }
+
+.list-content .list-group .title{
+  background:#5bc0de;
+  border:2px solid #DDDDDD;
+  font-weight:bold;
+  color:#FFFFFF;
+}
+.list-group-comments .list-group-item img {
+    height:45px;
+    width:45px;
+    float: left;
+}
+
+list-group-item img {
+    height:80px;
+    width:80px;
+}
+
+.list-group .img-thumbnail{
+
+    width: 100px;
+    float: left;
+    border-radius: 100%;
+    height: 100px;
+}

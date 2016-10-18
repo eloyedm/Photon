@@ -5,6 +5,7 @@
 {% block stylesheets %}
   {{ parent() }}
   <link rel="stylesheet" href="{{ asset('bundles/photom/css/Home.css')}}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{{ asset('bundles/photom/css/font-awesome.min.css')}}" media="screen" title="no title" charset="utf-8">
 {% endblock %}
 {% block Body %}
 {{ parent() }}
@@ -40,39 +41,8 @@
         </div>
             </div>
     <div id="phrase-content">TU MUNDO ACTUALIZADO</div>
-        <div class="container-cardsuser">
-                <div class="card">
-                     <div><img class="user-image-publication">
-                         <span class="user-name">Pancracio Pancreas:</span></div>
-                    <div class="descritpion-user-publication"><p class="description-video"> Mira este video blablablabla.Mira este video blablablabla.Mira este video blablablabla.Mira este video blablablabla.Mira este video blablablabla.
-                            </p></div>
-                        <img src="../Imagenes/decoraciones.jpg" alt="Avatar" id="user-public-image">
-                        <div class="container">
-                            <div class="container-interact-button"><button id="dislike-button" type="button"><i class="fa fa-thumbs-down" aria-hidden="true"></i>
-                                </button>
-                                <button id="comment-button"><i class="fa fa-comments" aria-hidden="true"></i>
-                                </button>
-                            <button id="like-button" type="button"><i class="fa fa-heart" aria-hidden="true"></i>
-                                </button></div>
-                               <div class="container-comment"><form name="comment-public" class="form-comments"><input type="text" placeholder="¿Quieres decir algo sobre este post?..." id="comment-input"></form></div>
-                            <div class="comentarios">
-                                <ul class="list-group-comments">
-                                     <li href="#" class="list-group-item text-left">
-                                        <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
-                                         <div class="post-user">
-                                         <label class="name">
-                                             Juan guillermo cuadrado:
-                                         </label>
-                                         <label class="comment">
-                                         fvsgesrgesrf
-                                         </label>
-                                         </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-        </div>
+    {# no variables will be accessible #}
+    {% include 'PhotomBundle::CardPosts.html.twig' only %}
         </section>
 </section>
 {% endblock %}

@@ -18,7 +18,7 @@ class DefaultController extends Controller
         // $users = $conn->fetchAll("SELECT * FROM Usuario");
         // dump($users);
         // die();
-        return $this->render('PhotomBundle:Default:index.html.twig', array("photon" => $photon));
+        return $this->render('PhotomBundle::Home.html.twig', array("photon" => $photon));
     }
 
     /**
