@@ -44,4 +44,12 @@ class DefaultController extends Controller
      {
        return $this->render('PhotomBundle::Registrar.html.twig');
      }
+
+     /**
+      * @Route("/perfil")
+      */
+      public function perfilAction()
+      {
+        return $this->render('PhotomBundle::Profile.html.twig');
+      }
 }

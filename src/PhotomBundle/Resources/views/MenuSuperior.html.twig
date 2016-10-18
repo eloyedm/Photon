@@ -1,33 +1,48 @@
 {% block stylesheets %}
 <link href="{{ asset('bundles/photom/css/MenuSuperior.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/photom/css/font-awesome.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}
 {% block Body %}
 <nav>
-    <ul>
-        <li class="container-logo">
-            <label>LOGO</label>
-        </li>
-        <li id="container-form">
-            <div>
-                <form method="get" id="find-user">
-                    <div class="container-search"><input type="text" id="style-search" placeholder="Buscar"></div>
-                </form>
-            </div>
-        </li>
-   <li id="style-user">
-    <label>
-        Usuario
-    </label>
-</li>
-<li id="style-profile">
-    <img src="{{ asset('bundles/photom/images/thumbnail.png')}}" >
-</li>
-<li id="style-notification">
-    <img src="{{ asset('bundles/photom/images/photon.png')}}"><a href="LogIn.html"></a>
-</li>
-  <li id="style-friendship">
-            <img src="{{ asset('bundles/photom/images/friends.png')}}"><a href="LogIn.html"></a>
-        </li>
-    </ul>
-</nav>
+              <ul>
+                  <li class="container-logo">
+                      <a href="#">LOGO</a>
+                  </li>
+                  <li id="container-form">
+              <div>
+                  <form method="get" id="find-user">
+                      <div class="container-search"><input type="text" id="style-search" placeholder="Buscar"></div>
+                  </form>
+              </div>
+          </li>
+                  <li id="style-friendship">
+                      <a href="#"><i class = "fa fa-users" aria-hidden="true"></i>
+                      </a>
+                  </li>
+                  <li id="style-notification">
+                      <a href="#" id="notificationLink">
+                          <img src="{{ asset('bundles/photom/images/photon.png')}}">
+                      </a>
+                      <span id="notification_count">3</span>
+                      <div id="notificationContainer">
+                          <div id="notificationTitle">Notifications</div>
+                          <div id="notificationsBody" class="notifications">
+                              <ul class="friend-list-solicitud">
+                                  <li>
+                                  </li>
+                              </ul>
+                          </div>
+                          <div id="notificationFooter"><a href="#">Ver Mas</a></div>
+                      </div>
+                  </li>
+                  <li id="style-profile">
+                      <img src="{{ asset('bundles/photom/images/thumbnail.png')}}" id="profile-   picture">
+                  </li>
+                  <li id="style-user">
+                      <label>
+                          Usuario
+                      </label>
+                  </li>
+              </ul>
+          </nav>
 {% endblock %}

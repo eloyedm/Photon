@@ -1,0 +1,161 @@
+.container-cardsuser{
+    margin-top: 4%;
+    height: 692px;
+    font-family: "Rockwell";
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(000,000,000,0.1);
+    float: right;
+    color: #373836;
+}
+
+.card {
+    width: 100%;
+    height: 100%;
+    float: left;
+}
+
+.descritpion-user-publication {
+    margin-top: 1%;
+    padding-left: 1.5%;
+    font-size: 90%;
+    padding-right: 1.5%;
+}
+
+.description-video {
+    margin-left: 0%;
+    display: inline;
+    float: left;
+    margin-top: 1%;
+    margin-bottom: 0%;
+}
+
+.descritpion-user-publication {
+    font-size: 90%;
+}
+
+#user-public-image {
+    width: 100%;
+    margin-right: auto;
+    height: auto;
+    margin-top: 1%;
+    height: 356px;
+}
+
+.container {
+    height: 33%;
+    margin-top: 1%;
+}
+
+.container-interact-button {
+    padding-top: 0%;
+    width: 100%;
+    height: 14%;
+}
+
+#dislike-button {
+    color: #8F1C1B;
+    font-size: 18px;
+}
+
+button {
+    background-color: transparent;
+    border: none;
+}
+
+#comment-button {
+    float: right;
+    margin-right: 3%;
+}
+
+#like-button {
+    float: right;
+}
+
+.container-comment {
+    background-color: rgba(000,000,000,0.03);
+    height: 17%;
+    margin-top: 0%;
+}
+
+.form-comments {
+    margin-bottom: 0%;
+    padding-top: 1%;
+    width: 99%;
+    padding-left: 0%;
+    height: 100%;
+}
+
+#comment-input {
+    width: 100%;
+    border: none;
+    background-color: transparent;
+    height: 67%;
+    padding-left: 2%;
+}
+
+.comentarios {
+    height: 155px;
+    margin-top: 0;
+    background-color: rgba(000,000,000,0.05);
+    overflow: hidden;
+}
+
+.list-group-comments {
+    padding-left: 1.5%;
+    margin: 0;
+    list-style: none;
+    padding-top: 1%;
+}
+
+.list-group-comments li {
+    float: none;
+    margin-top: 0;
+}
+
+.list-group-comments .list-group-item img {
+    height: 45px;
+    width: 45px;
+    float: left;
+}
+
+.post-user {
+    padding-left: 9%;
+    padding-top: 2%;
+}
+
+.list-group-comments .name {
+    font-weight: normal;
+    font-size: 74%;
+}
+.name {
+    color: #5bc0de;
+    text-align: center;
+    font-family: "Rockwell";
+    float: left;
+    margin-top: 8%;
+    margin-left: 1%;
+}
+
+#user-profile-pic{
+
+    float: left;
+    display: inline-block;
+}
+
+.fa.fa-heart {
+	font-size: 20px;
+    color: #373836;
+}
+
+.fa.fa-comments {
+	font-size: 20px;
+    color:#00698C;
+}
+
+.comment {
+    color: #373836;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 15px;
+}

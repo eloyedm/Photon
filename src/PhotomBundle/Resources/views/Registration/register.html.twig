@@ -1,24 +1,40 @@
+
 {% block head %}
 <title>Pagina de prueba de photon</title>
 {% endblock %}
 {% block stylesheets %}
-{{ parent() }}
-<link href="{{ asset('bundles/frontend/games/crucigrama/css/MDCrossword.css') }}" rel="stylesheet" type="text/css" />
-<link href="{{ asset('bundles/photom/css/Login.css')}}" rel="stylesheet" type="text/css"/>
+  <link href="{{ asset('bundles/photom/css/Registrar.css')}}" rel="stylesheet" type="text/css"/>
 {% endblock %}
-{% block content %}
+{% block fos_user_content %}
 <body class="background">
 <section class="background-overlay">
 </section>
 <section class="box-login">
-    <span>
-        <div> <img src="" id="logo-image" alt="no-image"></div>
-        {% include "FOSUserBundle:Registration:register_content.html.twig" %}
-    </span>
-       <div class ="box-register">
-            <span class="style-pregunta"><label>¿Aun no estas en la familia photon?</label></span>
-          <span class="style-register"><a href = "" style="color:#a8c545"> ¡Registrate! </a></span>
-        </div>
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+  <div class="style-profiled"> <img src="{{ asset('/bundles/photom/images/female.png')}}" class="style-profile"/></div>
+ <div class="conteiner-text">
+      {{ form_errors(form.nombreusuario) }}
+      {{ form_widget(form.nombreusuario) }}
+  </div>
+
+  <div  class="conteiner-text">
+      {{ form_errors(form.username) }}
+      {{ form_widget(form.username) }}
+  </div>
+
+  <div  class="conteiner-text">
+    {{ form_errors(form.email) }}
+    {{ form_widget(form.email) }}
+  </div>
+
+  <div  class="conteiner-text">
+    {{ form_widget(form.plainPassword) }}
+  </div>
+
+  <div>
+      <input type="submit" label="Entrar" class="style-submit" value="Photon" />
+  </div>
+{{ form_end(form) }}
 </section>
 </body>
-{% endblock %}
+{% endblock fos_user_content %}

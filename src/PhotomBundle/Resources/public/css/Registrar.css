@@ -1,5 +1,5 @@
 .background {
-    background-image: url('/bundles/photom/images/register2.jpg'); 
+    background-image: url('/bundles/photom/images/register2.jpg');
     background-repeat: no-repeat;
     background-size: 100% 100%;
     margin: 0;
@@ -27,7 +27,7 @@
     height: 12%;
 }
 
-#style-name{
+.style-name{
     width: 100%;
     height: 100%;
     background: url(../Imagenes/lock.png) no-repeat 0.5% 50%;
@@ -54,7 +54,7 @@
     font-style: italic
 }
 
-#style-email{
+.style-email{
     margin-top: 3%;
     width: 100%;
     height: 100%;
@@ -109,7 +109,7 @@
     text-decoration: none;
 }
 
-#style-username{
+.style-username{
     margin-top: 3%;
     background: url(../Imagenes/user.png) no-repeat 0% 50%;
     height: 100%;
@@ -153,8 +153,8 @@ input[type="text"],[type="username"],[type="email"],[type="number"],[type="passw
 }
 
 .style-submit{
-    margin-top: 2%;
-    margin-left: 20%;
+    margin-top: 34%;
+    margin-left: 28%;
     display: block;
     height: 10%;
     width: 55%;
@@ -204,4 +204,8 @@ label{
 
 a{
     text-decoration: none;
+}
+
+#fos_user_registration_form_plainPassword label{
+  display: none;
 }
