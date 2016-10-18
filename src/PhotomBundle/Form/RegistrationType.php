@@ -6,6 +6,7 @@ namespace PhotomBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use FOS\UserBundle\Util\LegacyFormHelper;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class RegistrationType extends AbstractType
 {
@@ -33,6 +34,14 @@ class RegistrationType extends AbstractType
               'class' => 'style-password',
               'placeholder' => 'CONTRASEÑA')),
             'invalid_message' => 'fos_user.password.mismatch',
+        ))
+        ->add('generoUsuario',ChoiceType::class, array(
+            'choices' => array(
+              'Hombre' => 'M',
+              'Mujer' => 'F'
+            ),
+            'expanded' => true,
+            'multiple' => false
         ))
     ;
     }
