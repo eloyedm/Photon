@@ -243,3 +243,38 @@ list-group-item img {
     border-radius: 100%;
     height: 100px;
 }
+
+.container-sidebar{
+    display: inline;
+    display: inline-block;
+    width: 20%;
+    margin-bottom: 3%;
+}
+
+.container-friend{
+    height: 27%;
+    margin-top: 25%;
+    text-align: center;
+    margin-left: 0%;
+    color: #5F5448;
+    font-family: "Rockwell";
+    padding-top: 3%;
+    font-size: 126%;
+}
+
+.container-publicationprofile{
+  float: right;
+  width: 80%;
+  margin-top: 6%;
+}
+
+.container-comment{
+  margin: 4% 7%;
+  height: 15%;
+}
+
+.container-comment input{
+  height: 100%;
+  font-size: 18px;
+  width: 85%;
+}

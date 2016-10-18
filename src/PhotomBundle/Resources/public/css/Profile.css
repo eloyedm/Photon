@@ -408,6 +408,17 @@ list-group-item img {
      color: #5F5448;
 }
 
+.container-comment{
+  margin: 4% 7%;
+  height: 15%;
+}
+
+.container-comment input{
+  height: 100%;
+  font-size: 18px;
+  width: 85%;
+}
+
 #username-profile{
     float: left;
     font-size: 26px;
