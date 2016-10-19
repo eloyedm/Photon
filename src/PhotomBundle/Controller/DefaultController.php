@@ -52,4 +52,12 @@ class DefaultController extends Controller
       {
         return $this->render('PhotomBundle::Profile.html.twig');
       }
+
+      /**
+       * @Route("/admin")
+       */
+       public function homeAdminAction()
+       {
+         return $this->render('PhotomBundle::HomeAdmin.html.twig');
+       }
 }

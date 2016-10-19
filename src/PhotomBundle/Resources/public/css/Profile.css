@@ -1,17 +1,34 @@
 body{
-
+    
     background-color: #FFF;
     margin: 0;
     padding: 0;
 }
+#find-user{
+    margin-bottom:0%;
+}
+
+.fa.fa-camera {
+	font-size: 25px;
+	color: #0092B2;
+}
+
+.fa.fa-video-camera {
+	font-size: 30px;
+	color: #0092B2;
+}
+
+nav{
+    background-color: #0092B2;
+    position: relative;
+    height: 38px;
+    position: fixed;
+    z-index: 4;
+    width: 100%;
+}
 
 #friend{
     display:none;
-}
-
-li{
-    float:left;
-    margin-top: 0.5%;
 }
 
 #notification{
@@ -28,9 +45,15 @@ li{
 }
 
 #user-profile-pic{
-
+    
     float: left;
     display: inline-block;
+}
+
+#style-notification {
+	margin-left: 4%;
+	margin-top: 0.3%;
+	position: relative;
 }
 
 .fa.fa-heart {
@@ -104,7 +127,7 @@ li{
 }
 
 .container-publica{
-
+    
     overflow: hidden;
     width: 7%;
     float: right;
@@ -118,7 +141,7 @@ li{
 }
 
 .container-camera{
-
+    
     margin-left: 0%;
     width: %;
     float: left;
@@ -135,6 +158,88 @@ li{
     margin-top: 0.2%;
     margin-left: 6%;
     padding-top: 0.3%;
+}
+
+#notificationContainer 
+{
+background-color: #fff;
+border: 1px solid rgba(100, 100, 100, .4);
+-webkit-box-shadow: 0 3px 8px rgba(0, 0, 0, .25);
+overflow: visible;
+position: absolute;
+top: 33px;
+margin-left: -170px;
+width: 400px;
+z-index: 10000;
+display: none;
+}
+
+#notification_count
+{
+padding: 3px 7px 3px 7px;
+background: #cc0000;
+color: #ffffff;
+font-weight: bold;
+margin-left: 20px;
+border-radius: 9px;
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+position: absolute;
+margin-top: -38px;
+font-size: 11px;
+}
+
+#notificationContainer:before {
+content: '';
+display: block;
+position: absolute;
+width: 0;
+height: 0;
+color: transparent;
+border: 10px solid black;
+border-color: transparent transparent white;
+margin-top: -20px;
+margin-left: 188px;
+}
+
+#notificationTitle
+{
+font-weight: bold;
+padding: 8px;
+font-size: 13px;
+background-color: #ffffff;
+position: fixed;
+z-index: 1000;
+width: 384px;
+border-bottom: 1px solid #dddddd;
+}
+
+.friend-list-solicitud{
+    
+}
+
+#notificationsBody
+{
+padding: 32px 0px 0px 0px !important;
+font-size: 13px;
+background-color: white;
+position: fixed;
+z-index: 991;
+border-bottom: 1px solid #dddddd;
+width: 400px;
+height: 318px;
+}
+#notificationFooter
+{
+background-color: #e9eaed;
+text-align: center;
+font-weight: bold;
+padding: 8px;
+font-size: 12px;
+border-top: 349px solid #dddddd;
+width: 384px;
+position: fixed;
+height: 21px;
 }
 
 #public-button{
@@ -169,6 +274,9 @@ li{
     font-family: "Rockwell";
     font-style:italic;
 }
+
+
+ul.tab li {float: left;width: 26%;}
 
 .container-user-image{
     position: absolute;
@@ -215,7 +323,7 @@ a {
 }
 
 .list-group .img-thumbnail{
-
+    
     width: 100px;
     float: left;
     border-radius: 100%;
@@ -243,6 +351,14 @@ a {
     padding-bottom: 5%;
 }
 
+.comentarios{
+    
+    height: 155px;
+    margin-top: 0;
+    background-color: rgba(000,000,000,0.05);
+    overflow: hidden;
+}
+
 #style-friendship{
     /*! float: left; */
     margin-left: 8%;
@@ -254,10 +370,37 @@ a {
 }
 
 #profile-picture{
-
+    
     width: 28px;
 }
 
+.list-group-comments .name{
+    
+    font-weight: normal;
+    font-size: 74%;
+}
+
+.comment{
+    
+    color: #373836;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 15px;
+}
+
+.post-user{
+    
+    padding-left: 9%;
+    padding-top: 2%;
+}
+
+.list-group-comments{
+    
+    padding-left: 1.5%;
+    margin: 0;
+    list-style: none;
+    padding-top: 1%;
+}
 
 .list-content .list-group .title{
   background:#5bc0de;
@@ -266,29 +409,26 @@ a {
   color:#FFFFFF;
 }
 .list-group-comments .list-group-item img {
-    height:45px;
+    height:45px; 
     width:45px;
     float: left;
 }
 
 list-group-item img {
-    height:80px;
+    height:80px; 
     width:80px;
-}
-
-.jumbotron .btn {
-    padding: 5px 5px !important;
-    font-size: 12px !important;
-}
-
-
-.list-friend tr{
-    border-bottom: 1px black solid;
 }
 
 .list-group{
     list-style: none;
     width: 100%;
+}
+
+.list-group li{
+    float:none;
+    margin-top: 1%;
+    padding-left: 3%;
+    height: 15%;
 }
 
 .list-group li:first-child{
@@ -301,8 +441,32 @@ list-group-item img {
     height: 5%;
 }
 
-.see-all{
+.jumbotron .btn {
+    padding: 5px 5px !important;
+    font-size: 12px !important;
+}
+.prj-name {
+    color:#5bc0de;    
+}
+.break{
+    width:100%;
+    margin:20px;
+}
+.name {
+    color:#5bc0de;    
+    text-align: center;
+    font-family: "Rockwell";
+    float: left;
+    margin-top: 8%;
+    margin-left: 1%;
+}
 
+.list-friend tr{
+    border-bottom: 1px black solid;
+}
+
+.see-all{
+    
     background-color: blue;
     width: 14%;
     height: 4%;
@@ -313,6 +477,8 @@ list-group-item img {
     display: none;
 }
 
+
+
 #text-public{
     width: 100%;
     height: 100%;
@@ -322,7 +488,7 @@ list-group-item img {
     font-size: 100%;
 }
 
-.public-photo-video{
+.public-photo-video{   
     margin-left: 0%;
     margin-top: 0.3%;
     top: 0%;
@@ -348,12 +514,13 @@ list-group-item img {
     margin-left: 0%;
     color: #5F5448;
     font-family: "Rockwell";
+    /*! border: 2px rgba(96, 85, 72, 0.40) solid; */
     padding-top: 3%;
     font-size: 126%;
 }
 
 .container-public-user{
-
+    
     width: 100%;
 }
 
@@ -405,18 +572,19 @@ list-group-item img {
 }
 
 .container-publicationsUser{
-     color: #5F5448;
+     color: #5F5448;   
 }
 
-.container-comment{
-  margin: 4% 7%;
-  height: 15%;
-}
-
-.container-comment input{
-  height: 100%;
-  font-size: 18px;
-  width: 85%;
+.container-cardsuser{
+    /*!  */
+    margin-top: 4%;
+    height: 692px;
+    font-family: "Rockwell";
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid rgba(000,000,000,0.1);
+    float: right;
+    color: #373836;
 }
 
 #username-profile{
@@ -442,7 +610,7 @@ list-group-item img {
 .container-infoUser > div:first-child{
     text-align: center;
     margin-top: 3%;
-    font-size: 126%;
+    font-size: 126%;  
     /*!  */
 }
 
@@ -486,9 +654,11 @@ ul.tab li a {
     border-top: none;
 }
 
-ul.tab li {
-    float: left;
-    width: 26%;
+nav ul{
+    list-style: none;
+    overflow: hidden;
+    margin: 0;
+    height: 100%;
 }
 
 #user-phrase{
@@ -515,6 +685,11 @@ li{
     bottom: 0%;
 }
 
+.container-search{
+    border: none;
+    background-color: none;
+}
+
 .banner-user{
 
 }
@@ -535,6 +710,27 @@ li{
     height: 100%;
 }
 
+.card {
+    width: 100%;
+    height: 100%;
+    /*!  */
+    float: left;
+}
+
+
+.card-video {
+    box-shadow: 0 19px 19px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 20%;
+    height: 53%;
+    border-radius: 5%;
+    float: left;
+    margin-left: 1%;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
 .container {
     /*!  */
     height: 33%;
@@ -554,8 +750,26 @@ li{
     font-family: "Rockwell";
     font-size: 146%;
     color: rgba(37,33,28,0.3);
-    color: rgba(37,33,28,0.3);
     font-style: italic;
+}
+
+#dislike-button{
+    color: #8F1C1B;
+    font-size: 18px;
+}
+
+button{
+    background-color: transparent;
+    border:none;
+}
+
+#like-button{
+    float: right;
+}
+
+#comment-button{
+    float: right;
+    margin-right: 3%;
 }
 
 .list-friend{
@@ -566,6 +780,26 @@ li{
    border-top: 1px solid;
 }
 
+.container-interact-button{
+    padding-top: 0%;
+    width: 100%;
+    height: 14%;
+}
+
+#user-public-image{
+    width: 100%;
+    margin-right: auto;
+    height: auto;
+    margin-top: 1%;
+    height: 356px;
+}
+
+
+#user-public-video{
+    width: 100%;
+    height: 80%;
+    margin-top: 3%;
+}
 
 .container-video-post{
      padding: 0px 13px;
@@ -596,13 +830,65 @@ li{
     /*! height: 9%; */
 }
 
+.description-video{
+    margin-left: 0%;
+    display: inline;
+    float: left;
+    margin-top: 1%;
+    margin-bottom: 0%;
+}
 
 .container-video {
 	float: left;
+}
+
+.descritpion-user-publication{
+    
+    margin-top: 1%;
+    padding-left: 1.5%;
+    font-size: 90%;
+    padding-right: 1.5%;
+}
+
+.form-comments{
+    margin-bottom: 0%;
+    padding-top: 1%;
+    width: 99%;
+    padding-left: 0%;
+    height: 100%;
+}
+
+#comment-input{
+    width:100%;
+    border: none;
+    background-color: transparent;
+    height: 67%;
+    padding-left: 2%;
 }
 
 #user-name{
     font-weight: bold;
     font-family: "Rockwell";
     font-style: italic;
+}
+
+.container-comment{
+    background-color: rgba(000,000,000,0.03);
+    height: 17%;
+    margin-top: 0%;
+}
+
+#style-search{
+     background: url(../Imagenes/lupa.png) no-repeat 2% 50%;
+     border-bottom: 2px solid white;
+     /*! height: 4%; */
+     width: 100%;
+     padding-left: 6%;
+     border-top: none;
+     border-left: none;
+     border-right: none;
+     color: white;
+     font-size: 118%;
+     font-style: italic;
+     font-family:  "Rockwell";
 }

@@ -1,0 +1,61 @@
+body{
+    margin: 0;
+}
+.header-admin{
+    background-color: #00698C;
+    height: 20%;
+    width: 100%;
+}
+.block-admin{
+    width: 100%;
+}
+.panel-admin{
+    border: 3px solid;
+    border-color: #373836;
+    margin: 2% auto;
+    font-family: "Rockwell";
+    font-weight: bold;
+    width: 90%;
+}
+.welcome-admin{
+    text-align: center;
+    margin: 2% auto;
+    color: #FCFCF9;
+    font-family: "Rockwell";
+    font-weight: bold;
+    width: 70%;
+    font-size: 175%;
+}
+table{
+    width: 100%;
+}
+td:first-child{
+    text-align: center;
+ 
+}
+td{
+    font-style: italic;
+    font-weight: normal;
+}
+.Logo{
+    width: 30%;
+    height: 30%;
+}
+button{
+    background-color: transparent;
+    border: none;
+}
+td:nth-child(3),td:last-child{
+    text-align: center;
+}
+#date{
+    border:none;
+    text-align: center;
+}
+a{
+    color:#8F1C1B;
+    text-decoration-style: none;
+    font-weight: bold;
+}
+
+
