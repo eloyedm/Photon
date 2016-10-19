@@ -26,7 +26,7 @@ class Bloqueousuario
      *
      * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUsuarioBloqueado", referencedColumnName="idUsuario")
+     *   @ORM\JoinColumn(name="idUsuarioBloqueado", referencedColumnName="id")
      * })
      */
     private $idusuariobloqueado;
@@ -36,7 +36,7 @@ class Bloqueousuario
      *
      * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUsuarioBloqueador", referencedColumnName="idUsuario")
+     *   @ORM\JoinColumn(name="idUsuarioBloqueador", referencedColumnName="id")
      * })
      */
     private $idusuariobloqueador;

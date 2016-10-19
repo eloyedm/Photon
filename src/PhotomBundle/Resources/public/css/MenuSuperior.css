@@ -1,3 +1,6 @@
+.hidden{
+  display: none;
+}
 nav {
     background-color: #0092B2;
     position: relative;

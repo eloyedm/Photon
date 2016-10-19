@@ -18,7 +18,7 @@
     </many-to-one>
     <many-to-one field="idusuarioreportador" target-entity="Usuario" fetch="LAZY">
       <join-columns>
-        <join-column name="idUsuarioReportador" referenced-column-name="idUsuario"/>
+        <join-column name="idUsuarioReportador" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="idrazonreportado" target-entity="Razon" fetch="LAZY">

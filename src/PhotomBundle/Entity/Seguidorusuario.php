@@ -33,7 +33,7 @@ class Seguidorusuario
      *
      * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUsuarioSeguidor", referencedColumnName="idUsuario")
+     *   @ORM\JoinColumn(name="idUsuarioSeguidor", referencedColumnName="id")
      * })
      */
     private $idusuarioseguidor;
@@ -43,7 +43,7 @@ class Seguidorusuario
      *
      * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUsuarioSeguido", referencedColumnName="idUsuario")
+     *   @ORM\JoinColumn(name="idUsuarioSeguido", referencedColumnName="id")
      * })
      */
     private $idusuarioseguido;

@@ -10,12 +10,12 @@
     </id>
     <many-to-one field="idusuariobloqueado" target-entity="Usuario" fetch="LAZY">
       <join-columns>
-        <join-column name="idUsuarioBloqueado" referenced-column-name="idUsuario"/>
+        <join-column name="idUsuarioBloqueado" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
     <many-to-one field="idusuariobloqueador" target-entity="Usuario" fetch="LAZY">
       <join-columns>
-        <join-column name="idUsuarioBloqueador" referenced-column-name="idUsuario"/>
+        <join-column name="idUsuarioBloqueador" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

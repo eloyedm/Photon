@@ -50,7 +50,7 @@ class Reportarusuario
      *
      * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUsuarioReportador", referencedColumnName="idUsuario")
+     *   @ORM\JoinColumn(name="idUsuarioReportador", referencedColumnName="id")
      * })
      */
     private $idusuarioreportador;

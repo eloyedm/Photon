@@ -4,6 +4,9 @@ namespace PhotomBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\FileBag;
+use PhotomBundle\Entity\Contenido;
 use \PDO;
 
 class DefaultController extends Controller
@@ -13,12 +16,36 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+        dump($this->getUser()->getId());
         $photon = "hola a todos";
         // $conn =$this->get('database_connection');;
         // $users = $conn->fetchAll("SELECT * FROM Usuario");
         // dump($users);
         // die();
         return $this->render('PhotomBundle::Home.html.twig', array("photon" => $photon));
+    }
+
+    /**
+     * @Route("/content/new/upload")
+     */
+    public function uploadAction(Request $request)
+    {
+        $usuario = $this->getUser();
+        $pieFoto = $request->request->get('pieDeFoto');
+        $foto = $request->files->get('foto');
+        $file_content = file_get_contents($foto->getPathName());
+
+        $publicacion = new Contenido();
+        $publicacion->setNombrecontenido("Publicacion 1");
+        $publicacion->setImagencontenido($file_content);
+        $publicacion->setDescripcioncontenido($pieFoto);
+        $publicacion->setIdusuariocontenido($usuario);
+        die();
+        // $conn =$this->get('database_connection');;
+        // $users = $conn->fetchAll("SELECT * FROM Usuario");
+        // dump($users);
+        // die();
+        return $this->redirect('/probando-forms/',$foto);
     }
 
     /**

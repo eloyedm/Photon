@@ -28,6 +28,27 @@ class Usuario extends BaseUser
     private $apellidousuario;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="usuarioUsuario", type="string", length=30, nullable=false)
+     */
+    private $usuariousuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="contraseñaUsuario", type="string", length=20, nullable=false)
+     */
+    private $contraseñausuario;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="correoUsuario", type="string", length=30, nullable=false)
+     */
+    private $correousuario;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="generoUsuario", type="integer", nullable=true)
@@ -79,11 +100,11 @@ class Usuario extends BaseUser
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="idUsuario", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    protected $id;
+    private $idusuario;
 
     /**
      * @var \PhotomBundle\Entity\Pais
@@ -96,12 +117,6 @@ class Usuario extends BaseUser
     private $idpaisusuario;
 
 
-    public function __construct()
-    {
-      parent::__construct();
-      // your own logic
-      $this->roles = array('ROLE_USER');
-    }
 
     /**
      * Set nombreusuario
@@ -149,6 +164,78 @@ class Usuario extends BaseUser
     public function getApellidousuario()
     {
         return $this->apellidousuario;
+    }
+
+    /**
+     * Set usuariousuario
+     *
+     * @param string $usuariousuario
+     *
+     * @return Usuario
+     */
+    public function setUsuariousuario($usuariousuario)
+    {
+        $this->usuariousuario = $usuariousuario;
+
+        return $this;
+    }
+
+    /**
+     * Get usuariousuario
+     *
+     * @return string
+     */
+    public function getUsuariousuario()
+    {
+        return $this->usuariousuario;
+    }
+
+    /**
+     * Set contraseñausuario
+     *
+     * @param string $contraseñausuario
+     *
+     * @return Usuario
+     */
+    public function setContraseñausuario($contraseñausuario)
+    {
+        $this->contraseñausuario = $contraseñausuario;
+
+        return $this;
+    }
+
+    /**
+     * Get contraseñausuario
+     *
+     * @return string
+     */
+    public function getContraseñausuario()
+    {
+        return $this->contraseñausuario;
+    }
+
+    /**
+     * Set correousuario
+     *
+     * @param string $correousuario
+     *
+     * @return Usuario
+     */
+    public function setCorreousuario($correousuario)
+    {
+        $this->correousuario = $correousuario;
+
+        return $this;
+    }
+
+    /**
+     * Get correousuario
+     *
+     * @return string
+     */
+    public function getCorreousuario()
+    {
+        return $this->correousuario;
     }
 
     /**
@@ -320,13 +407,13 @@ class Usuario extends BaseUser
     }
 
     /**
-     * Get id
+     * Get idusuario
      *
      * @return integer
      */
-    public function getId()
+    public function getIdusuario()
     {
-        return $this->id;
+        return $this->idusuario;
     }
 
     /**

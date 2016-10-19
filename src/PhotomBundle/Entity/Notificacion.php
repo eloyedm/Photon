@@ -64,7 +64,7 @@ class Notificacion
      *
      * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUsuarioNotificador", referencedColumnName="idUsuario")
+     *   @ORM\JoinColumn(name="idUsuarioNotificador", referencedColumnName="id")
      * })
      */
     private $idusuarionotificador;

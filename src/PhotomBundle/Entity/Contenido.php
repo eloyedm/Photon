@@ -54,7 +54,7 @@ class Contenido
      *
      * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUsuarioContenido", referencedColumnName="idUsuario")
+     *   @ORM\JoinColumn(name="idUsuarioContenido", referencedColumnName="id")
      * })
      */
     private $idusuariocontenido;

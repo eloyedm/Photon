@@ -1,0 +1,65 @@
+
+{% block stylesheets %}
+<link rel="stylesheet" href="{{ asset('bundles/photom/css/LogIn.css')}}" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+
+{% block fos_user_content %}
+{% if error %}
+    <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+{% endif %}
+<body class="background">
+<section class="background-overlay">
+</section>
+<section class="box-login">
+    <span>
+        <div> <img src="" id="logo-image" alt="no-image"></div>
+        <form action="{{ path("fos_user_security_check") }}" method="post">
+            <div class="style-profiled"> <img src="{{asset('bundles/photom/images/female.png')}}" class="style-profile"/></div>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            <div class="conteiner-text">
+              <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+            </div>
+            <div class="conteiner-text">
+              <input type="password" id="password" name="_password" required="required" />
+            </div>
+            <span class="style-remember">
+              <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+              <span id="remember"><label>Recordarme</label></span>
+            </span>
+            <span class="style-forget"><a style="color:#0092b2" href="">¿Contraseña olvidada? </a></span>
+            <div><input type="submit" id="_submit" class="style-submit" name="_submit" value="Entrar" /></div>
+        </form>
+    </span>
+    <div class ="box-register">
+      <span class="style-pregunta"><label>¿Aun no estas en la familia photon?</label></span>
+      <span class="style-register"><a href = "" style="color:#a8c545"> ¡Registrate! </a></span>
+    </div>
+</section>
+</body>
+{% endblock fos_user_content %}
+
+{% block Body %}
+<!-- <body class="background">
+<section class="background-overlay">
+</section>
+<section class="box-login">
+    <span>
+        <div> <img src="" id="logo-image" alt="no-image"></div>
+        <form method="post" action="">
+            <div class="style-profiled"> <img src="{{asset('bundles/photom/images/female.png')}}" class="style-profile"/></div>
+            <div class="conteiner-text"><input type="username" id ="style-username"></div>
+            <div class="conteiner-text"><input type="password" id="style-password"></div>
+            <span class="style-remember">  <input type = "checkbox" id="remember-check">
+               <span id="remember"><label>Recordarme</label></span>
+            </span>
+            <span class="style-forget"><a style="color:#0092b2" href="">¿Contraseña olvidada? </a></span>
+            <div><input type="submit" value ="Entrar" class="style-submit"></div>
+            </form>
+    </span>
+       <div class ="box-register">
+            <span class="style-pregunta"><label>¿Aun no estas en la familia photon?</label></span>
+          <span class="style-register"><a href = "" style="color:#a8c545"> ¡Registrate! </a></span>
+        </div>
+</section>
+</body> -->
+{% endblock %}

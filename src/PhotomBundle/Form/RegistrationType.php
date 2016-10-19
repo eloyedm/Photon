@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use FOS\UserBundle\Util\LegacyFormHelper;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class RegistrationType extends AbstractType
 {
@@ -37,11 +38,14 @@ class RegistrationType extends AbstractType
         ))
         ->add('generoUsuario',ChoiceType::class, array(
             'choices' => array(
-              'Hombre' => 'M',
-              'Mujer' => 'F'
+              'Hombre' => 0,
+              'Mujer' => 1
             ),
             'expanded' => true,
             'multiple' => false
+        ))
+        ->add('privacidadUsuario', HiddenType::class, array(
+          'data' => true
         ))
     ;
     }

@@ -36,7 +36,7 @@ class Preguntausuario
      *
      * @ORM\ManyToOne(targetEntity="PhotomBundle\Entity\Usuario")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="idUsuario", referencedColumnName="idUsuario")
+     *   @ORM\JoinColumn(name="idUsuario", referencedColumnName="id")
      * })
      */
     private $idusuario;

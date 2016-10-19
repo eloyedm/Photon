@@ -27,7 +27,7 @@
     </many-to-one>
     <many-to-one field="idusuarionotificador" target-entity="Usuario" fetch="LAZY">
       <join-columns>
-        <join-column name="idUsuarioNotificador" referenced-column-name="idUsuario"/>
+        <join-column name="idUsuarioNotificador" referenced-column-name="id"/>
       </join-columns>
     </many-to-one>
   </entity>

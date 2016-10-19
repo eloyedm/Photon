@@ -4,7 +4,7 @@
     <indexes>
       <index name="idPaisUsuario" columns="idPaisUsuario"/>
     </indexes>
-    <id name="idusuario" type="integer" column="idUsuario">
+    <id name="id" type="integer" column="id">
       <generator strategy="IDENTITY"/>
     </id>
     <field name="nombreusuario" type="string" column="nombreUsuario" length="50" nullable="false">
@@ -13,21 +13,6 @@
       </options>
     </field>
     <field name="apellidousuario" type="string" column="apellidoUsuario" length="20" nullable="true">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="usuariousuario" type="string" column="usuarioUsuario" length="30" nullable="false">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="contraseñausuario" type="string" column="contraseñaUsuario" length="20" nullable="false">
-      <options>
-        <option name="fixed"/>
-      </options>
-    </field>
-    <field name="correousuario" type="string" column="correoUsuario" length="30" nullable="false">
       <options>
         <option name="fixed"/>
       </options>
