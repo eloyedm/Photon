@@ -40,6 +40,15 @@ class DefaultController extends Controller
         $publicacion->setImagencontenido($file_content);
         $publicacion->setDescripcioncontenido($pieFoto);
         $publicacion->setIdusuariocontenido($usuario);
+        $em = $this->getDoctrine()->getManager();
+
+        // tells Doctrine you want to (eventually) save the Product (no queries yet)
+        $em->persist($publicacion);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $em->flush();
+
+
         die();
         // $conn =$this->get('database_connection');;
         // $users = $conn->fetchAll("SELECT * FROM Usuario");
