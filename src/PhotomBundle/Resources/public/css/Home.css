@@ -498,7 +498,7 @@ list-group-item img {
 .container-cardsuser{
     /*!  */
     margin-top: 4%;
-    height: 692px;
+    /*height: 692px;*/
     font-family: "Rockwell";
     width: 100%;
     overflow: hidden;
@@ -632,7 +632,7 @@ li{
 
 .card {
     width: 100%;
-    height: 100%;
+    /*height: 100%;*/
     /*!  */
     float: left;
 }
@@ -712,6 +712,7 @@ button{
     margin-right: auto;
     height: auto;
     margin-top: 1%;
+    max-height: 90%%;
 }
 
 

@@ -1,9 +1,27 @@
 {% extends 'PhotomBundle::MenuSuperior.html.twig' %}
+{% if usuario.fechaNacimiento is not defined %}
+  {% set fechaNacimiento = '' %}
+{% else %}
+  {% set fechaNacimiento = usuario.fechaNacimiento %}
+{% endif %}
+{% if usuario.domicilioUsuario is not defined %}
+  {% set domicilio = '' %}
+{% else %}
+  {% set domicilio = usuario.domicilioUsuario %}
+{% endif %}
+{% if usuario.bannerUsuario is not defined %}
+  {% set banner = asset('bundles/photom/images/login-background.jpg') %}
+{% else %}
+  {% set banner = usuario.bannerUsuaerio %}
+{% endif %}
+{% if usuario.perfilUsuario == '' %}
+  {% set perfil = asset('bundles/photom/images/female.png') %}
+{% else %}
+  {% set perfil = usuario.perfilUsuario %}
+{% endif %}
 
 {% block head %}
   <title>Photon</title>
-
-
 {% endblock %}
 {% block stylesheets %}
   {{ parent() }}
@@ -12,9 +30,7 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-
 <script type="text/javascript" src="{{ asset('bundles/photom/js/jquery-3.1.1.min.js')}}">
-
 </script>
 <script>
     $(document).ready(function() {
@@ -62,10 +78,10 @@
 {{ parent() }}
 <section class = "user-controls">
            <div class="banner-user">
-                <img src="{{ asset('bundles/photom/images/login-background.jpg')}}" id="banner">
+                <img src="{{ banner }}" id="banner">
            </div>
            <div class="container-user-image">
-               <img src="{{ asset('bundles/photom/images/female.png')}}" id="user-profile-pic"></img><t id="username-profile">Usuario</t>
+               <img src="{{ perfil }}" id="user-profile-pic"></img><t id="username-profile">{{ usuario.username }}</t>
            </div>
        <div class="user-tabs">
            <ul class="tab">
@@ -87,19 +103,24 @@
                    <div>
                        <div><t>Titulo: </t><t>Mrs.</t>
                        </div>
-                       <div><t>Nombre: </t><t>Albert Einstein</t>
+                       <div><t>Nombre: </t><t>{{ usuario.nombreUsuario}}</t>
                        </div>
-                       <div><t>Fecha Nacimiento: </t><t>26 abril 1996</t>
+                       <div><t>Fecha Nacimiento: </t><t>{{ fechaNacimiento }}</t>
                        </div>
                        <div><t>Pais: </t><t>México</t>
                        </div>
                        <div><t>Ciudad: </t><t>Monterrey</t>
                        </div>
                    <div><t>Empresa: </t><t>Milenio</t></div>
-                   <div><t>Email: </t><t>eloy.edm@gmail.com</t>
+                   <div><t>Email: </t><t>{{ usuario.email }}</t>
                    </div>
                    <div><t>Sobre ti: </t><t>Me gustan los libros y dross</t></div>
-                   <div><t>Genero: </t><i class="fa fa-venus" aria-hidden="true"></i>
+                   <div><t>Genero: </t>
+                     {% if usuario.generoUsuario == 0 %}
+                     <i class="fa fa-mars" aria-hidden="true"></i>
+                     {% else %}
+                     <i class="fa fa-venus" aria-hidden="true"></i>
+                     {% endif %}
                    </div>
                </div>
            </div>

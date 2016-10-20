@@ -71,7 +71,9 @@
       </div>
       <div id="phrase-content">TU MUNDO ACTUALIZADO</div>
     {# no variables will be accessible #}
-    {% include 'PhotomBundle::CardPosts.html.twig' only %}
+    {% for publicaciones in inicio %}
+      {% include 'PhotomBundle::CardPosts.html.twig' with {'publicacion': publicaciones} %}
+    {% endfor %}
         </section>
 </section>
 {% endblock %}

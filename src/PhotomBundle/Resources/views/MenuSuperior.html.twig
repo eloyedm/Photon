@@ -8,15 +8,15 @@
 <nav>
               <ul>
                   <li class="container-logo">
-                      <a href="#">LOGO</a>
+                      <a href="/">LOGO</a>
                   </li>
                   <li id="container-form">
-              <div>
-                  <form method="get" id="find-user">
-                      <div class="container-search"><input type="text" id="style-search" placeholder="Buscar"></div>
-                  </form>
-              </div>
-          </li>
+                    <div>
+                        <form method="get" id="find-user">
+                            <div class="container-search"><input type="text" id="style-search" placeholder="Buscar"></div>
+                        </form>
+                    </div>
+                  </li>
                   <li id="style-friendship">
                       <a href="#"><i class = "fa fa-users" aria-hidden="true"></i>
                       </a>
@@ -44,6 +44,9 @@
                       <label>
                           Usuario
                       </label>
+                  </li>
+                  <li>
+                    <a href="{{ path('fos_user_security_logout') }}"> Cerrar sesion</a>
                   </li>
               </ul>
           </nav>
