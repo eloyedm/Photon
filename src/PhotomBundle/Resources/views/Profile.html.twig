@@ -30,48 +30,7 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script type="text/javascript" src="{{ asset('bundles/photom/js/jquery-3.1.1.min.js')}}">
-</script>
-<script>
-    $(document).ready(function() {
-          $("#notificationLink").click(function()
-                                     {
-            $("#notificationContainer").fadeToggle(300);
-            $("#notification_count").fadeOut("slow");
-            return false;
-        });
-
-        $(document).click(function()
-                          {
-            $("#notificationContainer").hide();
-        });
-        $("#notificationContainer").click(function()
-                                          {
-            return false;
-        });
-    });
-    function changetab(evt, tabName) {
-        if(tabName.localeCompare("friend") == 0)
-        {
-            document.getElementById('friend').style.display = "inline-block";
-            document.getElementById('notification').style.display = "none";
-            document.getElementById('profile').style.display = "none";
-        }
-
-        if(tabName.localeCompare("notification") == 0)
-        {
-            document.getElementById(tabName).style.display = "inline-block";
-            document.getElementById('friend').style.display = "none";
-            document.getElementById('profile').style.display = "none";
-        }
-
-        if(tabName.localeCompare("profile") == 0)
-        {
-            document.getElementById(tabName).style.display = "inline-block";
-            document.getElementById('notification').style.display = "none";
-            document.getElementById('friend').style.display = "none";
-        }
-    }
+<script type="text/javascript" src="{{ asset('bundles/photom/js/Perfil/Perfil.js')}}"></script>
 </script>
 {% endblock %}
 {% block Body %}
@@ -90,7 +49,10 @@
                <li><a href="#" class="tablinks" onclick="changetab(event, 'notification')">Notificaciones</a></li>
            </ul>
        </div>
-
+       <div class="follow">
+         <i class="fa fa-plus-circle"></i>
+         Follow
+       </div>
    </section>
        <section class="container-profile-publication">
            <sidebar class="container-sidebar">

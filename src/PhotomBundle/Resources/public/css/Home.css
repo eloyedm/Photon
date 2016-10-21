@@ -813,3 +813,7 @@ button{
      font-style: italic;
      font-family:  "Rockwell";
 }
+
+.imagePreviewContainer{
+  text-align: center;
+}

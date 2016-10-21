@@ -1,5 +1,5 @@
 body{
-    
+
     background-color: #FFF;
     margin: 0;
     padding: 0;
@@ -45,7 +45,7 @@ nav{
 }
 
 #user-profile-pic{
-    
+
     float: left;
     display: inline-block;
 }
@@ -127,7 +127,7 @@ nav{
 }
 
 .container-publica{
-    
+
     overflow: hidden;
     width: 7%;
     float: right;
@@ -141,7 +141,7 @@ nav{
 }
 
 .container-camera{
-    
+
     margin-left: 0%;
     width: %;
     float: left;
@@ -160,7 +160,7 @@ nav{
     padding-top: 0.3%;
 }
 
-#notificationContainer 
+#notificationContainer
 {
 background-color: #fff;
 border: 1px solid rgba(100, 100, 100, .4);
@@ -215,7 +215,7 @@ border-bottom: 1px solid #dddddd;
 }
 
 .friend-list-solicitud{
-    
+
 }
 
 #notificationsBody
@@ -323,7 +323,7 @@ a {
 }
 
 .list-group .img-thumbnail{
-    
+
     width: 100px;
     float: left;
     border-radius: 100%;
@@ -352,7 +352,7 @@ a {
 }
 
 .comentarios{
-    
+
     height: 155px;
     margin-top: 0;
     background-color: rgba(000,000,000,0.05);
@@ -370,18 +370,18 @@ a {
 }
 
 #profile-picture{
-    
+
     width: 28px;
 }
 
 .list-group-comments .name{
-    
+
     font-weight: normal;
     font-size: 74%;
 }
 
 .comment{
-    
+
     color: #373836;
     font-weight: normal;
     font-style: italic;
@@ -389,13 +389,13 @@ a {
 }
 
 .post-user{
-    
+
     padding-left: 9%;
     padding-top: 2%;
 }
 
 .list-group-comments{
-    
+
     padding-left: 1.5%;
     margin: 0;
     list-style: none;
@@ -409,13 +409,13 @@ a {
   color:#FFFFFF;
 }
 .list-group-comments .list-group-item img {
-    height:45px; 
+    height:45px;
     width:45px;
     float: left;
 }
 
 list-group-item img {
-    height:80px; 
+    height:80px;
     width:80px;
 }
 
@@ -446,14 +446,14 @@ list-group-item img {
     font-size: 12px !important;
 }
 .prj-name {
-    color:#5bc0de;    
+    color:#5bc0de;
 }
 .break{
     width:100%;
     margin:20px;
 }
 .name {
-    color:#5bc0de;    
+    color:#5bc0de;
     text-align: center;
     font-family: "Rockwell";
     float: left;
@@ -466,7 +466,7 @@ list-group-item img {
 }
 
 .see-all{
-    
+
     background-color: blue;
     width: 14%;
     height: 4%;
@@ -488,7 +488,7 @@ list-group-item img {
     font-size: 100%;
 }
 
-.public-photo-video{   
+.public-photo-video{
     margin-left: 0%;
     margin-top: 0.3%;
     top: 0%;
@@ -520,7 +520,7 @@ list-group-item img {
 }
 
 .container-public-user{
-    
+
     width: 100%;
 }
 
@@ -572,7 +572,7 @@ list-group-item img {
 }
 
 .container-publicationsUser{
-     color: #5F5448;   
+     color: #5F5448;
 }
 
 .container-cardsuser{
@@ -610,7 +610,7 @@ list-group-item img {
 .container-infoUser > div:first-child{
     text-align: center;
     margin-top: 3%;
-    font-size: 126%;  
+    font-size: 126%;
     /*!  */
 }
 
@@ -705,6 +705,27 @@ li{
     height: 100%;
 }
 
+.follow{
+    width: 10%;
+    display: inherit;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    text-align: center;
+    background: rgba(255,255,255,0.8);
+    border: 1px solid blue;
+}
+
+.followed{
+    width: 10%;
+    display: inherit;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    text-align: center;
+    background: rgba(128,255,128,0.8);
+    border: 1px solid green;
+}
 .container-card{
     padding-top: 1.3%;
     height: 100%;
@@ -843,7 +864,7 @@ button{
 }
 
 .descritpion-user-publication{
-    
+
     margin-top: 1%;
     padding-left: 1.5%;
     font-size: 90%;

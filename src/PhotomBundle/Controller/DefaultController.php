@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\FileBag;
 use Doctrine\DBAL\DriverManager;
 use PhotomBundle\Entity\Contenido;
@@ -29,20 +30,14 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-      $photon = "hola mundo";
-      // $conn =$this->get('database_connection');;
-      // $queryBuilder = $conn->createQueryBuilder();
       $connTarget = $this->connectToDB();
-      $query = $connTarget->prepare("SELECT idUsuarioContenido, imagenContenido, descripcioncontenido FROM Contenido");
+      $query = $connTarget->prepare("SELECT idUsuarioContenido, imagenContenido, descripcioncontenido FROM Contenido ORDER BY idContenido DESC");
       $query->execute();
       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
       $result =  $query->fetchAll();
       foreach ($result as $key => $post) {
         $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
       }
-
-      // $queryBuilder->select('imagencontenido, descripcionContenido, nombreDueño');
-      //             ->from('Contenido', 'C';
       return $this->render('PhotomBundle::Home.html.twig', array("inicio" => $result));
     }
 
@@ -66,20 +61,32 @@ class DefaultController extends Controller
         $query->bindParam(':idUsuario', $usuario);
         $query->execute();
         $connTarget = null;
-        // $conn =$this->get('database_connection');;
-        // $queryBuilder = $conn->createQueryBuilder();
-        // $queryBuilder->insert('Contenido')
-        //     ->setValue("nombreContenido", '?')
-        //     ->setValue("imagenContenido", '?')
-        //     ->setValue("descripcionContenido", '?')
-        //     ->setValue("idUsuarioContenido", '?')
-        //     ->setParameter(0, "Publicacion 1")
-        //     ->setParameter(1, $file_content)
-        //     ->setParameter(2, $pieFoto)
-        //     ->setParameter(3, $usuario->getId())
-        // ;
-        // $query = $queryBuilder->execute();
+
+        // $fotoName  = md5(uniqid()).'.'.$foto->guessExtension();
+        // $foto->move($this->getParameter('foto_directorio'), $fotoName);
+
+        dump($foto->getMimeType());
+        die();
         return $this->redirect('/');
+    }
+
+    /**
+     * @Route("/users/follow")
+     */
+    public function followAction(Request $request)
+    {
+      $usuario = $this->getUser();
+      $usuario = $usuario->getId();
+      $seguido = $request->request->get('seguirA');
+      $connTarget = $this->connectToDB();
+      $query = $connTarget->prepare("SELECT id FROM Usuario WHERE username_canonical = :usuario");
+      $query->bindParam(":usuario", $seguido);
+      $query->execute();
+      $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+      $result =  $query->fetchAll();
+      return new JsonResponse(array(
+        'status' => 1,
+      ));
     }
 
     /**
@@ -118,6 +125,7 @@ class DefaultController extends Controller
         $query->execute();
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result =  $query->fetchAll();
+        $connTarget = null;
         return $this->render('PhotomBundle::Profile.html.twig', array('usuario'=> $result[0]));
       }
 
@@ -126,7 +134,18 @@ class DefaultController extends Controller
        */
        public function perfilVisitaAction($visitado)
        {
-         return $this->render('PhotomBundle::Profile.html.twig');
+
+         $connTarget = $this->connectToDB();
+         $query = $connTarget->prepare("SELECT id, username, nombreUsuario, perfilUsuario,email, generoUsuario FROM Usuario WHERE username_canonical = :usuario");
+         $query->bindParam(":usuario", $visitado);
+         $query->execute();
+         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+         $result =  $query->fetchAll();
+         if( $this->getUser()->getId() == $result[0]['id']){
+           return $this->redirect('/perfil');
+         }
+         dump($result);
+         return $this->render('PhotomBundle::Profile.html.twig', array('usuario' => $result[0]));
        }
 
       /**
@@ -136,4 +155,12 @@ class DefaultController extends Controller
        {
          return $this->render('PhotomBundle::HomeAdmin.html.twig');
        }
+
+       /**
+        * @Route("/profile")
+        */
+        public function profileAction()
+        {
+          return $this->redirect('/');
+        }
 }

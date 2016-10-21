@@ -9,7 +9,6 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-  <script type="text/javascript" src="{{ asset('bundles/photom/js/jquery-3.1.1.min.js')}}"></script>
   <script type="text/javascript" src="{{ asset('bundles/photom/js/Home/Home.js')}}"></script>
 {% endblock %}
 {% block Body %}
@@ -45,6 +44,9 @@
         </div>
         <div class="container-publication">
           <form method="POST" action="/content/new/upload"name="user-publication-user" id="user-post" enctype="multipart/form-data">
+            <div class="imagePreviewContainer">
+              <img src="" class="imagePreview" alt="" />
+            </div>
             <input type="text" placeholder="Comparte tu dia...." id="text-public" name="pieDeFoto">
             <input type="file" name="foto" class="photoSubmit hidden">
             <input type="file" name="video" class="videoSubmit hidden">
