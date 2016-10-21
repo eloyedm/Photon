@@ -51,19 +51,23 @@ class DefaultController extends Controller
         $titulo = "hola mundo";
         $pieFoto = $request->request->get('pieDeFoto');
         $foto = $request->files->get('foto');
-        $file_content = file_get_contents($foto->getPathName());
-        $connTarget = $this->connectToDB();
-        $query = $connTarget->prepare("INSERT INTO Contenido(nombreContenido, imagenContenido, descripcionContenido, idUsuarioContenido)
-                                VALUES(:nombre,:imagen, :descripcion, :idUsuario)");
-        $query->bindParam(':nombre', $titulo);
-        $query->bindParam(':imagen', $file_content);
-        $query->bindParam(':descripcion', $pieFoto);
-        $query->bindParam(':idUsuario', $usuario);
-        $query->execute();
-        $connTarget = null;
+        if( strpos("image", $foto->getMimeType()) !== false ){
+          $file_content = file_get_contents($foto->getPathName());
+          $connTarget = $this->connectToDB();
+          $query = $connTarget->prepare("INSERT INTO Contenido(nombreContenido, imagenContenido, descripcionContenido, idUsuarioContenido)
+                                  VALUES(:nombre,:imagen, :descripcion, :idUsuario)");
+          $query->bindParam(':nombre', $titulo);
+          $query->bindParam(':imagen', $file_content);
+          $query->bindParam(':descripcion', $pieFoto);
+          $query->bindParam(':idUsuario', $usuario);
+          $query->execute();
+          $connTarget = null;
+        }
+        elseif (strpos("video", $foto->getMimeType()) !== false) {
+          $fotoName  = md5(uniqid()).'.'.$foto->guessExtension();
+          $foto->move($this->getParameter('videos_directorio'), $fotoName);
+        }
 
-        // $fotoName  = md5(uniqid()).'.'.$foto->guessExtension();
-        // $foto->move($this->getParameter('foto_directorio'), $fotoName);
 
         dump($foto->getMimeType());
         die();
