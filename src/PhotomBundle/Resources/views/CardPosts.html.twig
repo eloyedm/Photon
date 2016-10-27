@@ -6,9 +6,10 @@
 {% if publicacion is defined %}
 <div class="container-cardsuser">
         <div class="card">
+            <p class="hidden idPub" >{{ publicacion.idContenido}}</p>
             <div>
               <img class="user-image-publication">
-              <span class="user-name">Pancracio Pancreas:</span>
+              <span class="user-name">{{ publicacion.username }}:</span>
             </div>
             <div class="descritpion-user-publication"><p class="description-video">{{ publicacion.descripcioncontenido}} </p>
             </div>
@@ -24,9 +25,7 @@
               </button>
             </div>
             <div class="container-comment">
-              <form name="comment-public" class="form-comments">
                 <input type="text" placeholder="¿Quieres decir algo sobre este post?..." id="comment-input">
-              </form>
             </div>
             <div class="comentarios">
                 <ul class="list-group-comments">

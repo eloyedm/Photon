@@ -31,7 +31,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
       $connTarget = $this->connectToDB();
-      $query = $connTarget->prepare("SELECT idUsuarioContenido, imagenContenido, descripcioncontenido FROM Contenido ORDER BY idContenido DESC");
+      $query = $connTarget->prepare("SELECT idUsuarioContenido, username, imagenContenido, descripcioncontenido, idContenido FROM Contenido JOIN Usuario ON Contenido.idUsuarioContenido = Usuario.id ORDER BY idContenido DESC");
       $query->execute();
       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
       $result =  $query->fetchAll();
@@ -51,7 +51,9 @@ class DefaultController extends Controller
         $titulo = "hola mundo";
         $pieFoto = $request->request->get('pieDeFoto');
         $foto = $request->files->get('foto');
-        if( strpos("image", $foto->getMimeType()) !== false ){
+        $type = explode("/", $foto->getMimeType());
+        $type = $type[0];
+        if($type == "image"){
           $file_content = file_get_contents($foto->getPathName());
           $connTarget = $this->connectToDB();
           $query = $connTarget->prepare("INSERT INTO Contenido(nombreContenido, imagenContenido, descripcionContenido, idUsuarioContenido)
@@ -63,15 +65,35 @@ class DefaultController extends Controller
           $query->execute();
           $connTarget = null;
         }
-        elseif (strpos("video", $foto->getMimeType()) !== false) {
+        elseif ($type == "video") {
           $fotoName  = md5(uniqid()).'.'.$foto->guessExtension();
           $foto->move($this->getParameter('videos_directorio'), $fotoName);
         }
-
-
-        dump($foto->getMimeType());
-        die();
         return $this->redirect('/');
+    }
+
+    /**
+     * @Route("/content/addComment")
+     */
+    public function commentAction(Request $request)
+    {
+      $usuario = $this->getUser();
+      $idPub = $request->request->get('idPub');
+      $comment = $request->request->get('comment');
+      $connTarget = $this->connectToDB();
+      $query = $connTarget->prepare("INSERT INTO Notificacion(comentarioNotificacion, idContenidoNotificacion, idUsuarioNotificacion)
+                              VALUES(:comentario, :idContenido, :idUsuario)");
+      $query->bindParam(':comentario', $comment);
+      $query->bindParam(':idContenido', $idPub);
+      $query->bindParam(':idUsuario', $usuario->getId());
+      $query->execute();
+      $connTarget = null;
+      
+      return new JsonResponse(array(
+        'pub' => $idPub,
+        'com' => $comment,
+        'usuario' => $usuario->getId()
+      ));
     }
 
     /**
