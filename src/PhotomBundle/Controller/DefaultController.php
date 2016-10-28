@@ -78,21 +78,22 @@ class DefaultController extends Controller
     public function commentAction(Request $request)
     {
       $usuario = $this->getUser();
+      $usuario = $usuario->getId();
       $idPub = $request->request->get('idPub');
       $comment = $request->request->get('comment');
       $connTarget = $this->connectToDB();
-      $query = $connTarget->prepare("INSERT INTO Notificacion(comentarioNotificacion, idContenidoNotificacion, idUsuarioNotificacion)
+      $query = $connTarget->prepare("INSERT INTO Notificacion(comentarioNotificacion, idContenidoNotificacion, idUsuarioNotificador)
                               VALUES(:comentario, :idContenido, :idUsuario)");
       $query->bindParam(':comentario', $comment);
       $query->bindParam(':idContenido', $idPub);
-      $query->bindParam(':idUsuario', $usuario->getId());
+      $query->bindParam(':idUsuario', $usuario);
       $query->execute();
       $connTarget = null;
-      
+
       return new JsonResponse(array(
         'pub' => $idPub,
         'com' => $comment,
-        'usuario' => $usuario->getId()
+        'usuario' => $usuario
       ));
     }
 
