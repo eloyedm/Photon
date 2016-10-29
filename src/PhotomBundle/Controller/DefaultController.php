@@ -98,6 +98,26 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/content/like")
+     */
+    public function likeAction(Request $request){
+      $usuario = $this->getUser();
+      $usuario = $usuario->getId();
+      $idPub = $request->request->get('idPub');
+      $connTarget = $this->connectToDB();
+      $query = $connTarget->prepare("INSERT INTO Notificacion(gustaNotificacion, idContenidoNotificacion, idUsuarioNotificador)
+                              VALUES(1, :idContenido, :idUsuario)");
+      $query->bindParam(':idContenido', $idPub);
+      $query->bindParam(':idUsuario', $usuario);
+      $query->execute();
+      $connTarget = null;
+
+      return new JsonResponse(array(
+        "status"=> "ok"
+      ));
+    }
+
+    /**
      * @Route("/users/follow")
      */
     public function followAction(Request $request)

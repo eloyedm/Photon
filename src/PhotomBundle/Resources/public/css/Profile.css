@@ -66,6 +66,7 @@ nav{
 	color: rgba(55,56,54,0.3);
 }
 
+
 .container-friend .img-thumbnail {
 	border-radius: 100%;
 	width: 60px;
@@ -912,4 +913,15 @@ button{
      font-size: 118%;
      font-style: italic;
      font-family:  "Rockwell";
+}
+
+#editProfileP{
+  color: white;
+  position: absolute;
+  left: 0;
+  display: none;
+}
+
+#editProfileP > .fa.fa-pencil{
+  color: white;
 }

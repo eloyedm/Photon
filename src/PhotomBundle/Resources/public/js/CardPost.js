@@ -19,7 +19,7 @@ define(['jquery', 'Backbone', 'commentView'],  function($, backbone, commentView
                   "comentario": data.com
                 });
                 comentario.$el.css("display", "none");
-                $(commentSelected).parent().siblings(".comentarios").find("ul.list-group-comments").append(comentario.$el);
+                $(commentSelected).parent().siblings(".comentarios").find("ul.list-group-comments").prepend(comentario.$el);
                 $(commentSelected).val("");
                 comentario.$el.fadeIn();
               }
@@ -27,5 +27,22 @@ define(['jquery', 'Backbone', 'commentView'],  function($, backbone, commentView
           }
         }
       });
+
+      $(".like-button").click(function(){
+        var idPub = $(this).parent().parent().siblings(".idPub").text();
+        var button = this
+        if(idPub != null){
+          $.ajax({
+            method: "POST",
+            url: "/content/like",
+            data: {
+              "idPub": idPub
+            },
+            success: function(data){
+              $(button).find("i").css("color", "blue");
+            }
+          });
+        }
     });
+  });
 });

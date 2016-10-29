@@ -30,7 +30,7 @@
 {% endblock %}
 {% block javascripts %}
 {{ parent() }}
-<script type="text/javascript" src="{{ asset('bundles/photom/js/Perfil/Perfil.js')}}"></script>
+<script type="text/javascript" src="{{ asset('bundles/photom/js/dist/profile.bundle.js')}}"></script>
 </script>
 {% endblock %}
 {% block Body %}
@@ -40,13 +40,16 @@
                 <img src="{{ banner }}" id="banner">
            </div>
            <div class="container-user-image">
-               <img src="{{ perfil }}" id="user-profile-pic"></img><t id="username-profile">{{ usuario.username }}</t>
+              <button type="button" name="button" id="editProfileP">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </button>
+              <img src="{{ perfil }}" id="user-profile-pic"></img><t id="username-profile">{{ usuario.username }}</t>
            </div>
        <div class="user-tabs">
            <ul class="tab">
-               <li><a href="#" class="tablinks" onclick="changetab(event, 'profile')">Perfil</a></li>
-               <li><a href="#" class="tablinks" onclick="changetab(event, 'friend')">Amigos</a></li>
-               <li><a href="#" class="tablinks" onclick="changetab(event, 'notification')">Notificaciones</a></li>
+               <li><a href="#" class="tablinks" data="profile" >Perfil</a></li>
+               <li><a href="#" class="tablinks" data="friend" >Amigos</a></li>
+               <li><a href="#" class="tablinks" data="notification">Notificaciones</a></li>
            </ul>
        </div>
        <div class="follow">
@@ -63,7 +66,7 @@
                </button>
                 </div>
                    <div>
-                       <div><t>Titulo: </t><t>Mrs.</t>
+                       <div><t>Titulo: </t><t contenteditable="true">Mrs.</t>
                        </div>
                        <div><t>Nombre: </t><t>{{ usuario.nombreUsuario}}</t>
                        </div>

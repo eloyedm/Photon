@@ -3,7 +3,7 @@ var path = __dirname;
 module.exports = {
     entry: {
     	main: "./js/Home/Home.js",
-
+      profile: "./js/Perfil/Perfil.js"
     },
     resolve: {
         alias: {
