@@ -18,7 +18,7 @@ class DefaultController extends Controller
     public function connectToDB(){
         $servername = "localhost";
         $username = "root";
-        $password = "";
+        $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -81,6 +81,7 @@ class DefaultController extends Controller
       $usuario = $usuario->getId();
       $idPub = $request->request->get('idPub');
       $comment = $request->request->get('comment');
+
       $connTarget = $this->connectToDB();
       $query = $connTarget->prepare("INSERT INTO Notificacion(comentarioNotificacion, idContenidoNotificacion, idUsuarioNotificador)
                               VALUES(:comentario, :idContenido, :idUsuario)");

@@ -13810,6 +13810,9 @@
 	              }
 	            });
 	          }
+	          else{
+	            alert("No puedes postear comentarios vacios");
+	          }
 	        }
 	      });
 

@@ -25,6 +25,9 @@ define(['jquery', 'Backbone', 'commentView'],  function($, backbone, commentView
               }
             });
           }
+          else{
+            alert("No puedes postear comentarios vacios");
+          }
         }
       });
 
