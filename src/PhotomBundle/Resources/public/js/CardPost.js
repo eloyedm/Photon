@@ -1,4 +1,4 @@
-define(['jquery', 'Backbone', 'commentView'],  function($, backbone, commentView) {
+define(['jquery', 'Backbone', 'commentView', 'reportModalView'],  function($, backbone, commentView, reportModalView) {
   $(document).ready(function(){
     $(document).keypress(function(e) {
         if(e.which == 13) {
@@ -26,23 +26,31 @@ define(['jquery', 'Backbone', 'commentView'],  function($, backbone, commentView
             });
           }
         }
-      });
+    });
 
-      $(".like-button").click(function(){
-        var idPub = $(this).parent().parent().siblings(".idPub").text();
-        var button = this
-        if(idPub != null){
-          $.ajax({
-            method: "POST",
-            url: "/content/like",
-            data: {
-              "idPub": idPub
-            },
-            success: function(data){
-              $(button).find("i").css("color", "blue");
-            }
-          });
-        }
+    $(".like-button").click(function(){
+      var idPub = $(this).parent().parent().siblings(".idPub").text();
+      var button = this
+      if(idPub != null){
+        $.ajax({
+          method: "POST",
+          url: "/content/like",
+          data: {
+            "idPub": idPub
+          },
+          success: function(data){
+            $(button).find("i").css("color", "blue");
+          }
+        });
+      }
+    });
+
+    $(".dislike-button").click(function(){
+      var idPub = $(this).parent().parent().siblings(".idPub").text();
+      var objReportModal = new reportModalView({
+        'idPub': idPub
+      });
+      $("body").append(objReportModal.$el);
     });
   });
 });

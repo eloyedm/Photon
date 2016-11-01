@@ -176,38 +176,75 @@ class DefaultController extends Controller
         return $this->render('PhotomBundle::Profile.html.twig', array('usuario'=> $result[0]));
       }
 
-      /**
-       * @Route("/perfil/{visitado}")
-       */
-       public function perfilVisitaAction($visitado)
-       {
+    /**
+     * @Route("/perfil/{visitado}")
+     */
+     public function perfilVisitaAction($visitado)
+     {
 
-         $connTarget = $this->connectToDB();
-         $query = $connTarget->prepare("SELECT id, username, nombreUsuario, perfilUsuario,email, generoUsuario FROM Usuario WHERE username_canonical = :usuario");
-         $query->bindParam(":usuario", $visitado);
-         $query->execute();
-         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-         $result =  $query->fetchAll();
-         if( $this->getUser()->getId() == $result[0]['id']){
-           return $this->redirect('/perfil');
-         }
-         dump($result);
-         return $this->render('PhotomBundle::Profile.html.twig', array('usuario' => $result[0]));
+       $connTarget = $this->connectToDB();
+       $query = $connTarget->prepare("SELECT id, username, nombreUsuario, perfilUsuario,email, generoUsuario FROM Usuario WHERE username_canonical = :usuario");
+       $query->bindParam(":usuario", $visitado);
+       $query->execute();
+       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+       $result =  $query->fetchAll();
+       if( $this->getUser()->getId() == $result[0]['id']){
+         return $this->redirect('/perfil');
        }
+       dump($result);
+       return $this->render('PhotomBundle::Profile.html.twig', array('usuario' => $result[0]));
+     }
+
+    /**
+     * @Route("/admin")
+     */
+     public function homeAdminAction()
+     {
+       return $this->render('PhotomBundle::HomeAdmin.html.twig');
+     }
+
+     /**
+      * @Route("/profile")
+      */
+      public function profileAction()
+      {
+        return $this->redirect('/');
+      }
 
       /**
-       * @Route("/admin")
-       */
-       public function homeAdminAction()
-       {
-         return $this->render('PhotomBundle::HomeAdmin.html.twig');
-       }
+      * @Route("/report/sendReport")
+      */
+      public function reportAction(Request $request){
+        $usuario = $this->getUser();
+        $usuario = $usuario->getId();
+        $idPub = $request->request->get('idPub');
+        $reason = $request->request->get('idReason');
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("INSERT INTO ReportarUsuario(idContenidoReporte, idUsuarioReportador, idRazonReportado) VALUES(:contenido, :usuarioReportador, :razon)");
+        $query->bindParam(":contenido", $idPub);
+        $query->bindParam(":usuarioReportador", $usuario);
+        $query->bindParam(":razon", $reason);
+        $query->execute();
+        $connTarget = null;
+        return new Response('OK', Response::HTTP_OK);
+      }
 
-       /**
-        * @Route("/profile")
-        */
-        public function profileAction()
-        {
-          return $this->redirect('/');
+      /**
+      * @Route("/report/reasons")
+      */
+      public function reportReasonsAction()
+      {
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("SELECT idRazon, nombreRazon, descripcionRazon FROM Razon;");
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result =  $query->fetchAll();
+        foreach ($result as $key => $value) {
+          $result[$key]['nombreRazon'] = utf8_encode($value['nombreRazon']);
+          $result[$key]['descripcionRazon'] = utf8_encode($value['descripcionRazon']);
         }
+        return new JsonResponse(array(
+          'razones' => $result
+        ));
+      }
 }
