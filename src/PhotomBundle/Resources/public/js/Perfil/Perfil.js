@@ -1,4 +1,4 @@
-define(['jquery'],  function($) {
+define(['jquery', 'updateUserInfo'],  function($, updateUserInfo) {
 $(document).ready(function() {
       $("#notificationLink").click(function()
                                  {
@@ -40,12 +40,6 @@ $(document).ready(function() {
 
     $(".tablinks").click(function(event){
       changetab(event, $(this).attr("data"));
-    });
-
-    $("#user-profile-pic").hover(function(){
-      $(this).siblings("#editProfileP").fadeIn();
-    }, function(){
-      $(this).siblings("#editProfileP").fadeOut();
     });
 });
 function changetab(evt, tabName) {

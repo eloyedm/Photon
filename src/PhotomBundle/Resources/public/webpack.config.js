@@ -11,6 +11,7 @@ module.exports = {
             'underscore': __dirname + '/node_modules/underscore/underscore.js',
             'Backbone': __dirname + '/node_modules/backbone/backbone.js',
             'cardPost': path + '/js/CardPost.js',
+            'updateUserInfo': path + '/js/Perfil/updateUserInfo.js',
             'commentView': path + '/js/views/commentView.js',
             'reportModalView': path + '/js/views/reportModalView.js'
         }

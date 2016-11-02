@@ -221,7 +221,7 @@ class DefaultController extends Controller
         $idPub = $request->request->get('idPub');
         $reason = $request->request->get('idReason');
         $connTarget = $this->connectToDB();
-        $query = $connTarget->prepare("INSERT INTO ReportarUsuario(idContenidoReporte, idUsuarioReportador, idRazonReportado) VALUES(:contenido, :usuarioReportador, :razon)");
+        $query = $connTarget->prepare("INSERT INTO ReportarUsuario(idContenidoReportado, idUsuarioReportador, idRazonReportado) VALUES(:contenido, :usuarioReportador, :razon)");
         $query->bindParam(":contenido", $idPub);
         $query->bindParam(":usuarioReportador", $usuario);
         $query->bindParam(":razon", $reason);

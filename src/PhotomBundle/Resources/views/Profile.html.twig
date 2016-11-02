@@ -43,6 +43,7 @@
               <button type="button" name="button" id="editProfileP">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
               </button>
+              <input type="file" name="profilePicture" id="inputProfilePicture" value="">
               <img src="{{ perfil }}" id="user-profile-pic"></img><t id="username-profile">{{ usuario.username }}</t>
            </div>
        <div class="user-tabs">
@@ -66,20 +67,20 @@
                </button>
                 </div>
                    <div>
-                       <div><t>Titulo: </t><t contenteditable="true">Mrs.</t>
+                       <div id="info-title"><t>Titulo: </t><t class="user-info" >Mrs.</t>
                        </div>
-                       <div><t>Nombre: </t><t>{{ usuario.nombreUsuario}}</t>
+                       <div id="info-name"><t>Nombre: </t><t class="user-info" >{{ usuario.nombreUsuario}}</t>
                        </div>
-                       <div><t>Fecha Nacimiento: </t><t>{{ fechaNacimiento }}</t>
+                       <div id="info-birtDate"><t>Fecha Nacimiento: </t><t class="user-info" >{{ fechaNacimiento }}</t>
                        </div>
-                       <div><t>Pais: </t><t>México</t>
+                       <div id="info-country"><t>Pais: </t><t class="user-info" >México</t>
                        </div>
-                       <div><t>Ciudad: </t><t>Monterrey</t>
+                       <div id="info-city"><t>Ciudad: </t><t class="user-info" >Monterrey</t>
                        </div>
-                   <div><t>Empresa: </t><t>Milenio</t></div>
-                   <div><t>Email: </t><t>{{ usuario.email }}</t>
+                   <div id="info-work"><t>Empresa: </t><t class="user-info" >Milenio</t></div>
+                   <div id="info-email"><t>Email: </t><t class="user-info" >{{ usuario.email }}</t>
                    </div>
-                   <div><t>Sobre ti: </t><t>Me gustan los libros y dross</t></div>
+                   <div id="info-about"><t>Sobre ti: </t><t class="user-info" >Me gustan los libros y dross</t></div>
                    <div><t>Genero: </t>
                      {% if usuario.generoUsuario == 0 %}
                      <i class="fa fa-mars" aria-hidden="true"></i>
