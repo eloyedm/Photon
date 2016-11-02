@@ -25,6 +25,9 @@ define(['jquery', 'Backbone', 'commentView', 'reportModalView'],  function($, ba
               }
             });
           }
+          else{
+            alert("No puedes postear comentarios vacios");
+          }
         }
     });
 
