@@ -10388,7 +10388,7 @@
 	 if(confirm("¿Estas seguro de que quieres guardar los cambios?")){
 	   $.ajax({
 	     method: "POST",
-	     url: "user/update/profile/info",
+	     url: "users/update/profile/info",
 	     data: {
 	       "title": $("#info-title >t:last-child").text(),
 	       "name": $("#info-name >t:last-child").text(),

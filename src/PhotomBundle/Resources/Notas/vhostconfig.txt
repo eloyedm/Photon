@@ -1,0 +1,30 @@
+<VirtualHost *:80>
+        DocumentRoot /Users/elloy/Sites/Photon/web
+        ServerName photon.website
+        ErrorLog /private/var/log/apache2/photon.website-error_log
+        CustomLog /private/var/log/apache2/photon.website-access_log combined
+
+        <Directory "/Users/elloy/Sites/Photon/web">
+                AllowOverride None
+                Require all granted
+                Allow from All
+
+                <IfModule mod_rewrite.c>
+                        Options -MultiViews
+                        RewriteEngine On
+                        RewriteCond %{REQUEST_FILENAME} !-f
+                        RewriteRule ^(.*)$ app.php [QSA,L]
+                </IfModule>
+
+        </Directory>
+        <Directory /Users/elloy/Sites/Photon>
+                Options FollowSymlinks
+        </Directory>
+        <Directory /Users/elloy/Sites/Photon/web/bundles>
+        <IfModule mod_rewrite.c>
+                RewriteEngine Off
+        </IfModule>
+        </Directory>
+</VirtualHost>
+
+HAbilitar el modulo rewrite con sudo a2enmod rewrite,si no esta disponible ir al httpd.conf o php.ini

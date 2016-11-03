@@ -108,22 +108,34 @@
        </sidebar>
        <section id="profile" class="container-publicationprofile">
            <div class="container-public-user">
-           <div class="phrase-publication"><span id="user-name">Usuario</span><tr><span id="user-phrase">dile al mundo lo que sientes...</span></div>
-           <div class="container-publication"><form method="get" name="user-publication-user" id="user-post"><input type="text" placeholder="Comparte tu dia...." id="text-public"></form></div>
-           <div class="public-photo-video"><div class="container-publica"><input type="submit" value="Publicar" id="public-button" ></div><div class="container-camera"><button type="button" id="camera-button"><i class="fa fa-camera" aria-hidden="true"></i>
-               </button></div>
-               <div class="container-video"><button type="button" id="video-button"><i class="fa fa-video-camera" aria-hidden="true"></i>
-</button>
-           </div>
-           </div>
+             <form method="POST" action="/content/new/upload" name="user-publication-user" id="user-post" enctype="multipart/form-data">
+               <div class="imagePreviewContainer">
+                 <img src="" class="imagePreview" alt="" />
                </div>
+               <input type="text" placeholder="Comparte tu dia...." id="text-public" name="pieDeFoto"/>
+               <input type="file" name="foto" class="photoSubmit hidden"/>
+               <input type="file" name="video" class="videoSubmit hidden"/>
+               <div class="public-photo-video">
+                 <div class="container-publica">
+                   <input type="submit" value="Publicar" id="public-button" />
+                 </div>
+                 <div class="container-camera">
+                   <button type="button" id="camera-button">
+                     <i class="fa fa-camera" aria-hidden="true"></i>
+                   </button>
+                 </div>
+                 <div class="container-video">
+                   <button type="button" id="video-button">
+                     <i class="fa fa-video-camera" aria-hidden="true"></i>
+                   </button>
+                 </div>
+               </div>
+             </form>
            </div>
-           1
-2
           {# no variables will be accessible #}
           {% include 'PhotomBundle::CardPosts.html.twig' only %}
            </section>
-   <section id="notification" class="container-notificationsuser">
+           <section id="notification" class="container-notificationsuser">
                <table class="list-friend">
                    <tr>
                      <th>

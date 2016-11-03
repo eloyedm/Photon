@@ -18,7 +18,7 @@ class DefaultController extends Controller
     public function connectToDB(){
         $servername = "localhost";
         $username = "root";
-        $password = "homecoming96";
+        $password = "";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -40,6 +40,8 @@ class DefaultController extends Controller
       }
       return $this->render('PhotomBundle::Home.html.twig', array("inicio" => $result));
     }
+
+    //CONTENT
 
     /**
      * @Route("/content/new/upload")
@@ -77,11 +79,12 @@ class DefaultController extends Controller
      */
     public function commentAction(Request $request)
     {
+      dump($_GET);
+      die();
       $usuario = $this->getUser();
       $usuario = $usuario->getId();
       $idPub = $request->request->get('idPub');
       $comment = $request->request->get('comment');
-
       $connTarget = $this->connectToDB();
       $query = $connTarget->prepare("INSERT INTO Notificacion(comentarioNotificacion, idContenidoNotificacion, idUsuarioNotificador)
                               VALUES(:comentario, :idContenido, :idUsuario)");
@@ -118,6 +121,8 @@ class DefaultController extends Controller
       ));
     }
 
+    //USERS
+
     /**
      * @Route("/users/follow")
      */
@@ -136,6 +141,15 @@ class DefaultController extends Controller
         'status' => 1,
       ));
     }
+
+    /**
+     * @Route("/users/update/profile/info")
+     */
+     public function usersUpdateInfoAction(Request $request){
+
+     }
+
+    //PAGES
 
     /**
      * @Route("/home")
@@ -211,6 +225,9 @@ class DefaultController extends Controller
       {
         return $this->redirect('/');
       }
+
+
+      //REPORTS
 
       /**
       * @Route("/report/sendReport")
