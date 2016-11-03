@@ -10349,6 +10349,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function($) {
+	$(document).ready(function(){
 	$("#user-profile-pic").hover(function(){
 	  $(this).siblings("#editProfileP").fadeIn();
 	}, function(){
@@ -10360,7 +10361,7 @@
 	    id: "saveInfoButton",
 	    text: "Guardar"
 	  });
-
+	  console.log("si jala we");
 	  $(".container-infoUser").append(saveButton);
 
 	  $(".user-info").attr("contentEditable", "true");
@@ -10405,6 +10406,7 @@
 	     }
 	   });
 	 }
+	});
 	});
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
