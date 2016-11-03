@@ -44,7 +44,7 @@
                 <i class="fa fa-pencil" aria-hidden="true"></i>
               </button>
               <input type="file" name="profilePicture" id="inputProfilePicture" class="hidden" value="">
-              <img src="{{ perfil }}" id="user-profile-pic"></img><t id="username-profile">{{ usuario.username }}</t>
+              <img src="{{ perfil }}" id="user-profile-pic"></img><t id="username-profile" class="user-info">{{ usuario.username }}</t>
            </div>
        <div class="user-tabs">
            <ul class="tab">
@@ -61,36 +61,36 @@
        <section class="container-profile-publication">
            <sidebar class="container-sidebar">
                <div class="container-infoUser">
-                   <div>
-               <t>Datos
-               </t><button id="edit-info"><i class="fa fa-pencil" aria-hidden="true"></i>
-               </button>
-                </div>
-                   <div>
-                       <div id="info-title"><t>Titulo: </t><t class="user-info" >Mrs.</t>
-                       </div>
-                       <div id="info-name"><t>Nombre: </t><t class="user-info" >{{ usuario.nombreUsuario}}</t>
-                       </div>
-                       <div id="info-birtDate"><t>Fecha Nacimiento: </t><t class="user-info" >{{ fechaNacimiento }}</t>
-                       </div>
-                       <div id="info-country"><t>Pais: </t><t class="user-info" >México</t>
-                       </div>
-                       <div id="info-city"><t>Ciudad: </t><t class="user-info" >Monterrey</t>
-                       </div>
-                   <div id="info-work"><t>Empresa: </t><t class="user-info" >Milenio</t></div>
-                   <div id="info-email"><t>Email: </t><t class="user-info" >{{ usuario.email }}</t>
+                 <div>
+                   <t>Datos
+                   </t><button id="edit-info"><i class="fa fa-pencil" aria-hidden="true"></i>
+                   </button>
+                  </div>
+                 <div>
+                     <div id="info-title"><t>Titulo: </t><t class="user-info" >Mrs.</t>
+                     </div>
+                     <div id="info-name"><t>Nombre: </t><t ><input type="text" class="user-info" readonly = "true" value="{{ usuario.nombreUsuario}}"></t>
+                     </div>
+                     <div id="info-birtDate"><t>Fecha Nacimiento: </t><t> <input type="date" class="user-info" readonly="true" value="{{ fechaNacimiento }}"</t>
+                     </div>
+                     <div id="info-country"><t>Pais: </t><t> <input type="text" class="user-info" readonly="true" value="México" ></t>
+                     </div>
+                     <div id="info-city"><t>Ciudad: </t><t><input type="text" class="user-info" readonly="true" value="Monterrey"></t>
+                     </div>
+                     <div id="info-work"><t>Empresa: </t><t><input type="text" class="user-info" readpnly="true" value="Milenio" ></t></div>
+                     <div id="info-email"><t>Email: </t><t> <input tpye="email" class="user-info" readonly="true" value="{{ usuario.email }}"></t>
+                     </div>
+                     <div id="info-about"><t>Sobre ti: </t><t> <input type="textarea" class="user-info"  readonly="true" value="Me gustan los libros y dross"</t></div>
+                     <div><t>Genero: </t>
+                       {% if usuario.generoUsuario == 0 %}
+                       <i class="fa fa-mars" aria-hidden="true"></i>
+                       {% else %}
+                       <i class="fa fa-venus" aria-hidden="true"></i>
+                       {% endif %}
+                     </div>
                    </div>
-                   <div id="info-about"><t>Sobre ti: </t><t class="user-info" >Me gustan los libros y dross</t></div>
-                   <div><t>Genero: </t>
-                     {% if usuario.generoUsuario == 0 %}
-                     <i class="fa fa-mars" aria-hidden="true"></i>
-                     {% else %}
-                     <i class="fa fa-venus" aria-hidden="true"></i>
-                     {% endif %}
-                   </div>
+                 </div>
                </div>
-           </div>
-       </div>
        <div class="container-friend">
            <div>
                <t>Amigos

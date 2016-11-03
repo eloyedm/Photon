@@ -146,7 +146,34 @@ class DefaultController extends Controller
      * @Route("/users/update/profile/info")
      */
      public function usersUpdateInfoAction(Request $request){
+       $parameters = $request->request;
 
+       $usuario = $this->getUser()->getId();
+       $title = $parameters->get("title");
+       $userName = $parameters->get("userName");
+       $name = $parameters->get("name");
+       $birthDate = $parameters->get("birthDate");
+       $country = $parameters->get("country");
+       $city = $parameters->get("city");
+       $work = $parameters->get("work");
+       $email = $parameters->get("email");
+       $about = $parameters->get("about");
+
+       $connTarget = $this->connectToDB();
+       $query = $connTarget->prepare("UPDATE Usuario SET username= :userName, nombreUsuario= :name, email= :email, descripcion=:about WHERE id=:usuario");
+       $query->bindParam(":usuario", $usuario);
+       $query->bindParam(":userName", $userName);
+       $query->bindParam(":name", $nombreUsuario);
+       $query->bindParam(":email", $email);
+       $query->bindParam(":about", $about);
+       $query->execute();
+       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+       $result =  $query->fetchAll();
+       $connTarget = null;
+
+       var_dump($result);
+       die();
+       return new Response('OK', Response::HTTP_OK);
      }
 
     //PAGES
