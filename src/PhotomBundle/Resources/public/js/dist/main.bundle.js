@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, backbone, cardPost) {
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2), __webpack_require__(4), __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, backbone, cardPost, menu) {
 	  $(document).ready(function(){
 
 	    $("#camera-button").click(function(){
@@ -13786,9 +13786,10 @@
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2), __webpack_require__(5), __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, backbone, commentView, reportModalView) {
 	  $(document).ready(function(){
 	    $(document).keypress(function(e) {
-	        if(e.which == 13) {
+	        if(e.which == 13 && $("#comment-input:focus").length > 0) {
 	          var commentSelected = $("#comment-input:focus");
 	          var idPub = $(commentSelected).parent().parent().siblings(".idPub").text();
+
 	          if($(commentSelected).val() != "" && idPub != null){
 	            $.ajax({
 	              method: "POST",
@@ -14007,6 +14008,47 @@
 	  });
 
 	  return reportModalView;
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 7 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function($){
+	 $(document).ready(function(){
+	  $("#style-search").keyup(function(e){
+	    var term = e.target.value
+	    $.ajax({
+	      method: "POST",
+	      url: "/search",
+	      data: {
+	        "term": term
+	      },
+	      success: function(data){
+	        $("#resultsContainer").empty();
+	        $.each(data.resultados, function(){
+	          var result = $("<li />", {
+	            class:"result"
+	          });
+	          var resultLink = $("<a />", {
+	            href: "/"+this.username_canonical,
+	            class: "resultLink"
+	          });
+
+	          var resultName = $("<div />", {
+	            class: "resultName",
+	            text: this.nombreUsuario
+	          });
+
+	          resultLink.append(resultName);
+	          result.append(resultLink);
+	          $("#resultsContainer").append(result);
+	        });
+	      }
+	    });
+	  });
+	});
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 

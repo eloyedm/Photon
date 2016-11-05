@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, updateUserInfo) {
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(8), __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, updateUserInfo, menu) {
 	$(document).ready(function() {
 	      $("#notificationLink").click(function()
 	                                 {
@@ -53,8 +53,9 @@
 	        return false;
 	    });
 
-	    $(document).click(function()
+	    $(document).click(function(event)
 	                      {
+	                        console.log(event.target);
 	        $("#notificationContainer").hide();
 	    });
 	    $("#notificationContainer").click(function()
@@ -10348,6 +10349,47 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function($){
+	 $(document).ready(function(){
+	  $("#style-search").keyup(function(e){
+	    var term = e.target.value
+	    $.ajax({
+	      method: "POST",
+	      url: "/search",
+	      data: {
+	        "term": term
+	      },
+	      success: function(data){
+	        $("#resultsContainer").empty();
+	        $.each(data.resultados, function(){
+	          var result = $("<li />", {
+	            class:"result"
+	          });
+	          var resultLink = $("<a />", {
+	            href: "/"+this.username_canonical,
+	            class: "resultLink"
+	          });
+
+	          var resultName = $("<div />", {
+	            class: "resultName",
+	            text: this.nombreUsuario
+	          });
+
+	          resultLink.append(resultName);
+	          result.append(resultLink);
+	          $("#resultsContainer").append(result);
+	        });
+	      }
+	    });
+	  });
+	});
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function($) {
 	  $(document).ready(function(){
 	    $("#user-profile-pic").hover(function(){
@@ -10362,14 +10404,41 @@
 	        class: "userSave",
 	        text: "Guardar"
 	      });
-	      console.log("si jala we");
-	      $(".container-infoUser").append(saveButton);
-
+	      $(".container-infoUser").prepend(saveButton);
+	      saveButton.click(function(){
+	        console.log($("#info-birthDate input").val());
+	        if(confirm("¿Estas seguro de que quieres guardar los cambios?")){
+	          $.ajax({
+	            method: "POST",
+	            url: "usuarios/editar",
+	            datatype: "json",
+	            data: {
+	              "title": $("#info-title input").val(),
+	              "userName": $("#username-profile").text(),
+	              "name": $("#info-name input").val(),
+	              "birthDate": $("#info-birthDate input").val(),
+	              "country": $("#info-country input").val(),
+	              "city": $("#info-city input").val(),
+	              "work": $("#info-work input").val(),
+	              "email": $("#info-email input").val(),
+	              "about": $("#info-about input").val()
+	            },
+	            success: function(data){
+	              console.log(data);
+	              $(".user-info#username-profile").removeAttr("contentEditable");
+	              $(".user-info").attr("readonly", "true");
+	              $("#saveInfoButton").remove();
+	              alert("Tu información ha sido actualizada");
+	            }
+	          });
+	        }
+	      });
 	      $(".user-info").removeAttr("readonly");
+	      $(".user-info#username-profile").attr("contentEditable", "true");
 	    });
 
-	    $("#edit-profileP").click(function(){
-	        $("#inputProfilePicture").click();
+	    $("#editProfileP").click(function(){
+	      $("#inputProfilePicture").click();
 	    });
 
 	    $("#inputProfilePicture").change(function(e){
@@ -10379,35 +10448,10 @@
 	          var reader = new FileReader();
 	          reader.onload = function(e){
 	            $("#user-profile-pic").attr("src", e.target.result);
+	            console.log(input.value);
 	          }
 	          reader.readAsDataURL(input.files[0]);
 	        }
-	      }
-	    });
-
-	    $(".userSave").click(function(){
-	      console.log("me pico");
-	      if(confirm("¿Estas seguro de que quieres guardar los cambios?")){
-	        $.ajax({
-	          method: "POST",
-	          url: "users/update/profile/info",
-	          data: {
-	            "title": $("#info-title >t:last-child").val(),
-	            "userName": $("#username-profile").val(),
-	            "name": $("#info-name >t:last-child").val(),
-	            "birthDate": $("#info-birthDate >t:last-child").val(),
-	            "country": $("#info-country >t:last-child").val(),
-	            "city": $("#info-city > t:last-child").val(),
-	            "work": $("#info-work > t:last-child").val(),
-	            "email": $("#info-email > t:last-child").val(),
-	            "about": $("#info-about > t:last-child").val()
-	          },
-	          success: function(){
-	            $(".user-info").attr("contentEditable", "false");
-	            $("#saveInfoButton").remove();
-	            alert("Tu información ha sido actualizada");
-	          }
-	        });
 	      }
 	    });
 	  });

@@ -1,4 +1,4 @@
-define(['jquery', 'updateUserInfo'],  function($, updateUserInfo) {
+define(['jquery', 'updateUserInfo', 'menu'],  function($, updateUserInfo, menu) {
 $(document).ready(function() {
       $("#notificationLink").click(function()
                                  {
@@ -7,8 +7,9 @@ $(document).ready(function() {
         return false;
     });
 
-    $(document).click(function()
+    $(document).click(function(event)
                       {
+                        console.log(event.target);
         $("#notificationContainer").hide();
     });
     $("#notificationContainer").click(function()

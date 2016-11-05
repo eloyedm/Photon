@@ -38,6 +38,7 @@ class DefaultController extends Controller
       foreach ($result as $key => $post) {
         $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
       }
+      $connTarget = null;
       return $this->render('PhotomBundle::Home.html.twig', array("inicio" => $result));
     }
 
@@ -79,8 +80,6 @@ class DefaultController extends Controller
      */
     public function commentAction(Request $request)
     {
-      dump($_GET);
-      die();
       $usuario = $this->getUser();
       $usuario = $usuario->getId();
       $idPub = $request->request->get('idPub');
@@ -137,15 +136,16 @@ class DefaultController extends Controller
       $query->execute();
       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
       $result =  $query->fetchAll();
+              $connTarget = null;
       return new JsonResponse(array(
         'status' => 1,
       ));
     }
 
     /**
-     * @Route("/users/update/profile/info")
+     * @Route("/usuarios/editar")
      */
-     public function usersUpdateInfoAction(Request $request){
+     public function usersEditarAction(Request $request){
        $parameters = $request->request;
 
        $usuario = $this->getUser()->getId();
@@ -159,21 +159,27 @@ class DefaultController extends Controller
        $email = $parameters->get("email");
        $about = $parameters->get("about");
 
-       $connTarget = $this->connectToDB();
-       $query = $connTarget->prepare("UPDATE Usuario SET username= :userName, nombreUsuario= :name, email= :email, descripcion=:about WHERE id=:usuario");
-       $query->bindParam(":usuario", $usuario);
-       $query->bindParam(":userName", $userName);
-       $query->bindParam(":name", $nombreUsuario);
-       $query->bindParam(":email", $email);
-       $query->bindParam(":about", $about);
-       $query->execute();
-       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-       $result =  $query->fetchAll();
-       $connTarget = null;
-
-       var_dump($result);
-       die();
-       return new Response('OK', Response::HTTP_OK);
+      //  $connTarget = $this->connectToDB();
+      //  $query = $connTarget->prepare("UPDATE Usuario SET username= :userName, nombreUsuario= :name, email= :email, descripcionUsuario=:about WHERE id=:usuario");
+      //  $query->bindParam(":usuario", $usuario);
+      //  $query->bindParam(":userName", $userName);
+      //  $query->bindParam(":name", $nombreUsuario);
+      //  $query->bindParam(":email", $email);
+      //  $query->bindParam(":about", $about);
+      //  $query->execute();
+      //  $connTarget = null;
+      return new JsonResponse(array(
+        'usuario' => $usuario,
+        'title' => $title,
+        'username' => $userName,
+        'name' => $name,
+        'birthDate' => $birthDate,
+        'country' => $country,
+        'city' => $city,
+        'work' => $work,
+        'email' => $email,
+        'about' => $about
+      ));
      }
 
     //PAGES
@@ -230,10 +236,10 @@ class DefaultController extends Controller
        $query->execute();
        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
        $result =  $query->fetchAll();
+       $connTarget = null;
        if( $this->getUser()->getId() == $result[0]['id']){
          return $this->redirect('/perfil');
        }
-       dump($result);
        return $this->render('PhotomBundle::Profile.html.twig', array('usuario' => $result[0]));
      }
 
@@ -290,6 +296,27 @@ class DefaultController extends Controller
         }
         return new JsonResponse(array(
           'razones' => $result
+        ));
+      }
+
+      //SEARCH
+
+      /**
+      * @Route("/search")
+      */
+      public function searchAction(Request $request){
+        $searchTerm = $request->request->get('term');
+        $searchTerm = "%".$searchTerm."%";
+        $connTarget = $this->connectToDB();
+
+        $query = $connTarget->prepare("SELECT nombreUsuario, username_canonical FROM Usuario WHERE nombreUsuario LIKE :search");
+        $query->bindParam(":search", $searchTerm);
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result =  $query->fetchAll();
+        $connTarget = null;
+        return new JsonResponse(array(
+          'resultados' => $result
         ));
       }
 }

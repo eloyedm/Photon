@@ -1,9 +1,10 @@
 define(['jquery', 'Backbone', 'commentView', 'reportModalView'],  function($, backbone, commentView, reportModalView) {
   $(document).ready(function(){
     $(document).keypress(function(e) {
-        if(e.which == 13) {
+        if(e.which == 13 && $("#comment-input:focus").length > 0) {
           var commentSelected = $("#comment-input:focus");
           var idPub = $(commentSelected).parent().parent().siblings(".idPub").text();
+
           if($(commentSelected).val() != "" && idPub != null){
             $.ajax({
               method: "POST",

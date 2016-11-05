@@ -13,7 +13,8 @@ module.exports = {
             'cardPost': path + '/js/CardPost.js',
             'updateUserInfo': path + '/js/Perfil/updateUserInfo.js',
             'commentView': path + '/js/views/commentView.js',
-            'reportModalView': path + '/js/views/reportModalView.js'
+            'reportModalView': path + '/js/views/reportModalView.js',
+            'menu': path + '/js/Menu.js'
         }
     },
     output: {

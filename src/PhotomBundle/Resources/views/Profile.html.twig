@@ -43,8 +43,9 @@
               <button type="button" name="button" id="editProfileP">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
               </button>
-              <input type="file" name="profilePicture" id="inputProfilePicture" class="hidden" value="">
-              <img src="{{ perfil }}" id="user-profile-pic"></img><t id="username-profile" class="user-info">{{ usuario.username }}</t>
+              <input type="file" name="profilePicture" id="inputProfilePicture" class="hidden"  value=""/>
+              <img src="{{ perfil }}" id="user-profile-pic"></img>
+              <t id="username-profile" class="user-info"> {{ usuario.username }}</t>
            </div>
        <div class="user-tabs">
            <ul class="tab">
@@ -71,7 +72,7 @@
                      </div>
                      <div id="info-name"><t>Nombre: </t><t ><input type="text" class="user-info" readonly = "true" value="{{ usuario.nombreUsuario}}"></t>
                      </div>
-                     <div id="info-birtDate"><t>Fecha Nacimiento: </t><t> <input type="date" class="user-info" readonly="true" value="{{ fechaNacimiento }}"</t>
+                     <div id="info-birthDate"><t>Fecha Nacimiento: </t><t> <input type="date" class="user-info" readonly="true" value="{{ fechaNacimiento }}"</t>
                      </div>
                      <div id="info-country"><t>Pais: </t><t> <input type="text" class="user-info" readonly="true" value="México" ></t>
                      </div>

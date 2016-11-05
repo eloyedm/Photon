@@ -1,4 +1,4 @@
-define(['jquery', 'Backbone', 'cardPost'],  function($, backbone, cardPost) {
+define(['jquery', 'Backbone', 'cardPost', 'menu'],  function($, backbone, cardPost, menu) {
   $(document).ready(function(){
 
     $("#camera-button").click(function(){
