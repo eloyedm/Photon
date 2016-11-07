@@ -14,7 +14,9 @@
     <span>
         <div> <img src="" id="logo-image" alt="no-image"></div>
         <form action="{{ path("fos_user_security_check") }}" method="post">
-            <div class="style-profiled"> <img src="{{asset('bundles/photom/images/female.png')}}" class="style-profile"/></div>
+            <div class="style-profiled">
+              <img src="{{asset('bundles/photom/images/female.png')}}" class="style-profile"/>
+            </div>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
             <div class="conteiner-text">
               <input type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
