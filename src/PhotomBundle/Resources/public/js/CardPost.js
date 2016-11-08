@@ -21,6 +21,7 @@ define(['jquery', 'Backbone', 'commentView', 'reportModalView'],  function($, ba
                 });
                 comentario.$el.css("display", "none");
                 $(commentSelected).parent().siblings(".comentarios").find("ul.list-group-comments").prepend(comentario.$el);
+                hashtags(comentario.$el.find(".comment"));
                 $(commentSelected).val("");
                 comentario.$el.fadeIn();
               }
@@ -56,5 +57,27 @@ define(['jquery', 'Backbone', 'commentView', 'reportModalView'],  function($, ba
       });
       $("body").append(objReportModal.$el);
     });
+
+    $(".comment").each(function(){
+      hashtags(this);
+    });
   });
+
+  function hashtags(comment){
+    var content = $(comment).text();
+    var tag = content.split("#");
+    var hashArr = []
+    if(tag.length >= 2){
+      for(var i = 0; i < tag.length; i++){
+        var hash = tag[i].split(" ")[0];
+        hashArr.push(hash);
+      }
+    }
+    var newContent = "";
+    for(var j = 0; j < hashArr.length; j++){
+      content = content.replace("#"+hashArr[j], '<span class="hashtag">#' + hashArr[j] + '</span>' );
+
+    }
+    $(comment).html(content);
+  }
 });

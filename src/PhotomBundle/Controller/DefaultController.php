@@ -18,7 +18,7 @@ class DefaultController extends Controller
     public function connectToDB(){
         $servername = "localhost";
         $username = "root";
-        $password = "homecoming96";
+        $password = "";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -182,6 +182,47 @@ class DefaultController extends Controller
       ));
      }
 
+     /**
+     * @Route("/user/upload/profilePicture")
+     */
+     public function usersUploadProfilePictureAction(Request $request)
+     {
+       $foto = $request->files->get('profilePicture');
+       $type = explode("/", $foto->getMimeType());
+       $type = $type[0];
+       if($type == 'image'){
+         $id = $this->getUser()->getId();
+         $file_content = file_get_contents($foto->getPathName());
+         $connTarget = $this->connectToDB();
+         $query = $connTarget->prepare("UPDATE Usuario SET perfilUsuario= :foto WHERE id= :idUsuario");
+         $query->bindParam(':foto', $file_content);
+         $query->bindParam(':idUsuario', $id);
+         $query->execute();
+         $connTarget = null;
+        }
+       return $this->redirect("/perfil");
+     }
+
+     /**
+     * @Route("/user/upload/bannerPicture")
+     */
+     public function usersUploadBannerPictureAction(Request $request)
+     {
+       $foto = $request->files->get('bannerPicture');
+       $type = explode("/", $foto->getMimeType());
+                $type = $type[0];
+       if($type == 'image'){
+         $id = $this->getUser()->getId();
+         $file_content = file_get_contents($foto->getPathName());
+         $connTarget = $this->connectToDB();
+         $query = $connTarget->prepare("UPDATE Usuario SET bannerUsuario= :foto WHERE id= :idUsuario");
+         $query->bindParam(':foto', $file_content);
+         $query->bindParam(':idUsuario', $id);
+         $query->execute();
+         $connTarget = null;
+        }
+       return $this->redirect("/perfil");
+     }
     //PAGES
 
     /**
@@ -215,11 +256,13 @@ class DefaultController extends Controller
       {
         $usuario = $this->getUser()->getId();
         $connTarget = $this->connectToDB();
-        $query = $connTarget->prepare("SELECT id, username, nombreUsuario, perfilUsuario,email, generoUsuario FROM Usuario WHERE id = :usuario");
+        $query = $connTarget->prepare("SELECT id, username, nombreUsuario, perfilUsuario, bannerUsuario, email, generoUsuario FROM Usuario WHERE id = :usuario");
         $query->bindParam(":usuario", $usuario);
         $query->execute();
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result =  $query->fetchAll();
+        $result[0]['perfilUsuario'] = base64_encode($result[0]['perfilUsuario']);
+        $result[0]['bannerUsuario'] = base64_encode($result[0]['bannerUsuario']);
         $connTarget = null;
         return $this->render('PhotomBundle::Profile.html.twig', array('usuario'=> $result[0]));
       }

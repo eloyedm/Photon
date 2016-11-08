@@ -10441,6 +10441,10 @@
 	      $("#inputProfilePicture").click();
 	    });
 
+	    $("#editProfileB").click(function(){
+	      $("#inputBannerPicture").click();
+	    });
+
 	    $("#inputProfilePicture").change(function(e){
 	      var input = e.target
 	      if(input != null ){
@@ -10448,10 +10452,26 @@
 	          var reader = new FileReader();
 	          reader.onload = function(e){
 	            $("#user-profile-pic").attr("src", e.target.result);
-	            console.log(input.value);
+
 	          }
 	          reader.readAsDataURL(input.files[0]);
 	        }
+	        $("#profilePictureForm").submit();
+	      }
+	    });
+
+	    $("#inputBannerPicture").change(function(e){
+	      var input = e.target
+	      if(input != null ){
+	        if(input.files && input.files[0]){
+	          var reader = new FileReader();
+	          reader.onload = function(e){
+	            $("#banner").attr("src", e.target.result);
+
+	          }
+	          reader.readAsDataURL(input.files[0]);
+	        }
+	        $("#bannerPictureForm").submit();
 	      }
 	    });
 	  });

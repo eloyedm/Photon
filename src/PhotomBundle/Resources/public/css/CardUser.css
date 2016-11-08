@@ -119,6 +119,10 @@ button {
     float: left;
 }
 
+.hashtag{
+  font-weight: bolder;
+}
+
 .post-user {
     padding-left: 9%;
     padding-top: 2%;

@@ -12,12 +12,12 @@
 {% if usuario.bannerUsuario is not defined %}
   {% set banner = asset('bundles/photom/images/login-background.jpg') %}
 {% else %}
-  {% set banner = usuario.bannerUsuaerio %}
+  {% set banner = "data:image/jpeg;base64," ~ usuario.bannerUsuario %}
 {% endif %}
 {% if usuario.perfilUsuario == '' %}
   {% set perfil = asset('bundles/photom/images/female.png') %}
 {% else %}
-  {% set perfil = usuario.perfilUsuario %}
+  {% set perfil = "data:image/jpeg;base64," ~ usuario.perfilUsuario %}
 {% endif %}
 
 {% block head %}
@@ -37,13 +37,21 @@
 {{ parent() }}
 <section class = "user-controls">
            <div class="banner-user">
+             <button type="button" name="button" id="editProfileB">
+               <i class="fa fa-pencil" aria-hidden="true"></i>
+             </button>
+             <form action="/user/upload/bannerPicture" method="post" id="bannerPictureForm" name="userBannerPicture"  class="hidden" enctype="multipart/form-data">
+               <input type="file" name="bannerPicture" id="inputBannerPicture" class="hidden"  value=""/>
+             </form>
                 <img src="{{ banner }}" id="banner">
            </div>
            <div class="container-user-image">
               <button type="button" name="button" id="editProfileP">
                 <i class="fa fa-pencil" aria-hidden="true"></i>
               </button>
-              <input type="file" name="profilePicture" id="inputProfilePicture" class="hidden"  value=""/>
+              <form action="/user/upload/profilePicture" method="post" id="profilePictureForm" name="userProfilePicture"  class="hidden" enctype="multipart/form-data">
+                <input type="file" name="profilePicture" id="inputProfilePicture" class="hidden"  value=""/>
+              </form>
               <img src="{{ perfil }}" id="user-profile-pic"></img>
               <t id="username-profile" class="user-info"> {{ usuario.username }}</t>
            </div>
