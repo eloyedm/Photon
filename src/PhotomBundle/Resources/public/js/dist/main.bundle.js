@@ -13802,7 +13802,9 @@
 	                console.log(data);
 	                var comentario = new commentView({
 	                  "autor": data.usuario,
-	                  "comentario": data.com
+	                  "comentario": data.com,
+	                  "image": data.image,
+	                  "link": data.link
 	                });
 	                comentario.$el.css("display", "none");
 	                $(commentSelected).parent().siblings(".comentarios").find("ul.list-group-comments").prepend(comentario.$el);
@@ -13878,9 +13880,12 @@
 	      usuario: "",
 	      comentario: "",
 	      foto: "",
+	      link: "",
 	      initialize: function(datosComentario){
 	        this.usuario = datosComentario["autor"];
 	        this.comentario = datosComentario["comentario"];
+	        this.foto = datosComentario["image"];
+	        this.link = datosComentario["link"];
 	        this.render();
 	      },
 	      render: function(){
@@ -13888,7 +13893,7 @@
 
 	        var usrImg = $("<img />", {
 	          class: "img-thumbnail",
-	          src: "http://bootdey.com/img/Content/User_for_snippets.png"
+	          src: "data:image/jpeg;base64,"+ this.foto
 	        });
 
 	        var postUs = $("<div />", {

@@ -4,9 +4,12 @@ define(['Backbone'],  function(backbone) {
       usuario: "",
       comentario: "",
       foto: "",
+      link: "",
       initialize: function(datosComentario){
         this.usuario = datosComentario["autor"];
         this.comentario = datosComentario["comentario"];
+        this.foto = datosComentario["image"];
+        this.link = datosComentario["link"];
         this.render();
       },
       render: function(){
@@ -14,7 +17,7 @@ define(['Backbone'],  function(backbone) {
 
         var usrImg = $("<img />", {
           class: "img-thumbnail",
-          src: "http://bootdey.com/img/Content/User_for_snippets.png"
+          src: "data:image/jpeg;base64,"+ this.foto
         });
 
         var postUs = $("<div />", {

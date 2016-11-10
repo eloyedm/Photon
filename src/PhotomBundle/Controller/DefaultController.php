@@ -121,11 +121,16 @@ class DefaultController extends Controller
       $query->bindParam(':idUsuario', $usuario);
       $query->execute();
       $connTarget = null;
-
+      $user = $this->getUser();
+      $usuario = $user->getNombreusuario();
+      $canonusuario = $user->getUsernameCanonical();
+      $image = base64_encode($user->getPerfilusuario());
       return new JsonResponse(array(
         'pub' => $idPub,
         'com' => $comment,
-        'usuario' => $usuario
+        'usuario' => $usuario,
+        'image' => $image,
+        'link' => $canonusuario
       ));
     }
 

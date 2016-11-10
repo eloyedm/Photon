@@ -17,7 +17,9 @@ define(['jquery', 'Backbone', 'commentView', 'reportModalView'],  function($, ba
                 console.log(data);
                 var comentario = new commentView({
                   "autor": data.usuario,
-                  "comentario": data.com
+                  "comentario": data.com,
+                  "image": data.image,
+                  "link": data.link
                 });
                 comentario.$el.css("display", "none");
                 $(commentSelected).parent().siblings(".comentarios").find("ul.list-group-comments").prepend(comentario.$el);
