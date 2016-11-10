@@ -17,8 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        $username = "superphoton";
-        $password = "Homecoming#96";
+        // $username = "superphoton";
+        // $password = "Homecoming#96";
+        $username = 'root';
+        $password = "";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -31,6 +33,7 @@ class DefaultController extends Controller
     public function indexAction()
     {
       $connTarget = $this->connectToDB();
+      $id = $this->getUser()->getId();
       $query = $connTarget->prepare("SELECT idUsuarioContenido, username, imagenContenido, descripcioncontenido, idContenido FROM Contenido JOIN Usuario ON Contenido.idUsuarioContenido = Usuario.id ORDER BY idContenido DESC");
       $query->execute();
       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -38,6 +41,16 @@ class DefaultController extends Controller
       foreach ($result as $key => $post) {
         $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
       }
+
+      // $query = $connTarget->prepare("CALL displayPublicacionesAmigos(:idUsuario, @res)");
+      // $query->bindParam(":idUsuario", $id);
+      // $query->execute();
+      // // $query = $connTarget->prepare("SELECT @res");
+      // // $query->execute();
+      // $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+      // $result = $query->fetchAll();
+      // dump($result);
+      // die();
       $connTarget = null;
       return $this->render('PhotomBundle::Home.html.twig', array("inicio" => $result));
     }
@@ -248,6 +261,14 @@ class DefaultController extends Controller
      {
        return $this->render('PhotomBundle::Registrar.html.twig');
      }
+
+     /**
+      * @Route("/register/confirmed")
+      */
+      public function registerConfirmedAction()
+      {
+        return $this->redirect("/");
+      }
 
      /**
       * @Route("/perfil")

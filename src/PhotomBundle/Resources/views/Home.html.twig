@@ -49,8 +49,8 @@
               <img src="" class="imagePreview" alt="" />
             </div>
             <input type="text" placeholder="Comparte tu dia...." id="text-public" name="pieDeFoto"/>
-            <input type="file" name="foto" class="photoSubmit hidden"/>
-            <input type="file" name="video" class="videoSubmit hidden"/>
+            <input type="file" required="true" name="foto" class="photoSubmit hidden"/>
+            <!-- <input type="file" name="video" class="videoSubmit hidden"/> -->
             <div class="public-photo-video">
               <div class="container-publica">
                 <input type="submit" value="Publicar" id="public-button" />
@@ -60,11 +60,11 @@
                   <i class="fa fa-camera" aria-hidden="true"></i>
                 </button>
               </div>
-              <div class="container-video">
+              <!-- <div class="container-video">
                 <button type="button" id="video-button">
                   <i class="fa fa-video-camera" aria-hidden="true"></i>
                 </button>
-              </div>
+              </div> -->
             </div>
           </form>
         </div>
