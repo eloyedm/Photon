@@ -20,7 +20,7 @@ class DefaultController extends Controller
         $username = "superphoton";
         $password = "Homecoming#96";
         // $username = 'root';
-        // $password = "";
+        // $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -34,24 +34,38 @@ class DefaultController extends Controller
     {
       $connTarget = $this->connectToDB();
       $id = $this->getUser()->getId();
-      $query = $connTarget->prepare("SELECT idUsuarioContenido, username, imagenContenido, descripcioncontenido, idContenido FROM Contenido JOIN Usuario ON Contenido.idUsuarioContenido = Usuario.id ORDER BY idContenido DESC");
+      // $query = $connTarget->prepare("SELECT idUsuarioContenido, username, imagenContenido, descripcioncontenido, idContenido FROM Contenido JOIN Usuario ON Contenido.idUsuarioContenido = Usuario.id ORDER BY idContenido DESC");
+      // $query->execute();
+      // $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+      // $result =  $query->fetchAll();
+      // foreach ($result as $key => $post) {
+      //   $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
+      // }
+
+      $query = $connTarget->prepare("CALL getPublicationsFriends(:idUsuario)");
+      $query->bindParam(":idUsuario", $id);
       $query->execute();
+      // $query = $connTarget->prepare("SELECT @res");
+      // $query->execute();
       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-      $result =  $query->fetchAll();
+      $result = $query->fetchAll();
+      $connTarget = null;
       foreach ($result as $key => $post) {
         $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
+        $idPub = $result[$key]['idContenido'];
+        $connTarget = $this->connectToDB();
+        $comments = $connTarget->prepare("CALL displayPublicacionesAmigos(:Pub)");
+        $comments->bindParam(":Pub", $idPub);
+        $comments->execute();
+        $commentsResult = $comments->setFetchMode(PDO::FETCH_ASSOC);
+        $commentsResult = $comments->fetchAll();
+        foreach($commentsResult as $keyC => $commen){
+          $commentsResult[$keyC]['FotoComentarista'] = base64_encode($commen['FotoComentarista']);
+        }
+        $connTarget = null;
+        array_push($result[$key], $commentsResult);
       }
 
-      // $query = $connTarget->prepare("CALL displayPublicacionesAmigos(:idUsuario, @res)");
-      // $query->bindParam(":idUsuario", $id);
-      // $query->execute();
-      // // $query = $connTarget->prepare("SELECT @res");
-      // // $query->execute();
-      // $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-      // $result = $query->fetchAll();
-      // dump($result);
-      // die();
-      $connTarget = null;
       return $this->render('PhotomBundle::Home.html.twig', array("inicio" => $result));
     }
 

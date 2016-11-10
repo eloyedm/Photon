@@ -9,9 +9,9 @@
             <p class="hidden idPub" >{{ publicacion.idContenido}}</p>
             <div>
               <img class="user-image-publication">
-              <span class="user-name">{{ publicacion.username }}:</span>
+              <span class="user-name">{{ publicacion.username_canonical }}:</span>
             </div>
-            <div class="descritpion-user-publication"><p class="description-video">{{ publicacion.descripcioncontenido}} </p>
+            <div class="descritpion-user-publication"><p class="description-video">{{ publicacion.descripcionContenido}} </p>
             </div>
 
             <img src="data:image/jpeg;base64,{{publicacion.imagenContenido}}" alt="Avatar" id="user-public-image">
@@ -40,6 +40,20 @@
                        </label>
                        </div>
                     </li>
+
+                    {% for comments in publicacion|last %}
+                        <li href="#" class="list-group-item text-left">
+                          <img class="img-thumbnail" src="data:image/jpeg;base64,{{comments.FotoComentarista}}">
+                          <div class="post-user">
+                          <label class="name">
+                            <a href="/{{ comments.UsuarioCanonicalComentarista}}"> {{ comments.UsuarioComentarista}} </a>
+                          </label>
+                          <label class="comment">
+                            {{ comments.comentarioNotificacion }}
+                          </label>
+                          </div>
+                       </li>
+                    {% endfor %}
                 </ul>
             </div>
                 </div>
