@@ -20,7 +20,7 @@ class DefaultController extends Controller
         $username = "superphoton";
         $password = "Homecoming#96";
         // $username = 'root';
-        // $password = "homecoming96";
+        // $password = "";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -32,6 +32,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
+      // phpinfo();
+      // die();
       $connTarget = $this->connectToDB();
       $id = $this->getUser()->getId();
       // $query = $connTarget->prepare("SELECT idUsuarioContenido, username, imagenContenido, descripcioncontenido, idContenido FROM Contenido JOIN Usuario ON Contenido.idUsuarioContenido = Usuario.id ORDER BY idContenido DESC");
