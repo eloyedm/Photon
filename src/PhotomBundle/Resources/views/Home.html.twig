@@ -15,21 +15,23 @@
 {% block Body %}
 {{ parent() }}
 <section class="container-profile-publication">
-       <sidebar class="container-sidebar">
+     <sidebar class="container-sidebar">
     <div class="container-infoUser">
-        </div>
+      </div>
     </div>
     <div class="container-friend">
-        <div>
-            <t>Amigos
-            </t>
-        </div>
-          <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-         <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-       <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-        <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-        <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-       <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
+      <div>
+          <t>Amigos
+          </t>
+      </div>
+      {% for amigos in friends %}
+        <a href="/perfil/{{ amigos.username_canonical }}"><img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg"></a>
+      {% endfor %}
+      <!-- <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
+      <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
+      <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
+      <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
+      <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg"> -->
     </div>
     </sidebar>
     <sidebar class="container-adbar">

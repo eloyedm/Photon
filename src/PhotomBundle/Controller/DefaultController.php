@@ -52,6 +52,13 @@ class DefaultController extends Controller
       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
       $result = $query->fetchAll();
       $connTarget = null;
+      $connTarget = $this->connectToDB();
+      $friends = $connTarget->prepare("CALL getAllFriends(:idUsuario, 0)");
+      $friends->bindParam(":idUsuario", $id);
+      $friends->execute();
+      $friendsList = $friends->setFetchMode(PDO::FETCH_ASSOC);
+      $friendsList = $friends->fetchAll();
+      $connTarget = null;
       foreach ($result as $key => $post) {
         $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
         $idPub = $result[$key]['idContenido'];
@@ -67,8 +74,10 @@ class DefaultController extends Controller
         $connTarget = null;
         array_push($result[$key], $commentsResult);
       }
-
-      return $this->render('PhotomBundle::Home.html.twig', array("inicio" => $result));
+      return $this->render('PhotomBundle::Home.html.twig', array(
+        "inicio" => $result,
+        "friends" => $friendsList
+      ));
     }
 
     //CONTENT
@@ -288,7 +297,7 @@ class DefaultController extends Controller
       */
       public function registerConfirmedAction()
       {
-        return $this->redirect("/");
+        return $this->redirect("/perfil");
       }
 
      /**
@@ -314,7 +323,9 @@ class DefaultController extends Controller
      */
      public function perfilVisitaAction($visitado)
      {
-
+       if($visitado == $this->getUser()->getUsernameCanonical()){
+         return $this->redirect("/perfil");
+       }
        $connTarget = $this->connectToDB();
        $query = $connTarget->prepare("SELECT id, username, nombreUsuario, perfilUsuario,email, generoUsuario FROM Usuario WHERE username_canonical = :usuario");
        $query->bindParam(":usuario", $visitado);
@@ -341,7 +352,7 @@ class DefaultController extends Controller
       */
       public function profileAction()
       {
-        return $this->redirect('/');
+        return $this->redirect('/perfil');
       }
 
 

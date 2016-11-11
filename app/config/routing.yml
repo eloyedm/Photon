@@ -11,4 +11,7 @@ fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
 
 fos_user_profile:
-  path: /
+  path: "/"
+
+fos_user_registration_confirmed:
+  path: "/"
