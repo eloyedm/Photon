@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        $username = "superphoton";
-        $password = "Homecoming#96";
-        // $username = 'root';
-        // $password = "";
+        // $username = "superphoton";
+        // $password = "Homecoming#96";
+        $username = 'root';
+        $password = "";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -96,20 +96,32 @@ class DefaultController extends Controller
         $type = $type[0];
         if($type == "image"){
           $file_content = file_get_contents($foto->getPathName());
+          if($file_content == @imagecreatefromjpeg($foto) || $file_content == @imagecreatefrompng($foto) || $file_content == @imagecreatefromwbmp($foto)){
+            $connTarget = $this->connectToDB();
+            $query = $connTarget->prepare("INSERT INTO Contenido(nombreContenido, imagenContenido, descripcionContenido, idUsuarioContenido)
+                                    VALUES(:nombre,:imagen, :descripcion, :idUsuario)");
+            $query->bindParam(':nombre', $titulo);
+            $query->bindParam(':imagen', $file_content);
+            $query->bindParam(':descripcion', $pieFoto);
+            $query->bindParam(':idUsuario', $usuario);
+            $query->execute();
+            $connTarget = null;
+          }
+        }
+        elseif ($type == "video") {
+          $fotoName = md5(uniqid()).'.'.$foto->guessExtension();
+          $foto->move($this->getParameter('videos_directorio'), $fotoName);
           $connTarget = $this->connectToDB();
-          $query = $connTarget->prepare("INSERT INTO Contenido(nombreContenido, imagenContenido, descripcionContenido, idUsuarioContenido)
+          $query = $connTarget->prepare("INSERT INTO Contenido(nombreContenido, videoContenido, descripcionContenido, idUsuarioContenido)
                                   VALUES(:nombre,:imagen, :descripcion, :idUsuario)");
           $query->bindParam(':nombre', $titulo);
-          $query->bindParam(':imagen', $file_content);
+          $query->bindParam(':imagen', $fotoName);
           $query->bindParam(':descripcion', $pieFoto);
           $query->bindParam(':idUsuario', $usuario);
           $query->execute();
           $connTarget = null;
         }
-        elseif ($type == "video") {
-          $fotoName  = md5(uniqid()).'.'.$foto->guessExtension();
-          $foto->move($this->getParameter('videos_directorio'), $fotoName);
-        }
+
         return $this->redirect('/');
     }
 
@@ -315,7 +327,11 @@ class DefaultController extends Controller
         $result[0]['perfilUsuario'] = base64_encode($result[0]['perfilUsuario']);
         $result[0]['bannerUsuario'] = base64_encode($result[0]['bannerUsuario']);
         $connTarget = null;
-        return $this->render('PhotomBundle::Profile.html.twig', array('usuario'=> $result[0]));
+        return $this->render('PhotomBundle::Profile.html.twig',
+          array(
+            'usuario'=> $result[0],
+            'editable' => true
+          ));
       }
 
     /**
@@ -336,7 +352,11 @@ class DefaultController extends Controller
        if( $this->getUser()->getId() == $result[0]['id']){
          return $this->redirect('/perfil');
        }
-       return $this->render('PhotomBundle::Profile.html.twig', array('usuario' => $result[0]));
+       return $this->render('PhotomBundle::Profile.html.twig',
+          array(
+            'usuario' => $result[0],
+            'editable' => false
+          ));
      }
 
     /**
