@@ -23,7 +23,7 @@ $(document).ready(function() {
       nombreUsuario = nombreUsuario[nombreUsuario.length -1];
       console.log(nombreUsuario);
       $.ajax({
-        type  : "POST",
+        method  : "GET",
         url   : "/users/follow",
         data  : {
           "seguirA" : nombreUsuario

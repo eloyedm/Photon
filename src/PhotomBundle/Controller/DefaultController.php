@@ -20,7 +20,7 @@ class DefaultController extends Controller
         // $username = "superphoton";
         // $password = "Homecoming#96";
         $username = 'root';
-        $password = "";
+        $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -184,14 +184,30 @@ class DefaultController extends Controller
     {
       $usuario = $this->getUser();
       $usuario = $usuario->getId();
-      $seguido = $request->request->get('seguirA');
+      $seguido = $request->query->get('seguirA');
       $connTarget = $this->connectToDB();
-      $query = $connTarget->prepare("SELECT id FROM Usuario WHERE username_canonical = :usuario");
-      $query->bindParam(":usuario", $seguido);
+      // $query = $connTarget->prepare("SELECT id FROM Usuario WHERE username_canonical = :usuario");
+      // $query->bindParam(":usuario", $seguido);
+      // $query->execute();
+      $return_value = 0;
+      $query = $connTarget->prepare("CALL followUser(:name, :id, :res)");
+      $query->bindParam(":name", $seguido);
+      $query->bindParam(":id", $usuario);
+      $query->bindParam(":res", $return_value, PDO::PARAM_STR, 40000);
       $query->execute();
-      $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+      // $result = $query->setFetchMode(PDO::FETCH_ASSOC);
       $result =  $query->fetchAll();
-              $connTarget = null;
+      $connTarget = null;
+
+      dump($result);
+      die();
+      $query = $connTarget->prepare("SELECT @res");
+      $status = $query->setFetchMode(PDO::FETCH_ASSOC);
+      $status =  $query->fetchAll();
+      $connTarget = null;
+
+      dump($result, $status);
+      die();
       return new JsonResponse(array(
         'status' => 1,
       ));
@@ -418,18 +434,24 @@ class DefaultController extends Controller
       //SEARCH
 
       /**
-      * @Route("/search")
+      * @Route("/livesearch")
       */
       public function searchAction(Request $request){
-        $searchTerm = $request->request->get('term');
-        $searchTerm = "%".$searchTerm."%";
+        $searchTerm = $request->query->get('term');
+        // $searchTerm = "%".$searchTerm."%";
         $connTarget = $this->connectToDB();
+        $usuario = $this->getUser()->getId();
+        $queryUsers = $connTarget->prepare("CALL findUser(:search, :user)");
+        $queryUsers->bindParam(":search", $searchTerm);
+        $queryUsers->bindParam(":user", $usuario);
+        $queryUsers->execute();
+        $resultUsers = $queryUsers->setFetchMode(PDO::FETCH_ASSOC);
+        $resultUsers =  $queryUsers->fetchAll();
+        // $query = $connTarget->prepare("SELECT nombreUsuario, username_canonical FROM Usuario WHERE nombreUsuario LIKE :search");
+        // dump($resultUsers, $searchTerm);
+        // die();
 
-        $query = $connTarget->prepare("SELECT nombreUsuario, username_canonical FROM Usuario WHERE nombreUsuario LIKE :search");
-        $query->bindParam(":search", $searchTerm);
-        $query->execute();
-        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-        $result =  $query->fetchAll();
+        // $queryContent = $connTarget->prepare("CALL")
         $connTarget = null;
         return new JsonResponse(array(
           'resultados' => $result

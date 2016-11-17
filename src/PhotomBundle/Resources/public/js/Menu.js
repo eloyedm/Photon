@@ -3,8 +3,8 @@ define(['jquery'],  function($){
   $("#style-search").keyup(function(e){
     var term = e.target.value
     $.ajax({
-      method: "POST",
-      url: "/search",
+      method: "GET",
+      url: "/livesearch",
       data: {
         "term": term
       },
@@ -15,7 +15,7 @@ define(['jquery'],  function($){
             class:"result"
           });
           var resultLink = $("<a />", {
-            href: "/"+this.username_canonical,
+            href: "/perfil/"+this.username_canonical,
             class: "resultLink"
           });
 
