@@ -1,7 +1,7 @@
 define(['jquery'],  function($){
  $(document).ready(function(){
   $("#style-search").keyup(function(e){
-    var term = e.target.value
+    var term = e.target.value;
     $.ajax({
       method: "GET",
       url: "/livesearch",

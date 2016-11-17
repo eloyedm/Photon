@@ -10352,7 +10352,7 @@
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function($){
 	 $(document).ready(function(){
 	  $("#style-search").keyup(function(e){
-	    var term = e.target.value
+	    var term = e.target.value;
 	    $.ajax({
 	      method: "GET",
 	      url: "/livesearch",

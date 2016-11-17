@@ -436,7 +436,7 @@ class DefaultController extends Controller
       /**
       * @Route("/livesearch")
       */
-      public function searchAction(Request $request){
+      public function liveSearchAction(Request $request){
         $searchTerm = $request->query->get('term');
         // $searchTerm = "%".$searchTerm."%";
         $connTarget = $this->connectToDB();
@@ -456,5 +456,13 @@ class DefaultController extends Controller
         return new JsonResponse(array(
           'resultados' => $result
         ));
+      }
+
+      /**
+      * @Route("/search")
+      */
+      public function searchAction(Request $request){
+        $search = $request->query->get('busqueda');
+        return $this->render("PhotomBundle::search.html.twig");
       }
 }

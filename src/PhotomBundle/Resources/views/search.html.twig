@@ -1,0 +1,20 @@
+{% extends 'PhotomBundle::MenuSuperior.html.twig' %}
+{% block head %}
+  <title>Photon</title>
+{% endblock %}
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('bundles/photom/css/Home.css')}}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{{ asset('bundles/photom/css/CardUser.css')}}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{{ asset('bundles/photom/css/font-awesome.min.css')}}" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+  <script type="text/javascript" src="{{ asset("bundles/photom/js/dist/main.bundle.js") }}"> </script>
+{% endblock %}
+{% block Body %}
+{{ parent() }}
+  <div class="">
+    Aqui deben quedar los resultados de busqueda
+  </div>
+{% endblock %}
