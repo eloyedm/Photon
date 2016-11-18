@@ -38,5 +38,10 @@
       </div>
     {% endfor %}
   </section>
+  <section id="postsResults">
+    {% for publicaciones in posts %}
+      {% include 'PhotomBundle::CardPosts.html.twig' with {'publicacion': publicaciones} %}
+    {% endfor %}
+  </section>
 </section>
 {% endblock %}

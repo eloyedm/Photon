@@ -466,8 +466,33 @@ class DefaultController extends Controller
         foreach ($resultUsers as $key => $post) {
           $resultUsers[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
         }
+        $connTarget = null;
+        $connTarget = $this->connectToDB();
+        $queryPosts = $connTarget->prepare("CALL findContent(:search, 0, '2016-01-01', '2016-01-01')");
+        $queryPosts->bindParam(":search", $search);
+        $queryPosts->execute();
+        $resultPosts = $queryPosts->setFetchMode(PDO::FETCH_ASSOC);
+        $resultPosts =  $queryPosts->fetchAll();
+        $connTarget = null;
+        foreach ($resultPosts as $key => $post) {
+          $resultPosts[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
+            $resultPosts[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
+          $idPub = $resultPosts[$key]['idContenido'];
+          $connTarget = $this->connectToDB();
+          $comments = $connTarget->prepare("CALL displayPublicacionesAmigos(:Pub)");
+          $comments->bindParam(":Pub", $idPub);
+          $comments->execute();
+          $commentsResult = $comments->setFetchMode(PDO::FETCH_ASSOC);
+          $commentsResult = $comments->fetchAll();
+          foreach($commentsResult as $keyC => $commen){
+            $commentsResult[$keyC]['FotoComentarista'] = base64_encode($commen['FotoComentarista']);
+          }
+          $connTarget = null;
+          array_push($resultPosts[$key], $commentsResult);
+        }
         return $this->render('PhotomBundle::Search.html.twig', array(
-          'usuarios' => $resultUsers
+          'usuarios' => $resultUsers,
+          'posts' => $resultPosts
         ));
       }
 }
