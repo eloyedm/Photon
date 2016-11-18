@@ -1,0 +1,42 @@
+{% extends 'PhotomBundle::MenuSuperior.html.twig' %}
+{% block head %}
+  <title>Photon</title>
+{% endblock %}
+{% block stylesheets %}
+  {{ parent() }}
+  <link rel="stylesheet" href="{{ asset('bundles/photom/css/Home.css')}}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{{ asset('bundles/photom/css/CardUser.css')}}" media="screen" title="no title" charset="utf-8">
+      <link rel="stylesheet" href="{{ asset('bundles/photom/css/Search.css')}}" media="screen" title="no title" charset="utf-8">
+    <link rel="stylesheet" href="{{ asset('bundles/photom/css/font-awesome.min.css')}}" media="screen" title="no title" charset="utf-8">
+{% endblock %}
+{% block javascripts %}
+{{ parent() }}
+  <script type="text/javascript" src="{{ asset("bundles/photom/js/dist/main.bundle.js") }}"> </script>
+{% endblock %}
+{% block Body %}
+{{ parent() }}
+<section id="searchResultsContainer">
+  <div class="">
+    Estos fueron los resultados de tu busqueda
+  </div>
+  <section id="usersResults">
+    {% for user in usuarios %}
+      <div class="userResult">
+        <div class="imageContainer">
+          <img class="userImage" src="data:image/jpeg;base64,{{user.perfilUsuario}}" alt="" />
+        </div>
+        <div class="dataContainer">
+          <ul class="userData">
+            <li><a href="/perfil/{{ user.username_canonical}}"> {{ user.nombreUsuario }} </a></li>
+            <li> {{ user.descripcionUsuario }} </li>
+            <li> {{ user.email }} </li>
+            <li> {{ user['getLikes(id)'] }} </li>
+            <li> {{ user['getVideos(id)'] }}</li>
+            <li> {{ user['getImages(id)'] }}</li>
+          </ul>
+        </div>
+      </div>
+    {% endfor %}
+  </section>
+</section>
+{% endblock %}

@@ -189,27 +189,16 @@ class DefaultController extends Controller
       // $query = $connTarget->prepare("SELECT id FROM Usuario WHERE username_canonical = :usuario");
       // $query->bindParam(":usuario", $seguido);
       // $query->execute();
-      $return_value = 0;
-      $query = $connTarget->prepare("CALL followUser(:name, :id, :res)");
+      $query = $connTarget->prepare("CALL followUser(:name, :id, @res)");
       $query->bindParam(":name", $seguido);
       $query->bindParam(":id", $usuario);
-      $query->bindParam(":res", $return_value, PDO::PARAM_STR, 40000);
       $query->execute();
-      // $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+      $result = $query->setFetchMode(PDO::FETCH_ASSOC);
       $result =  $query->fetchAll();
       $connTarget = null;
-
-      dump($result);
-      die();
-      $query = $connTarget->prepare("SELECT @res");
-      $status = $query->setFetchMode(PDO::FETCH_ASSOC);
-      $status =  $query->fetchAll();
       $connTarget = null;
-
-      dump($result, $status);
-      die();
       return new JsonResponse(array(
-        'status' => 1,
+        'status' => $result[0]['isFollowing'],
       ));
     }
 
@@ -447,6 +436,9 @@ class DefaultController extends Controller
         $queryUsers->execute();
         $resultUsers = $queryUsers->setFetchMode(PDO::FETCH_ASSOC);
         $resultUsers =  $queryUsers->fetchAll();
+        foreach ($resultUsers as $key => $post) {
+          $resultUsers[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
+        }
         // $query = $connTarget->prepare("SELECT nombreUsuario, username_canonical FROM Usuario WHERE nombreUsuario LIKE :search");
         // dump($resultUsers, $searchTerm);
         // die();
@@ -454,7 +446,7 @@ class DefaultController extends Controller
         // $queryContent = $connTarget->prepare("CALL")
         $connTarget = null;
         return new JsonResponse(array(
-          'resultados' => $result
+          'resultados' => $resultUsers
         ));
       }
 
@@ -463,6 +455,19 @@ class DefaultController extends Controller
       */
       public function searchAction(Request $request){
         $search = $request->query->get('busqueda');
-        return $this->render("PhotomBundle::search.html.twig");
+        $connTarget = $this->connectToDB();
+        $usuario = $this->getUser()->getId();
+        $queryUsers = $connTarget->prepare("CALL findUser(:search, :user)");
+        $queryUsers->bindParam(":search", $search);
+        $queryUsers->bindParam(":user", $usuario);
+        $queryUsers->execute();
+        $resultUsers = $queryUsers->setFetchMode(PDO::FETCH_ASSOC);
+        $resultUsers =  $queryUsers->fetchAll();
+        foreach ($resultUsers as $key => $post) {
+          $resultUsers[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
+        }
+        return $this->render('PhotomBundle::Search.html.twig', array(
+          'usuarios' => $resultUsers
+        ));
       }
 }

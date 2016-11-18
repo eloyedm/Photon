@@ -598,9 +598,10 @@ list-group-item img {
     font-size: 26px;
     margin-top: 38%;
     font-family: "Rockwell";
-    color: white;
-    position: relative;
-    left: 110%;
+    color: black;
+    position: absolute;;
+    left: 150px;
+    bottom: 10px;
 }
 
 .container-infoUser > div{

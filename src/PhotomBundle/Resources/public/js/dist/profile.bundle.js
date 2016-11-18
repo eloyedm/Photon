@@ -69,18 +69,23 @@
 	      nombreUsuario = nombreUsuario[nombreUsuario.length -1];
 	      console.log(nombreUsuario);
 	      $.ajax({
-	        method  : "GET",
+	        type  : "GET",
 	        url   : "/users/follow",
 	        data  : {
 	          "seguirA" : nombreUsuario
 	        },
 	        datatype: "json",
 	        success: function(data){
-	          if(data.status == 1){
+	          if(data.status == 0){
 	            $(".follow").removeClass("follow").addClass("followed");
 	            var icono = $(".followed").find("i");
 	            icono.removeClass("fa-plus-circle").addClass("fa-check-circle");
-	         }
+	          }
+	          else if (data.statu == 1) {
+	            $(".followed").removeClass("followed").addClass("follow");
+	            var icono = $(".follow").find("i");
+	            icono.removeClass("fa-check-circle").addClass("fa-plus-circle");
+	          }
 	        }
 	      });
 	    });

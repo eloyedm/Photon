@@ -26,6 +26,7 @@ a {
     text-decoration: none;
 }
 
+
 #container-form {
     width: 55%;
     margin-top: 0.1%;
@@ -54,6 +55,19 @@ a {
     font-size: 118%;
     font-style: italic;
     font-family: "Rockwell";
+}
+
+#resultsContainer{
+  z-index: 3;
+  width: 52%;
+  position: absolute;
+  height: auto;
+  background-color: white;
+}
+
+#resultsContainer li.result{
+  width: 100%;
+  margin: 10px
 }
 
 #style-friendship {
