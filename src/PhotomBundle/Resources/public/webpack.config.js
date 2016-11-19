@@ -3,13 +3,15 @@ var path = __dirname;
 module.exports = {
     entry: {
     	main: "./js/Home/Home.js",
-      profile: "./js/Perfil/Perfil.js"
+      profile: "./js/Perfil/Perfil.js",
+      register: './js/Register/Register.js'
     },
     resolve: {
         alias: {
             'jquery': __dirname + '/node_modules/jquery/dist/jquery.js',
             'underscore': __dirname + '/node_modules/underscore/underscore.js',
             'Backbone': __dirname + '/node_modules/backbone/backbone.js',
+            'slick': __dirname + '/node_modules/slick-carousel/slick/slick.js',
             'cardPost': path + '/js/CardPost.js',
             'updateUserInfo': path + '/js/Perfil/updateUserInfo.js',
             'commentView': path + '/js/views/commentView.js',

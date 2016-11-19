@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        // $username = "superphoton";
-        // $password = "Homecoming#96";
-        $username = 'root';
-        $password = "homecoming96";
+        $username = "superphoton";
+        $password = "Homecoming#96";
+        // $username = 'root';
+        // $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -61,6 +61,7 @@ class DefaultController extends Controller
       $connTarget = null;
       foreach ($result as $key => $post) {
         $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
+        $result[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
         $idPub = $result[$key]['idContenido'];
         $connTarget = $this->connectToDB();
         $comments = $connTarget->prepare("CALL displayPublicacionesAmigos(:Pub)");
@@ -314,7 +315,8 @@ class DefaultController extends Controller
       */
       public function registerConfirmedAction()
       {
-        return $this->redirect("/perfil");
+
+        return $this->render("PhotomBundle::CompletarRegistro.html.twig");
       }
 
      /**

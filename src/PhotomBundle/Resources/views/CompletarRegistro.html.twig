@@ -1,0 +1,38 @@
+{% block stylesheets %}
+<link href="{{ asset('bundles/photom/css/font-awesome.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/photom/node_modules/slick-carousel/slick/slick.css')}}" rel="stylesheet" type="text/css"/>
+<link href="{{ asset('bundles/photom/css/registerConfirm.css')}}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset("bundles/photom/js/dist/register.bundle.js") }}"> </script>
+{% endblock %}
+{% block Body %}
+  <div id="infoMainContainer">
+    <div id="title">
+      <span> Queremos saber mas de ti <br> ¿Podrias respondernos algunas preguntas? </span>
+      <form class="registerExtra" method="post">
+        <div id="preguntasExtras">
+          <div class="pregunta">
+            <span>¿Cuando es tu cumpleaños?</span>
+            <input type="date" name="fechaNacimiento" value="">
+          </div>
+          <div class="pregunta">
+            <span>¿Donde vives?</span>
+            <input type="address" name="domicilio" value="">
+          </div>
+          <div class="pregunta">
+            <span>¿Que tal una foto para decorarla portada de tu perfil?</span>
+            <input type="file" name="banner" value="">
+          </div>
+          <div class="pregunta">
+            <span>Cuentanos un poco mas sobre ti</span>
+            <input type="textarea" name="descripcion" value="">
+          </div>
+        </div>
+      </form>
+      <div class="leftArrowPreguntas">
+        <i class="fa fa-arrow-circle-o-left" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div>
+{% endblock %}
