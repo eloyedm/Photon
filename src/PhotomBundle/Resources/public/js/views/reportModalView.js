@@ -96,6 +96,7 @@ define(['Backbone'],  function(backbone) {
       var reasonReported = $(".checkRazon:checked").val();
       var that = this;
       if(confirm("¿Estas seguro de que quieres reportar este contenido?")){
+        console.log("si mandar");
         $.ajax({
           method: "POST",
           url: "/report/sendReport",

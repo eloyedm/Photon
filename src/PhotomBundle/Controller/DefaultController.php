@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        $username = "superphoton";
-        $password = "Homecoming#96";
-        // $username = 'root';
-        // $password = "homecoming96";
+        // $username = "superphoton";
+        // $password = "Homecoming#96";
+        $username = 'root';
+        $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -97,17 +97,16 @@ class DefaultController extends Controller
         $type = $type[0];
         if($type == "image"){
           $file_content = file_get_contents($foto->getPathName());
-          if($file_content == @imagecreatefromjpeg($foto) || $file_content == @imagecreatefrompng($foto) || $file_content == @imagecreatefromwbmp($foto)){
+          // if($file_content == @imagecreatefromjpeg($foto) || $file_content == @imagecreatefrompng($foto) || $file_content == @imagecreatefromwbmp($foto)){
             $connTarget = $this->connectToDB();
-            $query = $connTarget->prepare("INSERT INTO Contenido(nombreContenido, imagenContenido, descripcionContenido, idUsuarioContenido)
-                                    VALUES(:nombre,:imagen, :descripcion, :idUsuario)");
+            $query = $connTarget->prepare("CALL insertContent(:nombre, NULL, :descripcion, :imagen, :idUsuario)");
             $query->bindParam(':nombre', $titulo);
             $query->bindParam(':imagen', $file_content);
             $query->bindParam(':descripcion', $pieFoto);
             $query->bindParam(':idUsuario', $usuario);
             $query->execute();
             $connTarget = null;
-          }
+          // }
         }
         elseif ($type == "video") {
           $fotoName = md5(uniqid()).'.'.$foto->guessExtension();
@@ -136,8 +135,7 @@ class DefaultController extends Controller
       $idPub = $request->request->get('idPub');
       $comment = $request->request->get('comment');
       $connTarget = $this->connectToDB();
-      $query = $connTarget->prepare("INSERT INTO Notificacion(comentarioNotificacion, idContenidoNotificacion, idUsuarioNotificador)
-                              VALUES(:comentario, :idContenido, :idUsuario)");
+      $query = $connTarget->prepare("CALL insertNOtification(:comentario, NULL, 0, :idContenido, :idUsuario)");
       $query->bindParam(':comentario', $comment);
       $query->bindParam(':idContenido', $idPub);
       $query->bindParam(':idUsuario', $usuario);
@@ -146,7 +144,9 @@ class DefaultController extends Controller
       $user = $this->getUser();
       $usuario = $user->getNombreusuario();
       $canonusuario = $user->getUsernameCanonical();
-      $image = base64_encode($user->getPerfilusuario());
+      $image = $user->getPerfilusuario();
+      $image = stream_get_contents($image);
+      $image = base64_encode($image);
       return new JsonResponse(array(
         'pub' => $idPub,
         'com' => $comment,
@@ -164,8 +164,7 @@ class DefaultController extends Controller
       $usuario = $usuario->getId();
       $idPub = $request->request->get('idPub');
       $connTarget = $this->connectToDB();
-      $query = $connTarget->prepare("INSERT INTO Notificacion(gustaNotificacion, idContenidoNotificacion, idUsuarioNotificador)
-                              VALUES(1, :idContenido, :idUsuario)");
+      $query = $connTarget->prepare("CALL insertNOtification(NULL, 1, 0, :idContenido, :idUsuario)");
       $query->bindParam(':idContenido', $idPub);
       $query->bindParam(':idUsuario', $usuario);
       $query->execute();
@@ -394,7 +393,7 @@ class DefaultController extends Controller
         $idPub = $request->request->get('idPub');
         $reason = $request->request->get('idReason');
         $connTarget = $this->connectToDB();
-        $query = $connTarget->prepare("INSERT INTO ReportarUsuario(idContenidoReportado, idUsuarioReportador, idRazonReportado) VALUES(:contenido, :usuarioReportador, :razon)");
+        $query = $connTarget->prepare("CALL reportUser(:usuarioReportador, :razon, :contenido, '')");
         $query->bindParam(":contenido", $idPub);
         $query->bindParam(":usuarioReportador", $usuario);
         $query->bindParam(":razon", $reason);
@@ -409,7 +408,7 @@ class DefaultController extends Controller
       public function reportReasonsAction()
       {
         $connTarget = $this->connectToDB();
-        $query = $connTarget->prepare("SELECT idRazon, nombreRazon, descripcionRazon FROM Razon;");
+        $query = $connTarget->prepare("SELECT idRazon, nombreRazon, descripcionRazon FROM getRazones;");
         $query->execute();
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result =  $query->fetchAll();

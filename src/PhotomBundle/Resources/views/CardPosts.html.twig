@@ -29,18 +29,6 @@
             </div>
             <div class="comentarios">
                 <ul class="list-group-comments">
-                     <li href="#" class="list-group-item text-left">
-                       <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
-                       <div class="post-user">
-                       <label class="name">
-                           Juan guillermo cuadrado:
-                       </label>
-                       <label class="comment">
-                       fvsgesrgesrf #yolo esto es una prueba #life #is #good
-                       </label>
-                       </div>
-                    </li>
-
                     {% for comments in publicacion|last %}
                         <li href="#" class="list-group-item text-left">
                           <img class="img-thumbnail" src="data:image/jpeg;base64,{{comments.FotoComentarista}}">
