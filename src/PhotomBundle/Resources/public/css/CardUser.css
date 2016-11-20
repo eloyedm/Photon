@@ -1,12 +1,13 @@
 .container-cardsuser{
-    margin-top: 4%;
-    height: 692px;
+  margin-top: 4%;
+    height: 700px;
     font-family: "Rockwell";
-    width: 100%;
+    width: 72%;
     overflow: hidden;
     border: 1px solid rgba(000,000,000,0.1);
     float: right;
     color: #373836;
+    margin-right: 25%;
 }
 
 .card {
