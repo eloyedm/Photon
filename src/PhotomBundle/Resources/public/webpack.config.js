@@ -4,7 +4,8 @@ module.exports = {
     entry: {
     	main: "./js/Home/Home.js",
       profile: "./js/Perfil/Perfil.js",
-      register: './js/Register/Register.js'
+      register: './js/Register/Register.js',
+      recover: './js/Recover/Recover.js'
     },
     resolve: {
         alias: {

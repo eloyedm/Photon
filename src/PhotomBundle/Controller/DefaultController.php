@@ -395,6 +395,69 @@ class DefaultController extends Controller
 
       }
 
+      /**
+      * @Route("/recover/password")
+      */
+      public function recoverPasswordAction(){
+        return $this->render("PhotomBundle::Recover.html.twig");
+      }
+
+      /**
+      * @Route("/recover/password/getQuestions")
+      */
+      public function recoverPasswordQuestionsAction(Request $request){
+        $user = $request->request->get("user");
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("CALL getQuestionsUser(:user)");
+        $query->bindParam(":user", $user);
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result =  $query->fetchAll();
+        foreach ($result as $key => $value) {
+            $result[$key]['preguntaUno'] = utf8_encode($value['preguntaUno']);
+        }
+        if(count($result) > 0){
+          return new JsonResponse(array(
+            "questions" => $result
+          ));
+        }
+        else {
+          return new Response('ERROR', Response::HTTP_ERROR);
+        }
+      }
+
+      /**
+      * @Route("/update/password")
+      */
+      public function updatePassword(Request $request){
+        $parameter = $request->request;
+        $usuario = $parameter->get('usuario');
+        $pregunta  = $parameter->get('pregunta');
+        $respuesta = $parameter->get('respuesta'.$pregunta);
+        $pass = $parameter->get('nuevaPass');
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("SELECT questionCorrect(:usuario, :respuesta, :pregunta) AS question");
+        $query->bindParam(":usuario", $usuario);
+        $query->bindParam(":respuesta", $respuesta);
+        $query->bindParam(":pregunta", $pregunta);
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result =  $query->fetchAll();
+        if($result[0]['question']){
+          $user_manager = $this->get("fos_user.user_manager");
+          $user  = $user_manager->findUserByUsername($usuario);
+          $encoder_service = $this->get('security.encoder_factory');
+          $encoder = $encoder_service->getEncoder($user);
+          $encoded_pass = $encoder->encodePassword($pass, $user->getSalt());
+          $connTarget = $this->connectToDB();
+          $query = $connTarget->prepare("CALL updatePassword(:usuario, :password)");
+          $query->bindParam(":usuario", $usuario);
+          $query->bindParam(":password", $encoded_pass);
+          $query->execute();
+          return $this->redirect("/login");
+        }
+      }
+
      /**
       * @Route("/perfil")
       */

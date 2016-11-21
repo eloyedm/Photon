@@ -1,0 +1,15 @@
+{% block stylesheets %}
+
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset("bundles/photom/js/dist/recover.bundle.js") }}"> </script>
+{% endblock %}
+{% block Body %}
+  <div id="mainContainer">
+    <span> Por favor, introduce tu nombre de usuario </span>
+    <input type="text" id="username" name="username" value="">
+    <button type="submit" id="getPreguntas" name="button">Enviar</button>
+    <form class="updatePass" action="/update/password" method="post" name="updatePassword">
+    </form>
+  </div>
+{% endblock %}
