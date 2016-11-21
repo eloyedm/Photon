@@ -125,26 +125,16 @@
     <section id="followers" class="container-friendsuser">
                 <ul class="list-group">
                       <li href="#" class="list-group-item title">
-                          Tus Photon Seguidos
-                         </li>
+                          Tus Photon Seguidores
+                       </li>
+                       {% for seguidor in seguidores %}
                          <li href="#" class="list-group-item text-left">
-                           <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
+                           <img class="img-thumbnail" src="data:image/jpeg;base64,{{ seguidor.perfilUsuario }}">
                            <label class="name">
-                               Juan guillermo cuadrado<br>
+                              {{ seguidor.nombreUsuario}}<br>
                            </label>
                          </li>
-                         <li href="#" class="list-group-item text-left">
-                             <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-                           <label class="name">
-                             James Rodriguez
-                           </label>
-                         </li>
-                         <li href="#" class="list-group-item text-left">
-                             <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_2.jpg">
-                             <label class="name">
-                               Mariana pajon
-                             </label>
-                         </li>
+                       {% endfor %}
                        </ul>
                       </section>
     <section id="profile" class="container-publicationprofile">
@@ -203,24 +193,14 @@
                 <li href="#" class="list-group-item title">
                     Tus Photon Seguidos
                    </li>
-                   <li href="#" class="list-group-item text-left">
-                     <img class="img-thumbnail" src="http://bootdey.com/img/Content/User_for_snippets.png">
-                     <label class="name">
-                         Juan guillermo cuadrado<br>
-                     </label>
-                   </li>
-                   <li href="#" class="list-group-item text-left">
-                       <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-                     <label class="name">
-                       James Rodriguez
-                     </label>
-                   </li>
-                   <li href="#" class="list-group-item text-left">
-                       <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_2.jpg">
+                   {% for seguido in seguidos %}
+                     <li href="#" class="list-group-item text-left">
+                       <img class="img-thumbnail" src="data:image/jpeg;base64,{{ seguido.perfilUsuario }}">
                        <label class="name">
-                         Mariana pajon
+                          {{ seguido.nombreUsuario}}<br>
                        </label>
-                   </li>
+                     </li>
+                   {% endfor %}
                  </ul>
               </section>
             </section>

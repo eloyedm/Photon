@@ -473,10 +473,32 @@ class DefaultController extends Controller
         $result[0]['perfilUsuario'] = base64_encode($result[0]['perfilUsuario']);
         $result[0]['bannerUsuario'] = base64_encode($result[0]['bannerUsuario']);
         $connTarget = null;
+        $connTarget = $this->connectToDB();
+        $querySeguidores = $connTarget->prepare("CALL getAllFriends(:idUsuario, 1)");
+        $querySeguidores->bindParam(":idUsuario", $usuario);
+        $querySeguidores->execute();
+        $seguidores = $querySeguidores->setFetchMode(PDO::FETCH_ASSOC);
+        $seguidores =  $querySeguidores->fetchAll();
+        $connTarget = null;
+        foreach ($seguidores as $key => $value) {
+          $seguidores[$key]['perfilUsuario'] = base64_encode($value['perfilUsuario']);
+        }
+        $connTarget = $this->connectToDB();
+        $querySeguidos = $connTarget->prepare("CALL getSeguidos(:idUsuario)");
+        $querySeguidos->bindParam(":idUsuario", $usuario);
+        $querySeguidos->execute();
+        $seguidos = $querySeguidos->setFetchMode(PDO::FETCH_ASSOC);
+        $seguidos =  $querySeguidos->fetchAll();
+        $connTarget = null;
+        foreach ($seguidos as $key => $value) {
+          $seguidos[$key]['perfilUsuario'] = base64_encode($value['perfilUsuario']);
+        }
         return $this->render('PhotomBundle::Profile.html.twig',
           array(
             'usuario'=> $result[0],
-            'editable' => true
+            'editable' => true,
+            'seguidores' => $seguidores,
+            'seguidos' => $seguidos
           ));
       }
 
