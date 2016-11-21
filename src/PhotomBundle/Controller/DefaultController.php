@@ -314,8 +314,85 @@ class DefaultController extends Controller
       */
       public function registerConfirmedAction()
       {
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("SELECT idPregunta, preguntaUno FROM getQuestionCatalog");
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result =  $query->fetchAll();
+        $onnTarget = null;
+        foreach ($result as $key => $value) {
+          $result[$key]['preguntaUno'] = utf8_encode($value['preguntaUno']);
+        }
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("SELECT idPais, nombrePais FROM getPaises");
+        $query->execute();
+        $paises = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $paises =  $query->fetchAll();
+        $onnTarget = null;
+        return $this->render("PhotomBundle::CompletarRegistro.html.twig", array(
+          'questions' => $result,
+          'paises' => $paises
+        ));
+      }
 
-        return $this->render("PhotomBundle::CompletarRegistro.html.twig");
+      /**
+      * @Route("/complete/registration/info")
+      */
+      public function completeRegisterAction(Request $request){
+        $parameter = $request->request;
+        $usuario = $this->getUser()->getId();
+        $fecha = $parameter->get('fechaNacimiento');
+        $domicilio = $parameter->get('domicilio');
+        // $encoder_service = $this->get("security.encoder_factory");
+        // $user = $this->getUser();
+        // $encoder = $encoder_service->getEncoder($user);
+        //
+        // $encoded_pass = $encoder->encodePassword($domicilio, $user->getSalt());
+        // $contra = 'contraeloy';
+        // dump($domicilio);
+        // dump($encoder->isPasswordValid($user->getPassword(), $domicilio, $user->getSalt()));
+        // die();
+        $descripcion = $parameter->get('descripcion');
+        $privacidad = $parameter->get('privacidad');
+        $pais = $parameter->get('pais');
+        $preguntasRespondidas = array();
+        for($i = 1; $i < 8; $i++){
+          $numero = 'checkPregunta-'.$i;
+          $pregunta = $parameter->get($numero);
+          $texto = 'respuesta-'.$i;
+          $respuesta = $parameter->get($texto);
+          if($pregunta != NULL && $respuesta != NULL){
+            $preguntasRespondidas[$pregunta] = $respuesta;
+          }
+        }
+        $foto = $request->files->get('banner');
+        $type = explode("/", $foto->getMimeType());
+        $type = $type[0];
+        if($type == "image"){
+          $file_content = file_get_contents($foto->getPathName());
+          $connTarget = $this->connectToDB();
+          $query = $connTarget->prepare("CALL insertOtherData(:idUsuario, :fecha, :domicilio, :banner, :privacidad, :descripcion, :pais)");
+          $query->bindParam(':idUsuario', $usuario);
+          $query->bindParam(':fecha', $fecha);
+          $query->bindParam(':domicilio', $domicilio);
+          $query->bindParam(':banner', $file_content);
+          $query->bindParam(':privacidad', $privacidad);
+          $query->bindParam(':descripcion', $descripcion);
+          $query->bindParam(':pais', $pais);
+          $query->execute();
+          $connTarget = $this->connectToDB();
+          $query = $connTarget->prepare("CALL insertQuestions(:idUsuario, :respuesta, :idPregunta)");
+          $query->bindParam(':idUsuario', $usuario);
+          $query->bindParam(':respuesta', $respuesta);
+          $query->bindParam(':idPregunta', $pregunta);
+          foreach ($preguntasRespondidas as $key => $value) {
+            $respuesta = $value;
+            $pregunta = $key;
+            $query->execute();
+          }
+          return $this->redirect("/");
+        }
+
       }
 
      /**

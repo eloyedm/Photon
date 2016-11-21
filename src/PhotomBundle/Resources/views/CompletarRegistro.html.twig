@@ -10,7 +10,7 @@
   <div id="infoMainContainer">
     <div id="title">
 </div>
-      <form class="registerExtra" method="post">
+      <form class="registerExtra" method="POST" id="extraInfoForm" enctype="multipart/form-data" name="extraInfoForm" action="/complete/registration/info">
         <div id="preguntasExtras">
           <div class="pregunta">
             <span>¿Que dia naciste?</span>
@@ -19,6 +19,11 @@
           <div class="pregunta">
             <span>¿Donde vives?</span>
             <input type="address" name="domicilio" value="">
+            <select class="pais" name="pais">
+              {% for pais in paises %}
+                  <option value="{{ pais.idPais}}">{{pais.nombrePais}}</option>
+              {% endfor %}
+            </select>
           </div>
           <div class="pregunta">
             <span>¿Que tal una foto para decorarla portada de tu perfil?</span>
@@ -27,6 +32,22 @@
           <div class="pregunta">
             <span>Cuentanos un poco mas sobre ti</span>
             <input type="textarea" name="descripcion" value="">
+          </div>
+          <div class="pregunta">
+            <span>¿Quien te gustaria que pueda ver tu cuenta?</span>
+            <input type="radio" name="privacidad" value=1 checked/><span>Publica</span>
+            <input type="radio" name="privacidad" value=0/><span>Privada</span>
+          </div>
+          <div class="pregunta" style="height:auto">
+            <span>Por tu seguridad, responde alguna de las preguntas de seguridad par apoder reestablecer tu contraseña si es necesario</span>
+            {% for question in questions %}
+              <div class="contenedorPregunta" id="{{question.idPregunta}}">
+                <input type="checkbox" class="checkPregunta" name="checkPregunta-{{question.idPregunta}}" value="{{question.idPregunta}}">
+                <span class="textoPregunta"> {{ question.preguntaUno }}</span>
+                <input type="text" name="respuesta-{{question.idPregunta}}" readonly="true"value="">
+              </div>
+            {% endfor %}
+            <input type="submit" name="name" value="">
           </div>
         </div>
       </form>

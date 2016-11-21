@@ -37,3 +37,25 @@ body{
       display: block;
       margin: 8% 4%;
 }
+
+.contenedorPregunta{
+  height: 60px;
+}
+.contenedorPregunta > input[type="checkbox"]{
+  display: inline;
+  width: 20%;
+  height: 30%;
+  vertical-align: middle;
+}
+
+.contenedorPregunta > input[type="text"]{
+  display: block;
+  position: relative;
+  left: 25%;
+  background-color: rgba(128,128,128,0.5);
+}
+.contenedorPregunta > span.textoPregunta{
+  display: inline;
+  font-size: 20px;
+  color: white;
+}

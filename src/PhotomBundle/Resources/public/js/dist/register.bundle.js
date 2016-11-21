@@ -48,7 +48,19 @@
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(9)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, slick) {
 	  $(document).ready(function() {
 	    $("#preguntasExtras").slick({
-	      arrows: true
+	      arrows: true,
+	      infinite: false,
+	      adaptativeHeight: true
+	    });
+
+	    $(".checkPregunta").change(function(e){
+	      var texto = $(this).parent().find("input[type='text']");
+	      if(this.checked){
+	        texto.removeAttr("readonly").css("background-color","white");
+	      }
+	      else{
+	        texto.attr("readonly", "true").css("background-color","rgba(128,128,128,0.5)");
+	      }
 	    });
 	  });
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
