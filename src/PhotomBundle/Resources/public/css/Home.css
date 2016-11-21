@@ -30,11 +30,6 @@ ul{
     display: inline-block;
 }
 
-#style-notification {
-	margin-left: 2%;
-	margin-top: 0.5%;
-}
-
 .fa.fa-heart {
 	font-size: 28px;
     color: #373836;
@@ -62,14 +57,6 @@ ul{
     color:#00698C;
 }
 
-#style-user {
-	margin-left: 1%;
-	margin-top: 0.8%;
-	color: white;
-	font-weight: bold;
-	font-family: "Rockwell";
-}
-
 .fa.fa-camera {
 	font-size: 30px;
 	color: #0092B2;
@@ -80,20 +67,8 @@ ul{
 	color: #0092B2;
 }
 
-#style-profile {
-	margin-left: 3%;
-	margin-top: 0.2%;
-}
-
 #profile{
   height:50%;
-}
-
-.phrase-publication{
-    margin-left: 0%;
-    font-size: 109%;
-    margin-top: 0%;
-    margin-left: 1%;
 }
 
 .container-publications{
@@ -147,13 +122,6 @@ margin-left: 188px;
 
 #user-post{
     margin:0;
-}
-
-#container-form{
-    width: 58%;
-    margin-top: 0.2%;
-    margin-left: 6%;
-    padding-top: 0.3%;
 }
 
 #public-button{
@@ -223,10 +191,6 @@ th,td{
     font-weight: bold;
 }
 
-a {
-	text-decoration: none;
-}
-
 .container-notificationsuser{
     width: 53%;
     height: auto;
@@ -254,7 +218,7 @@ a {
 }
 
 .container-publicationprofile{
-    width: 60%;
+    width: 67.5%;
     height: auto;
     display: inline;
     margin-top: 0%;
@@ -270,10 +234,6 @@ a {
     margin-top: 0;
     background-color: rgba(000,000,000,0.05);
     overflow: hidden;
-}
-
-#style-friendship{
-    margin-left: 9%;
 }
 
 .list-content{
@@ -297,6 +257,11 @@ a {
     font-style: italic;
     font-size: 14px;
     margin-left: 0.5%;
+}
+
+#photoPreview{
+  visibility: hidden;
+  height: 200px;
 }
 
 .post-user{
@@ -410,7 +375,7 @@ list-group-item img {
     margin-top: 0.8%;
     margin-left: 0%;
     width: 100%;
-    height: 5%;
+    height: 30px;
 }
 
 #user-post{
@@ -430,8 +395,9 @@ list-group-item img {
 }
 
 .container-public-user{
-
-    width: 100%;
+    width: 80%;
+    margin: 0 auto;
+    height:auto;
 }
 
 .phrase-publication{
@@ -463,7 +429,7 @@ list-group-item img {
 .container-sidebar{
     display: inline;
     display: inline-block;
-    width: 20%;
+    width: 17.4%;
     margin-bottom: 3%;
 }
 
@@ -572,7 +538,6 @@ nav ul{
 
 li{
     float:left;
-    margin-top: 0.5%;
 }
 
 .user-tabs{
@@ -581,11 +546,6 @@ li{
     left: 23%;
     width: 64%;
     bottom: 0%;
-}
-
-.container-search{
-    border: none;
-    background-color: none;
 }
 
 .banner-user{
@@ -643,7 +603,7 @@ li{
 }
 
 #phrase-content{
-    margin-top: 3.8%;
+    margin-top: 2%;
     float: left;
     font-family: "Rockwell";
     font-size: 146%;
@@ -651,6 +611,7 @@ li{
     font-style: italic;
     display: inline-block;
     width: 100%;
+    text-align: center;
 }
 
 #dislike-button{
@@ -722,13 +683,6 @@ button{
     margin-top: 0%;
 }
 
-#container-form{
-    width: 55%;
-    margin-top: 0.1%;
-    margin-left: 12%;
-    padding-top: 0.3%;
-}
-
 .description-video{
     display: inline;
     float: left;
@@ -774,20 +728,6 @@ button{
     background-color: rgba(000,000,000,0.03);
     height: 15%;
     margin-top: 0%;
-}
-
-#style-search{
-     background: url('/bundles/photom/images/lupa.png') no-repeat 2% 50%;
-     border-bottom: 2px solid white;
-     width: 100%;
-     padding-left: 6%;
-     border-top: none;
-     border-left: none;
-     border-right: none;
-     color: white;
-     font-size: 118%;
-     font-style: italic;
-     font-family:"Rockwell";
 }
 
 .imagePreviewContainer{

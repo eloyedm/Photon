@@ -46,7 +46,22 @@
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2), __webpack_require__(4), __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, backbone, cardPost, menu) {
 	  $(document).ready(function(){
+	    $("#notificationLink").click(function()
+	                               {
+	      $("#notificationContainer").fadeToggle(300);
+	      $("#notification_count").fadeOut("slow");
+	      return false;
+	  });
 
+	  $(document).click(function(event)
+	                    {
+	                      console.log(event.target);
+	      $("#notificationContainer").hide();
+	  });
+	  $("#notificationContainer").click(function()
+	                                    {
+	      return false;
+	  });
 	    $("#camera-button").click(function(){
 	      $(".photoSubmit").click();
 	    });
@@ -56,6 +71,7 @@
 	    });
 
 	    $(".photoSubmit").change(function(e){
+	      $('#photoPreview').css({'visibility':'visible'});
 	      var input = e.target
 	      if(input != null ){
 	        if(input.files && input.files[0]){
