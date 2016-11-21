@@ -121,52 +121,39 @@
        </sidebar>
        <sidebar class="container-adbar">
        </sidebar>
-       <section id="profile" class="container-publicationprofile">
-           <div class="container-public-user">
-             <form method="POST" action="/content/new/upload" name="user-publication-user" id="user-post" enctype="multipart/form-data">
-               <div class="imagePreviewContainer">
-                 <img src="" class="imagePreview" alt="" />
+       <section class="container-publicationprofile">
+             <div class="container-public-user">
+               <div class="phrase-publication">
+                 <span id="user-name">Usuario
+                 </span>
+                 <tr>
+                   <span id="user-phrase">dile al mundo lo que sientes...
+                   </span>
                </div>
-               <input type="text" placeholder="Comparte tu dia...." id="text-public" name="pieDeFoto"/>
-               <input type="file" name="foto" class="photoSubmit hidden"/>
-               <input type="file" name="video" class="videoSubmit hidden"/>
-               <div class="public-photo-video">
-                 <div class="container-publica">
-                   <input type="submit" value="Publicar" id="public-button" />
-                 </div>
-                 <div class="container-camera">
-                   <button type="button" id="camera-button">
-                     <i class="fa fa-camera" aria-hidden="true"></i>
-                   </button>
-                 </div>
-                 <div class="container-video">
-                   <button type="button" id="video-button">
-                     <i class="fa fa-video-camera" aria-hidden="true"></i>
-                   </button>
-                 </div>
+               <div class="container-publication">
+                   <div class="public-photo-video">
+                     <div class="container-publica">
+                       <form method="POST" action="/content/new/upload" name="user-publication-user" id="user-post" enctype="multipart/form-data">
+                         <input type="text" placeholder="Comparte tu dia...." id="text-public" name="pieDeFoto"/>
+                         <input type="file" required="true" name="foto" class="photoSubmit hidden"/>
+                       <input type="submit" value="Publicar" id="public-button" />
+                     </form>
+                     <div class="container-camera">
+                       <button type="button" id="camera-button">
+                         <i class="fa fa-camera" aria-hidden="true"></i>
+                       </button>
+                     </div>
+                     </div>
+                     <div id="photoPreview">
+                       <div class="imagePreviewContainer">
+                         <img src="" class="imagePreview" alt="" style="width:100%;height:100%;"/>
+                       </div>
+                     </div>
+                   </div>
                </div>
-             </form>
-           </div>
-          {# no variables will be accessible #}
-          {% include 'PhotomBundle::CardPosts.html.twig' only %}
-           </section>
-           <section id="notification" class="container-notificationsuser">
-               <table class="list-friend">
-                   <tr>
-                     <th>
-                       <input type="checkbox">
-                     </th>
-                      <th colspan="2">
-                       Notificaciones
-                      </th>
-                   </tr>
-                   <tr>
-                       <td><button><img src="{{ asset('bundles/photom/images/lineaA.png')}}"></button></td>
-                       <td>Tu publicacion ha sido comentada por <t class="usuario-notificacion">Usuario</t></td>
-                   </tr>
-               </table>
-               <div> <button class="see-all">Todos leidos</button></div>
-           </section>
+             </div>
+             <div id="phrase-content">TU MUNDO ACTUALIZADO</div>
+           {# no variables will be accessible #}
    <section id="friend" class="container-friendsuser">
          <ul class="list-group">
      <li href="#" class="list-group-item title">

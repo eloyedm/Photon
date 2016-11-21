@@ -6,6 +6,9 @@ $(document).ready(function() {
         $("#notification_count").fadeOut("slow");
         return false;
     });
+    $("#camera-button").click(function(){
+      $(".photoSubmit").click();
+    });
 
     $(document).click(function(event)
                       {
@@ -15,6 +18,20 @@ $(document).ready(function() {
     $("#notificationContainer").click(function()
                                       {
         return false;
+    });
+
+    $(".photoSubmit").change(function(e){
+      $('#photoPreview').css({'visibility':'visible'});
+      var input = e.target
+      if(input != null ){
+        if(input.files && input.files[0]){
+          var reader = new FileReader();
+          reader.onload = function(e){
+            $(".imagePreview").attr("src", e.target.result);
+          }
+          reader.readAsDataURL(input.files[0]);
+        }
+      }
     });
 
     $(".follow").click(function(){
