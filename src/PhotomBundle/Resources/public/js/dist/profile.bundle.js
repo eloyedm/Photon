@@ -112,25 +112,36 @@
 	    });
 	});
 	function changetab(evt, tabName) {
-	    if(tabName.localeCompare("friend") == 0)
+	    if(tabName.localeCompare("followers") == 0)
 	    {
-	        document.getElementById('friend').style.display = "inline-block";
+	        document.getElementById('followers').style.display = "inline-block";
 	        document.getElementById('notification').style.display = "none";
 	        document.getElementById('profile').style.display = "none";
+	        document.getElementById('following').style.display = "none";
 	    }
 
 	    if(tabName.localeCompare("notification") == 0)
 	    {
 	        document.getElementById(tabName).style.display = "inline-block";
-	        document.getElementById('friend').style.display = "none";
+	        document.getElementById('following').style.display = "none";
 	        document.getElementById('profile').style.display = "none";
+	        document.getElementById('followers').style.display = "none";
 	    }
 
 	    if(tabName.localeCompare("profile") == 0)
 	    {
 	        document.getElementById(tabName).style.display = "inline-block";
 	        document.getElementById('notification').style.display = "none";
-	        document.getElementById('friend').style.display = "none";
+	        document.getElementById('following').style.display = "none";
+	        document.getElementById('followers').style.display = "none";
+	    }
+
+	    if(tabName.localeCompare("following") == 0)
+	    {
+	        document.getElementById(tabName).style.display = "inline-block";
+	        document.getElementById('notification').style.display = "none";
+	        document.getElementById('profile').style.display = "none";
+	        document.getElementById('followers').style.display = "none";
 	    }
 	}
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));

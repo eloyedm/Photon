@@ -27,7 +27,11 @@ nav{
     width: 100%;
 }
 
-#friend{
+#followers{
+    display:none;
+}
+
+#following{
     display:none;
 }
 
@@ -54,12 +58,6 @@ nav{
   height: 100%;
 }
 
-#style-notification {
-	margin-left: 4%;
-	margin-top: 0.3%;
-	position: relative;
-}
-
 .fa.fa-heart {
 	font-size: 20px;
     color: #373836;
@@ -83,14 +81,6 @@ nav{
     color:#00698C;
 }
 
-#style-user {
-	margin-left: 2%;
-	margin-top: 0.8%;
-	color: white;
-	font-weight: bold;
-	font-family: "Rockwell";
-}
-
 .fa.fa-camera {
 	font-size: 25px;
 	color: #0092B2;
@@ -99,11 +89,6 @@ nav{
 .fa.fa-video-camera {
 	font-size: 30px;
 	color: #0092B2;
-}
-
-#style-profile {
-	margin-left: 3%;
-	margin-top: 0.2%;
 }
 
  ul.tab {
@@ -116,28 +101,20 @@ nav{
 }
 
 .phrase-publication{
-    margin-left: 0%;
-    font-size: 109%;
-    margin-top: 0%;
-    margin-left: 1%;
-}
-
-.container-publications{
-    border-top: solid 2px rgba(37,33,28,0.3);
-    border-bottom: none;
-    border-right: none;
-    border-left: none;
-    margin-top: 0.5%;
-    overflow: auto;
+  margin-left: 0%;
+  font-size: 122%;
 }
 
 .container-publica{
-
     overflow: hidden;
     width: 7%;
     float: right;
     margin-right: 4%;
     height: 4%;
+}
+
+.hidden{
+  display: none;
 }
 
 #camera-button{
@@ -146,23 +123,24 @@ nav{
 }
 
 .container-camera{
+  margin-left: 0%;
+  width: auto;
+  float: left;
+  overflow: hidden;
+  margin-top: 0.5%;
+}
 
-    margin-left: 0%;
-    width: %;
-    float: left;
-    overflow: hidden;
-    margin-top: 0.5%;
+#photoPreview{
+  visibility: hidden;
+  height: 200px;
+}
+
+.imagePreviewContainer{
+  text-align: center;
 }
 
 #user-post{
     margin:0;
-}
-
-#container-form{
-    width: 58%;
-    margin-top: 0.2%;
-    margin-left: 6%;
-    padding-top: 0.3%;
 }
 
 #notificationContainer
@@ -248,15 +226,22 @@ height: 21px;
 }
 
 #public-button{
- width: 100%;
- height: 100%;
- color: white;
- font-size: 13px;
- background-color: #0092B2;
- border: none;
- font-weight: bold;
- font-style: italic;
- font-family: "Rockwell";
+  width: 106px;
+  height: 30px;
+  color: white;
+  font-size: 17px;
+  background-color: #0092B2;
+  border: none;
+  font-weight: bold;
+  font-style: italic;
+  font-family: "Rockwell";
+  float: right;
+  margin-top: 5px;
+}
+
+.modalFoot > .public-button{
+  width: 30%;
+  float: right;
 }
 
 #video-button{
@@ -271,7 +256,7 @@ height: 21px;
     top: 0%;
     float: left;
     margin-top: 4%;
-    margin-left: 1.5%;
+    margin-left: 1%;
 }
 
 #user-phrase{
@@ -281,7 +266,7 @@ height: 21px;
 }
 
 
-ul.tab li {float: left;width: 26%;}
+ul.tab li {float: left;width: 20%;}
 
 .container-user-image{
     position: absolute;
@@ -345,16 +330,24 @@ a {
     padding-bottom: 5%;
 }
 
-.container-publicationprofile{
-    width: 633.333px;
+.container-following{
+    width: 53%;
     height: auto;
-    display: inline;
-    margin-top: 0%;
+    margin-top: 2%;
     float: right;
-    margin-right: 9%;
-    padding-top: 2%;
-    padding-left: 2%;
+    margin-right: 3%;
     padding-bottom: 5%;
+}
+
+.container-publicationprofile{
+  width: 67.5%;
+  height: auto;
+  display: inline;
+  margin-top: 0%;
+  float: right;
+  margin-right: 0%;
+  padding-top: 2%;
+  padding-bottom: 5%;
 }
 
 .comentarios{
@@ -363,12 +356,6 @@ a {
     margin-top: 0;
     background-color: rgba(000,000,000,0.05);
     overflow: hidden;
-}
-
-#style-friendship{
-    /*! float: left; */
-    margin-left: 8%;
-    /*! margin-top:  0.5%; */
 }
 
 .list-content{
@@ -483,11 +470,9 @@ list-group-item img {
     display: none;
 }
 
-
-
 #text-public{
     width: 100%;
-    height: 10%;
+    height: 26px;
     padding-left: 1%;
     border: 1px solid rgba(33,32,28,0.3);
     font-family: "Rockwell";
@@ -498,15 +483,14 @@ list-group-item img {
     margin-left: 0%;
     margin-top: 0.3%;
     top: 0%;
-    width: 100%;
-    height: 4%;
+    height: 100%;
 }
 
 .container-publication{
     margin-top: 0.8%;
     margin-left: 0%;
     width: 100%;
-    height: 5%;
+    height: 30px;
 }
 
 #user-post{
@@ -514,35 +498,25 @@ list-group-item img {
 }
 
 .container-friend{
-    height: 27%;
-    margin-top: 25%;
+    height: 30%;
+    margin-top: 35%;
     text-align: center;
     margin-left: 0%;
     color: #5F5448;
     font-family: "Rockwell";
-    /*! border: 2px rgba(96, 85, 72, 0.40) solid; */
-    padding-top: 3%;
+    border: 2px rgba(96, 85, 72, 0.40) solid;
+    padding-top: 0%;
     font-size: 126%;
 }
 
 .container-public-user{
-
-    width: 100%;
-}
-
-.phrase-publication{
-    margin-left: 2%;
-    font-size: 122%;
+    width: 80%;
+    margin: 0 auto;
+    height:auto;
 }
 
 .user-name{
     font-weight: bold;
-}
-
-#user-phrase{
-    margin-left: 0.5%;
-    font-family: "Rockwell";
-    font-style:italic;
 }
 
 .user-image-publication{
@@ -556,17 +530,17 @@ list-group-item img {
 }
 
 .container-adbar{
-    display: inline-block;
-    width: 20%;
-    float:right;
-    height: 100%;
+  display: inline-block;
+  width: 15%;
+  float:right;
+  height: 100%;
 }
 
 .container-sidebar{
-    display: inline;
-    display: inline-block;
-    width: 20%;
-    margin-bottom: 3%;
+  display: inline;
+  display: inline-block;
+  width: 17.4%;
+  margin-bottom: 3%;
 }
 
 .container-infoUser{
@@ -627,11 +601,9 @@ list-group-item img {
 }
 
 #edit-info{
-    /*!  */
     border:none;
     height: 10%;
     width: 11%;
-    /*!  */
     float: right;
     margin-right: 14%;
 }
@@ -668,12 +640,6 @@ nav ul{
     overflow: hidden;
     margin: 0;
     height: 100%;
-}
-
-#user-phrase{
-    margin-left: 1%;
-    font-family: "Rockwell";
-    font-style:italic;
 }
 
 .list-group-comments li{
@@ -722,7 +688,7 @@ li{
     bottom: 10px;
     text-align: center;
     background: rgba(255,255,255,0.8);
-    border: 1px solid blue;
+    cursor:hand;
 }
 
 .followed{
@@ -731,6 +697,7 @@ li{
     position: absolute;
     right: 10px;
     bottom: 10px;
+    border: none;
     text-align: center;
     background: rgba(128,255,128,0.8);
     border: 1px solid green;
@@ -775,12 +742,15 @@ li{
 }
 
 #phrase-content{
-    margin-top: 0.8%;
-    margin-left: 2%;
+    margin-top: 2%;
+    float: left;
     font-family: "Rockwell";
     font-size: 146%;
     color: rgba(37,33,28,0.3);
     font-style: italic;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
 }
 
 #dislike-button{
@@ -845,19 +815,11 @@ button{
 }
 
 .container-publica{
-    width: 17%;
-    float: right;
-    margin-right: 0%;
-    height: 100%;
-    margin-top: 0.4%;
-}
-
-#container-form{
-    width: 55%;
-    margin-top: 0.1%;
-    margin-left: 12%;
-    padding-top: 0.3%;
-    /*! height: 9%; */
+  width: 100%;
+  float: right;
+  margin-right: 0%;
+  height: 100px;
+  margin-top: 0%;
 }
 
 .description-video{
@@ -906,21 +868,6 @@ button{
     background-color: rgba(000,000,000,0.03);
     height: 17%;
     margin-top: 0%;
-}
-
-#style-search{
-     background: url(../Imagenes/lupa.png) no-repeat 2% 50%;
-     border-bottom: 2px solid white;
-     /*! height: 4%; */
-     width: 100%;
-     padding-left: 6%;
-     border-top: none;
-     border-left: none;
-     border-right: none;
-     color: white;
-     font-size: 118%;
-     font-style: italic;
-     font-family:  "Rockwell";
 }
 
 #editProfileP{
