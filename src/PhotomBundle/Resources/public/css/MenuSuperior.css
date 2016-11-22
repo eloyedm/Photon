@@ -181,3 +181,12 @@ a {
       width: 70px;
       margin: 0;
 }
+
+.notificationCard{
+  position: fixed;
+  width: 10%;
+  height: 5%;
+  left: 2%;
+  bottom: 2%;
+  box-shadow: 5px 5px 5px 5px #888888;
+}

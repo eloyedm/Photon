@@ -17,7 +17,8 @@ module.exports = {
             'updateUserInfo': path + '/js/Perfil/updateUserInfo.js',
             'commentView': path + '/js/views/commentView.js',
             'reportModalView': path + '/js/views/reportModalView.js',
-            'menu': path + '/js/Menu.js'
+            'menu': path + '/js/Menu.js',
+            'notificationView': path + '/js/views/notificationView.js'
         }
     },
     output: {

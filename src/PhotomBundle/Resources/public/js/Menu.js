@@ -1,4 +1,4 @@
-define(['jquery'],  function($){
+define(['jquery', 'notificationView'],  function($, notificationView){
  $(document).ready(function(){
   $("#style-search").keyup(function(e){
     var term = e.target.value;
@@ -31,5 +31,17 @@ define(['jquery'],  function($){
       }
     });
   });
+
+  window.setInterval(function(){
+    $.ajax({
+      method: "GET",
+      url: "/get/notifications",
+      success: function(){
+        var notification = new notificationView();
+      }
+    });
+
+
+  }, 3000)
 });
 });

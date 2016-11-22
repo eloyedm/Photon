@@ -14060,7 +14060,7 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function($){
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, notificationView){
 	 $(document).ready(function(){
 	  $("#style-search").keyup(function(e){
 	    var term = e.target.value;
@@ -14093,7 +14093,45 @@
 	      }
 	    });
 	  });
+
+	  window.setInterval(function(){
+	    $.ajax({
+	      method: "GET",
+	      url: "/get/notifications",
+	      success: function(){
+	        var notification = new notificationView();
+	      }
+	    });
+
+
+	  }, 3000)
 	});
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 8 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function($,backbone){
+	    var notificationView = Backbone.View.extend({
+	      tagName: "div",
+	      initialize: function(){
+	        this.$el.addClass("notificationCard");
+	        var notificacion = $("<span />", {
+	          text: "Sandy te dio like"
+	        });
+
+	        this.$el.append(notificacion);
+	        this.render();
+	      },
+
+	      render: function(){
+	        $("body").append(this.$el);
+	      }
+	    });
+
+	    return notificationView;
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 

@@ -19,6 +19,21 @@
 {% else %}
   {% set perfil = "data:image/jpeg;base64," ~ usuario.perfilUsuario %}
 {% endif %}
+{% if seguidores is not defined %}
+  {% set seguidores = '' %}
+{% else %}
+  {% set seguidores = seguidores %}
+{% endif %}
+{% if seguidos is not defined %}
+  {% set seguidos = '' %}
+{% else %}
+  {% set seguidos = seguidos %}
+{% endif %}
+{% if publicaciones is not defined %}
+  {% set publicaciones = '' %}
+{% else %}
+  {% set publicaciones = publicaciones %}
+{% endif %}
 
 {% block head %}
   <title>Photon</title>
@@ -170,6 +185,9 @@
              </div>
              <div id="phrase-content">TU MUNDO ACTUALIZADO</div>
            {# no variables will be accessible #}
+           {% for publicacion in publicaciones %}
+             {% include 'PhotomBundle::CardPosts.html.twig' with {'publicacion': publicacion} %}
+           {% endfor %}
            </section>
     <section id="notification" class="container-notificationsuser">
                        <table class="list-friend">

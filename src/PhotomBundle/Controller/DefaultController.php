@@ -27,6 +27,19 @@ class DefaultController extends Controller
 
         return $conn;
     }
+
+    public function resizeImage($image, $newSize){
+      list($width, $height) = getimagesizefromstring($image);
+      $new_width = $width*$newSize;
+      $new_height = $height*$newSize;
+      $origin = imagecreatefromstring($image);
+      $image = imagescale($origin, $new_width, $new_height);
+      ob_start();
+      imagejpeg($image);
+      $contents = ob_get_contents();
+      ob_end_clean();
+      return $contents;
+    }
     /**
      * @Route("/")
      */
@@ -39,7 +52,7 @@ class DefaultController extends Controller
       // $query = $connTarget->prepare("SELECT idUsuarioContenido, username, imagenContenido, descripcioncontenido, idContenido FROM Contenido JOIN Usuario ON Contenido.idUsuarioContenido = Usuario.id ORDER BY idContenido DESC");
       // $query->execute();
       // $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-      // $result =  $query->fetchAll();
+      // $result =  $query->fetchAll();$post['perfilUsuario']
       // foreach ($result as $key => $post) {
       //   $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
       // }
@@ -60,8 +73,9 @@ class DefaultController extends Controller
       $friendsList = $friends->fetchAll();
       $connTarget = null;
       foreach ($result as $key => $post) {
+        $newImage = $this->resizeImage($post['perfilUsuario'], 0.1);
         $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
-        $result[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
+        $result[$key]['perfilUsuario'] = base64_encode($newImage);
         $idPub = $result[$key]['idContenido'];
         $connTarget = $this->connectToDB();
         $comments = $connTarget->prepare("CALL displayPublicacionesAmigos(:Pub)");
@@ -70,7 +84,8 @@ class DefaultController extends Controller
         $commentsResult = $comments->setFetchMode(PDO::FETCH_ASSOC);
         $commentsResult = $comments->fetchAll();
         foreach($commentsResult as $keyC => $commen){
-          $commentsResult[$keyC]['FotoComentarista'] = base64_encode($commen['FotoComentarista']);
+          $newComment = $this->resizeImage($commen['FotoComentarista'], 0.1);
+          $commentsResult[$keyC]['FotoComentarista'] = base64_encode($newComment);
         }
         $connTarget = null;
         array_push($result[$key], $commentsResult);
@@ -219,6 +234,8 @@ class DefaultController extends Controller
        $email = $parameters->get("email");
        $about = $parameters->get("about");
 
+       dump($usuario, $userName, $name, $birthDate, $country, $city, $work, $email, $about);
+       die();
       //  $connTarget = $this->connectToDB();
       //  $query = $connTarget->prepare("UPDATE Usuario SET username= :userName, nombreUsuario= :name, email= :email, descripcionUsuario=:about WHERE id=:usuario");
       //  $query->bindParam(":usuario", $usuario);
@@ -254,7 +271,7 @@ class DefaultController extends Controller
          $id = $this->getUser()->getId();
          $file_content = file_get_contents($foto->getPathName());
          $connTarget = $this->connectToDB();
-         $query = $connTarget->prepare("UPDATE Usuario SET perfilUsuario= :foto WHERE id= :idUsuario");
+         $query = $connTarget->prepare("CALL editProfileImage(:foto, :idUsuario)");
          $query->bindParam(':foto', $file_content);
          $query->bindParam(':idUsuario', $id);
          $query->execute();
@@ -275,7 +292,7 @@ class DefaultController extends Controller
          $id = $this->getUser()->getId();
          $file_content = file_get_contents($foto->getPathName());
          $connTarget = $this->connectToDB();
-         $query = $connTarget->prepare("UPDATE Usuario SET bannerUsuario= :foto WHERE id= :idUsuario");
+         $query = $connTarget->prepare("CALL editBanner(:foto, :idUsuario)");
          $query->bindParam(':foto', $file_content);
          $query->bindParam(':idUsuario', $id);
          $query->execute();
@@ -465,7 +482,7 @@ class DefaultController extends Controller
       {
         $usuario = $this->getUser()->getId();
         $connTarget = $this->connectToDB();
-        $query = $connTarget->prepare("SELECT id, username, nombreUsuario, perfilUsuario, bannerUsuario, email, generoUsuario FROM Usuario WHERE id = :usuario");
+        $query = $connTarget->prepare("CALL perfilCargar(:usuario)");
         $query->bindParam(":usuario", $usuario);
         $query->execute();
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
@@ -493,12 +510,26 @@ class DefaultController extends Controller
         foreach ($seguidos as $key => $value) {
           $seguidos[$key]['perfilUsuario'] = base64_encode($value['perfilUsuario']);
         }
+
+        $connTarget = $this->connectToDB();
+        $queryPublicaciones = $connTarget->prepare("CALL getPublicationsPropia(:idUsuario)");
+        $queryPublicaciones->bindParam(":idUsuario", $usuario);
+        $queryPublicaciones->execute();
+        $publicaciones = $queryPublicaciones->setFetchMode(PDO::FETCH_ASSOC);
+        $publicaciones =  $queryPublicaciones->fetchAll();
+        $connTarget = null;
+        foreach ($publicaciones as $key => $value) {
+          $newPostImage = $this->resizeImage($value['perfilUsuario'],0.3);
+          $publicaciones[$key]['perfilUsuario'] = base64_encode($newPostImage);
+          $publicaciones[$key]['imagenContenido'] = base64_encode($value['imagenContenido']);
+        }
         return $this->render('PhotomBundle::Profile.html.twig',
           array(
             'usuario'=> $result[0],
             'editable' => true,
             'seguidores' => $seguidores,
-            'seguidos' => $seguidos
+            'seguidos' => $seguidos,
+            'publicaciones' => $publicaciones
           ));
       }
 
@@ -657,5 +688,31 @@ class DefaultController extends Controller
           'usuarios' => $resultUsers,
           'posts' => $resultPosts
         ));
+      }
+
+      /**
+      * @Route("/get/notifications")
+      */
+      public function getNotificationsAction(Request $request){
+        $usuario = $this->getuser()->getId();
+        $connTarget = $this->connectToDB();
+        $usuario = $this->getUser()->getId();
+        $query = $connTarget->prepare("CALL getNotificationUser(:user)");
+        $query->bindParam(":user", $usuario);
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result =  $query->fetchAll();
+        $session = $this->get('session');
+        if($session->get('notifId')){
+          if($session->get('notifId') != end($result)){
+            return new JsonResponse(array(
+              'notificacion' => end($result)
+            ));
+          }
+        }
+        else{
+          $this->get('session')->set('notifId', end($result));
+        }
+        die();
       }
 }
