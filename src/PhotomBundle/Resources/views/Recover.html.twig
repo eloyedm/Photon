@@ -1,15 +1,21 @@
 {% block stylesheets %}
-
+  <link rel="stylesheet" href="{{ asset('bundles/photom/css/ResetPassword.css')}}" media="screen" title="no title" charset="utf-8">
 {% endblock %}
 {% block javascripts %}
     <script type="text/javascript" src="{{ asset("bundles/photom/js/dist/recover.bundle.js") }}"> </script>
 {% endblock %}
 {% block Body %}
+<section class="box-login">
   <div id="mainContainer">
-    <span> Por favor, introduce tu nombre de usuario </span>
-    <input type="text" id="username" name="username" value="">
-    <button type="submit" id="getPreguntas" name="button">Enviar</button>
-    <form class="updatePass" action="/update/password" method="post" name="updatePassword">
-    </form>
+    <div id="container">
+    <div class="porfas"> Por favor, introduce tu nombre de usuario </div>
+  <div>  <input type="text" id="username" name="username" value="" required></div>
+  <div  class="button">  <button type="submit" id="getPreguntas" class="style-submit" name="button">Enviar</button></div>
   </div>
+  <div class="update">
+  <form class="updatePass" action="/update/password" method="post" name="updatePassword">
+  </form>
+</div>
+  </div>
+</section>
 {% endblock %}

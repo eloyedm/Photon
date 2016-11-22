@@ -13,6 +13,7 @@ define(['jquery'],  function($) {
             "user": user
           },
           success: function(data){
+            $('#container').css({"visibility":"hidden"});
             console.log(data.questions);
             $.each(data.questions, function(){
               var container = $("<div />", {
@@ -52,7 +53,8 @@ define(['jquery'],  function($) {
 
             var enviar = $("<button />",{
               type: "submit",
-              text: "Reestablecer"
+              text: "Reestablecer",
+              class: "style-submit"
             });
 
             var usuarioName = $("<input />",{
