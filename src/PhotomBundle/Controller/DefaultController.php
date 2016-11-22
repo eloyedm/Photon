@@ -88,6 +88,14 @@ class DefaultController extends Controller
           $commentsResult[$keyC]['FotoComentarista'] = base64_encode($newComment);
         }
         $connTarget = null;
+        if($post['username_canonical'] == $this->getUser()->getUsernameCanonical()){
+          $own = true;
+          array_push($result[$key], $own);
+        }
+        else{
+          $own = false;
+          array_push($result[$key], $own);
+        }
         array_push($result[$key], $commentsResult);
       }
       return $this->render('PhotomBundle::Home.html.twig', array(
@@ -703,16 +711,34 @@ class DefaultController extends Controller
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result =  $query->fetchAll();
         $session = $this->get('session');
+        dump($session->get('notifId'));
+        dump(end($result)['idNotificacion']);
         if($session->get('notifId')){
-          if($session->get('notifId') != end($result)){
+          if($session->get('notifId') != end($result)['idNotificacion']){
+            $this->get('session')->set('notifId', end($result)['idNotificacion']);
+            end($result)['perfilUsuario'] = base64_encode(end($result)['perfilUsuario']);
+            end($result)['username'] = utf8_encode(end($result)['username']);
+            end($result)['username_canonical'] = utf8_encode(end($result)['username_canonical']);
+            end($result)['nombreUsuario'] = utf8_encode(end($result)['nombreUsuario']);
+            end($result)['comentarioNotificacion'] = utf8_encode(end($result)['comentarioNotificacion']);
             return new JsonResponse(array(
-              'notificacion' => end($result)
+              'user' => end($result)['username'],
+              'username_canonical' => end($result)['username_canonical'],
+              'nombreUsuario' => end($result)['nombreUsuario'],
+              'idContenidoNotificacion' => end($result)['idContenidoNotificacion'],
+              'comentarioNotificacion' => end($result)['comentarioNotificacion'],
+              'gustaNotificacion' => end($result)['gustaNotificacion'],
+              'id' => end($result)['idNotificacion']
             ));
+          }
+          else{
+            return new Response('ERROR', Response::HTTP_NOT_FOUND);
           }
         }
         else{
-          $this->get('session')->set('notifId', end($result));
+          $this->get('session')->set('notifId', end($result)['idNotificacion']);
+          return new Response('ERROR', Response::HTTP_NOT_FOUND);
         }
-        die();
+
       }
 }

@@ -13899,13 +13899,22 @@
 	    $.ajax({
 	      method: "GET",
 	      url: "/get/notifications",
-	      success: function(){
-	        var notification = new notificationView();
+	      datatype: "json",
+	      success: function(data){
+	        var notification = new notificationView({
+	          "autor": data.user,
+	          "comentario": data.comentarioNotificacion,
+	          'gusta': data.gustaNotificacion,
+	          'id': data.id,
+	          'idContenido': data.idContenidoNotificacion
+	        });
 	      }
 	    });
 
 
-	  }, 3000)
+	  }, 5000)
+
+
 	});
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -13917,17 +13926,44 @@
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function($,backbone){
 	    var notificationView = Backbone.View.extend({
 	      tagName: "div",
-	      initialize: function(){
+	      user: "",
+	      contenido: "",
+	      comentario: "",
+	      like: "",
+	      idNotif: "",
+	      initialize: function(notificacion){
+	        this.user = notificacion['autor'];
+	        this.comentario = notificacion['comentario'];
+	        this.like = notificacion['gusta']
+	        this.contenido = notificacion['idContenido'];
+	        this.idNotif = notificacion['id'];
 	        this.$el.addClass("notificationCard");
-	        var notificacion = $("<span />", {
-	          text: "Sandy te dio like"
-	        });
-
 	        this.$el.append(notificacion);
 	        this.render();
 	      },
 
 	      render: function(){
+	        var accion = "";
+	        if(this.like == ""){
+	          accion = " le gusta tu publicacion";
+	        }
+	        else{
+	          accion = " comento tu publicacion";
+	        }
+
+	        var usuario =  this.user;
+
+	        var contenidoNotif = $("<span />",{
+	            class: "contenidoNotificacion",
+	            text: usuario + accion
+	        });
+
+	        var link = $("<a />",{
+	          href: "/detail/content/"+this.contenido
+	        });
+
+	        link.append(contenidoNotif);
+	        this.$el.append(link);
 	        $("body").append(this.$el);
 	      }
 	    });

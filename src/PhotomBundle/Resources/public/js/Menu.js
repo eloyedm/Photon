@@ -36,12 +36,21 @@ define(['jquery', 'notificationView'],  function($, notificationView){
     $.ajax({
       method: "GET",
       url: "/get/notifications",
-      success: function(){
-        var notification = new notificationView();
+      datatype: "json",
+      success: function(data){
+        var notification = new notificationView({
+          "autor": data.user,
+          "comentario": data.comentarioNotificacion,
+          'gusta': data.gustaNotificacion,
+          'id': data.id,
+          'idContenido': data.idContenidoNotificacion
+        });
       }
     });
 
 
-  }, 3000)
+  }, 5000)
+
+
 });
 });
