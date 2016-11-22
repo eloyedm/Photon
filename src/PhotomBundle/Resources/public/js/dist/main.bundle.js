@@ -14060,7 +14060,7 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, notificationView){
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(10)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, notificationView){
 	 $(document).ready(function(){
 	  $("#style-search").keyup(function(e){
 	    var term = e.target.value;
@@ -14094,6 +14094,7 @@
 	    });
 	  });
 
+	  var chequeado = 0
 	  window.setInterval(function(){
 	    $.ajax({
 	      method: "GET",
@@ -14107,7 +14108,18 @@
 	          'id': data.id,
 	          'idContenido': data.idContenidoNotificacion
 	        });
+	        if(chequeado == 0){chequeado=1;}
+	      },
+	      error: function(){
+	        if(chequeado == 2){
+	          $(".notificationCard").fadeOut("slow",function(){
+	            $(".notificationCard").remove();
+	          });
+
+	        }
+	        if(chequeado == 1){chequeado=2;}
 	      }
+
 	    });
 
 
@@ -14119,7 +14131,9 @@
 
 
 /***/ },
-/* 8 */
+/* 8 */,
+/* 9 */,
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function($,backbone){

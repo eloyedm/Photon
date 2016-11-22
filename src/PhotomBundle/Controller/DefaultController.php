@@ -90,11 +90,11 @@ class DefaultController extends Controller
         $connTarget = null;
         if($post['username_canonical'] == $this->getUser()->getUsernameCanonical()){
           $own = true;
-          array_push($result[$key], $own);
+          $result[$key]['own'] = $own;
         }
         else{
           $own = false;
-          array_push($result[$key], $own);
+          $result[$key]['own'] = $own;
         }
         array_push($result[$key], $commentsResult);
       }
@@ -131,14 +131,13 @@ class DefaultController extends Controller
             $connTarget = null;
           // }
         }
-        elseif ($type == "video") {
+        elseif ($type == "video" || $type == "octet-stream") {
           $fotoName = md5(uniqid()).'.'.$foto->guessExtension();
           $foto->move($this->getParameter('videos_directorio'), $fotoName);
           $connTarget = $this->connectToDB();
-          $query = $connTarget->prepare("INSERT INTO Contenido(nombreContenido, videoContenido, descripcionContenido, idUsuarioContenido)
-                                  VALUES(:nombre,:imagen, :descripcion, :idUsuario)");
+          $query = $connTarget->prepare("CALL insertContent(:nombre, :video, :descripcion, NULL, :idUsuario)");
           $query->bindParam(':nombre', $titulo);
-          $query->bindParam(':imagen', $fotoName);
+          $query->bindParam(':video', $fotoName);
           $query->bindParam(':descripcion', $pieFoto);
           $query->bindParam(':idUsuario', $usuario);
           $query->execute();
@@ -195,6 +194,40 @@ class DefaultController extends Controller
 
       return new JsonResponse(array(
         "status"=> "ok"
+      ));
+    }
+
+    /**
+     * @Route("/detail/content/{idPub}")
+     */
+    public function detailContentAction(Request $request, $idPub){
+      $usuario = $this->getUser();
+      $name = $usuario->getUsernameCanonical();
+      $usuario = $usuario->getId();
+      $idPub = intval($idPub);
+      $connTarget = $this->connectToDB();
+      $query = $connTarget->prepare("CALL getDetail(:pub)");
+      $query->bindParam(":pub", $idPub);
+      $query->execute();
+      $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+      $result =  $query->fetchAll();
+      $result[0]['imagenContenido'] = base64_encode($result[0]['imagenContenido']);
+      $result[0]['perfilUsuario'] = base64_encode($result[0]['perfilUsuario']);
+      $connTarget = $this->connectToDB();
+      $query = $connTarget->prepare("CALL displayPublicacionesAmigos(:pub)");
+      $query->bindParam(":pub", $idPub);
+      $query->execute();
+      $resultComentarios = $query->setFetchMode(PDO::FETCH_ASSOC);
+      $resultComentarios =  $query->fetchAll();
+      foreach ($resultComentarios as $key => $value) {
+        $resultComentarios[$keyC]['FotoComentarista'] = base64_encode($value['FotoComentarista']);
+      }
+      array_push($result[0], $resultComentarios);
+      $result[0]['idContenido'] = $idPub;
+      $result[0]['username_canonical'] = $name;
+      $result[0]['own'] = true;
+      return $this->render("PhotomBundle::DetailPost.html.twig", array(
+        'inicio' => $result
       ));
     }
 
@@ -530,6 +563,14 @@ class DefaultController extends Controller
           $newPostImage = $this->resizeImage($value['perfilUsuario'],0.3);
           $publicaciones[$key]['perfilUsuario'] = base64_encode($newPostImage);
           $publicaciones[$key]['imagenContenido'] = base64_encode($value['imagenContenido']);
+          if($value['username_canonical'] == $this->getUser()->getUsernameCanonical()){
+            $own = true;
+            $publicaciones[$key]['own'] = $own;
+          }
+          else{
+            $own = false;
+            $publicaciones[$key]['own'] = $own;
+          }
         }
         return $this->render('PhotomBundle::Profile.html.twig',
           array(

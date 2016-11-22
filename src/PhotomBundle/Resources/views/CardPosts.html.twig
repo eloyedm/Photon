@@ -12,9 +12,17 @@
               <span class="user-name">{{ publicacion.username_canonical }}:</span>
             </div>
             <div class="descritpion-user-publication"><p class="description-video">{{ publicacion.descripcionContenido}} </p>
+              {% if publicacion.own == true %}
+              <button type="button" class="borrarContenido" name="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+              {% endif %}
             </div>
-
+            {% if publicacion.imagenContenido != NULL %}
             <img src="data:image/jpeg;base64,{{publicacion.imagenContenido}}" alt="Avatar" id="user-public-image">
+            {% else %}
+            <video src="uploads/videos/{{publicacion.videoContenido}}" controls="true" width="100%" >
+            </video>
+            {% endif %}
+
             <div class="container">
             <div class="container-interact-button">
               <button class="dislike-button" id="dislike-button" type="button"><i class="fa fa-thumbs-down" aria-hidden="true"></i>

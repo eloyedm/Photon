@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(9), __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, updateUserInfo, menu) {
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(8), __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, updateUserInfo, menu) {
 	$(document).ready(function() {
 	      $("#notificationLink").click(function()
 	                                 {
@@ -13861,7 +13861,7 @@
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(8)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, notificationView){
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(10)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, notificationView){
 	 $(document).ready(function(){
 	  $("#style-search").keyup(function(e){
 	    var term = e.target.value;
@@ -13895,6 +13895,7 @@
 	    });
 	  });
 
+	  var chequeado = 0
 	  window.setInterval(function(){
 	    $.ajax({
 	      method: "GET",
@@ -13908,7 +13909,18 @@
 	          'id': data.id,
 	          'idContenido': data.idContenidoNotificacion
 	        });
+	        if(chequeado == 0){chequeado=1;}
+	      },
+	      error: function(){
+	        if(chequeado == 2){
+	          $(".notificationCard").fadeOut("slow",function(){
+	            $(".notificationCard").remove();
+	          });
+
+	        }
+	        if(chequeado == 1){chequeado=2;}
 	      }
+
 	    });
 
 
@@ -13921,59 +13933,6 @@
 
 /***/ },
 /* 8 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function($,backbone){
-	    var notificationView = Backbone.View.extend({
-	      tagName: "div",
-	      user: "",
-	      contenido: "",
-	      comentario: "",
-	      like: "",
-	      idNotif: "",
-	      initialize: function(notificacion){
-	        this.user = notificacion['autor'];
-	        this.comentario = notificacion['comentario'];
-	        this.like = notificacion['gusta']
-	        this.contenido = notificacion['idContenido'];
-	        this.idNotif = notificacion['id'];
-	        this.$el.addClass("notificationCard");
-	        this.$el.append(notificacion);
-	        this.render();
-	      },
-
-	      render: function(){
-	        var accion = "";
-	        if(this.like == ""){
-	          accion = " le gusta tu publicacion";
-	        }
-	        else{
-	          accion = " comento tu publicacion";
-	        }
-
-	        var usuario =  this.user;
-
-	        var contenidoNotif = $("<span />",{
-	            class: "contenidoNotificacion",
-	            text: usuario + accion
-	        });
-
-	        var link = $("<a />",{
-	          href: "/detail/content/"+this.contenido
-	        });
-
-	        link.append(contenidoNotif);
-	        this.$el.append(link);
-	        $("body").append(this.$el);
-	      }
-	    });
-
-	    return notificationView;
-	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-
-
-/***/ },
-/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1)], __WEBPACK_AMD_DEFINE_RESULT__ = function($) {
@@ -14061,6 +14020,60 @@
 	      }
 	    });
 	  });
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 9 */,
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function($,backbone){
+	    var notificationView = Backbone.View.extend({
+	      tagName: "div",
+	      user: "",
+	      contenido: "",
+	      comentario: "",
+	      like: "",
+	      idNotif: "",
+	      initialize: function(notificacion){
+	        this.user = notificacion['autor'];
+	        this.comentario = notificacion['comentario'];
+	        this.like = notificacion['gusta']
+	        this.contenido = notificacion['idContenido'];
+	        this.idNotif = notificacion['id'];
+	        this.$el.addClass("notificationCard");
+	        this.$el.append(notificacion);
+	        this.render();
+	      },
+
+	      render: function(){
+	        var accion = "";
+	        if(this.like == ""){
+	          accion = " le gusta tu publicacion";
+	        }
+	        else{
+	          accion = " comento tu publicacion";
+	        }
+
+	        var usuario =  this.user;
+
+	        var contenidoNotif = $("<span />",{
+	            class: "contenidoNotificacion",
+	            text: usuario + accion
+	        });
+
+	        var link = $("<a />",{
+	          href: "/detail/content/"+this.contenido
+	        });
+
+	        link.append(contenidoNotif);
+	        this.$el.append(link);
+	        $("body").append(this.$el);
+	      }
+	    });
+
+	    return notificationView;
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
 

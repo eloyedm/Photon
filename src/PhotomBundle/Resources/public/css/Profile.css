@@ -840,6 +840,7 @@ button{
     padding-left: 1.5%;
     font-size: 90%;
     padding-right: 1.5%;
+    position: relative;
 }
 
 .form-comments{

@@ -166,4 +166,9 @@ button {
     font-size: 15px;
 }
 
+.borrarContenido{
+  right: 0;
+  position: absolute;
+}
+
 /*Aqui empiez el css del modal*/

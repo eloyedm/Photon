@@ -32,6 +32,7 @@ define(['jquery', 'notificationView'],  function($, notificationView){
     });
   });
 
+  var chequeado = 0
   window.setInterval(function(){
     $.ajax({
       method: "GET",
@@ -45,7 +46,18 @@ define(['jquery', 'notificationView'],  function($, notificationView){
           'id': data.id,
           'idContenido': data.idContenidoNotificacion
         });
+        if(chequeado == 0){chequeado=1;}
+      },
+      error: function(){
+        if(chequeado == 2){
+          $(".notificationCard").fadeOut("slow",function(){
+            $(".notificationCard").remove();
+          });
+
+        }
+        if(chequeado == 1){chequeado=2;}
       }
+
     });
 
 
