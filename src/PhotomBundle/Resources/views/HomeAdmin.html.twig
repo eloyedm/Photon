@@ -17,12 +17,16 @@
                 <th>Tiempo bloqueo</th>
                 <th>Bloquear</th>
             </tr>
-            <tr>
-                <td><button><img src="{{asset('bundles/photom/images/lineaA.png')}}"></button></td>
-                <td> Usuario ha sido reportado por <a href="">Privacidad de fotos violada y no controlada.</a></td>
-                 <td><input type="datetime" placeholder="04/08/2016" id="date"></td>
-                <td><button id="block-user"><img src="{{asset('bundles/photom/images/bloquear.png')}}"></button></td>
-            </tr>
+            {% for reporte in reportes %}
+              <tr>
+                  <td><button><img src="{{asset('bundles/photom/images/lineaA.png')}}"></button></td>
+                  <td> {{reporte.nombreUsuario}} ha sido reportado por <a href="/detail/content/{{ reporte.idContenidoReportado }}">{{ reporte.nombreRazon }}</a></td>
+                  <form class="blockUser" action="/admin/set/block" method="post">
+                    <td><input type="datetime" placeholder="04/08/2016" name="date" id="date"></td>
+                    <td><button type="submit" id="block-user"><img src="{{asset('bundles/photom/images/bloquear.png')}}"></button></td>
+                  </form>
+              </tr>
+            {% endfor %}
         </table>
     </section>
 </section>

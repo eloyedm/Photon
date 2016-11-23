@@ -612,7 +612,15 @@ class DefaultController extends Controller
      */
      public function homeAdminAction()
      {
-       return $this->render('PhotomBundle::HomeAdmin.html.twig');
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("CALL getProfileAdmin()");
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result = $query->fetchAll();
+        dump($result);
+        return $this->render('PhotomBundle::HomeAdmin.html.twig', array(
+          'reportes' => $result
+        ));
      }
 
      /**
@@ -781,5 +789,15 @@ class DefaultController extends Controller
           return new Response('ERROR', Response::HTTP_NOT_FOUND);
         }
 
+      }
+
+      //ADMIN
+
+      /**
+      * @Routr("/admin/set/block")
+      */
+      public function setBlockUser(Request $request){
+        $parameters = $request->request;
+        $dateFin = $parameter->get()
       }
 }
