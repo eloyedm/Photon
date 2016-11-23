@@ -12,7 +12,7 @@
 </section>
 <section class="box-login">
     <span>
-        <form action="{{ path("fos_user_security_check") }}" method="post">
+        <form action="{{ path("fos_user_security_check") }}" method="post" id="loginForm" onerror="alerta()">
             <div class="style-profiled">
               <img src="{{asset('bundles/photom/images/female.png')}}" class="style-profile"/>
             </div>
@@ -36,31 +36,14 @@
       <span class="style-register"><a href = "{{ path('fos_user_registration_register') }}" style="color:#a8c545"> ¡Registrate! </a></span>
     </div>
 </section>
+<script type="text/javascript">
+  function alerta(){
+    alert("no puedes entrar");
+  }
+</script>
 </body>
 {% endblock fos_user_content %}
 
 {% block Body %}
-<!-- <body class="background">
-<section class="background-overlay">
-</section>
-<section class="box-login">
-    <span>
-        <div> <img src="" id="logo-image" alt="no-image"></div>
-        <form method="post" action="">
-            <div class="style-profiled"> <img src="{{asset('bundles/photom/images/female.png')}}" class="style-profile"/></div>
-            <div class="conteiner-text"><input type="username" id ="style-username"></div>
-            <div class="conteiner-text"><input type="password" id="style-password"></div>
-            <span class="style-remember">  <input type = "checkbox" id="remember-check">
-               <span id="remember"><label>Recordarme</label></span>
-            </span>
-            <span class="style-forget"><a style="color:#0092b2" href="">¿Contraseña olvidada? </a></span>
-            <div><input type="submit" value ="Entrar" class="style-submit"></div>
-            </form>
-    </span>
-       <div class ="box-register">
-            <span class="style-pregunta"><label>¿Aun no estas en la familia photon?</label></span>
-          <span class="style-register"><a href = "" style="color:#a8c545"> ¡Registrate! </a></span>
-        </div>
-</section>
-</body> -->
+
 {% endblock %}

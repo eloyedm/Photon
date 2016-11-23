@@ -63,6 +63,7 @@ define(['jquery', 'Backbone', 'commentView', 'reportModalView'],  function($, ba
     $(".comment").each(function(){
       hashtags(this);
     });
+
   });
 
   function hashtags(comment){

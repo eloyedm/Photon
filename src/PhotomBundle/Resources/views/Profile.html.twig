@@ -99,6 +99,15 @@
                    {% endif %}
                   </div>
                  <div>
+
+                      <div class="info-privacidad">
+                        {% if usuario.privacidadUsuario == 1 %}
+                        <input type="checkbox" name="privacidad" checked value="1">
+                        {% else %}
+                          <input type="checkbox" name="privacidad" value="">
+                        {% endif %}
+                        <span> Cuenta publica </span>
+                      </div>
                      <div id="info-title"><t>Titulo: </t><t class="user-info" >Mrs.</t>
                      </div>
                      <div id="info-name"><t>Nombre: </t><t ><input type="text" class="user-info" readonly = "true" value="{{ usuario.nombreUsuario}}"></t>

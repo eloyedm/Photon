@@ -10,15 +10,14 @@ $(document).ready(function() {
       $(".photoSubmit").click();
     });
 
-    $(document).click(function(event)
-                      {
-                        console.log(event.target);
-        $("#notificationContainer").hide();
-    });
-    $("#notificationContainer").click(function()
-                                      {
-        return false;
-    });
+
+      $("html").click(function(event){
+          console.log(event.target);
+          $("#notificationContainer").hide();
+      });
+      $("#notificationContainer").click(function(){
+          return false;
+      });
 
     $(".photoSubmit").change(function(e){
       $('#photoPreview').css({'visibility':'visible'});
@@ -61,8 +60,37 @@ $(document).ready(function() {
       });
     });
 
+    $(".borrarContenido").click(function(){
+      var idPub = $(this).parent().parent().find(".idPub").text();
+      var card = $(this).parent().parent().parent();
+      console.log(idPub);
+      $.ajax({
+        type: "GET",
+        url: "/delete/content",
+        data: {
+          "idPub": idPub
+        },
+        success: function(){
+          console.log(card);
+        card.remove();
+        }
+      });
+    });
+
     $(".tablinks").click(function(event){
       changetab(event, $(this).attr("data"));
+    });
+
+    $(".info-privacidad input").change(function(){
+      var valor = 0;
+      valor = this.checked == true ? 1: 0;
+      $.ajax({
+        method: "GET",
+        url: "/user/set/privacidad",
+        data: {
+          "status": valor
+        }
+      });
     });
 });
 function changetab(evt, tabName) {

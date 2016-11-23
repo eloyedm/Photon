@@ -198,6 +198,26 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/delete/content")
+     */
+    public function deleteContentAction(Request $request){
+      if($this->isGranted("ROLE_USER")){
+        $idPub = $request->query->get('idPub');
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("CALL deleteContent(:pub)");
+        $query->bindParam(':pub', $idPub);
+        $query->execute();
+        $connTarget = null;
+        return new JsonResponse(array(
+          "status"=> "ok"
+        ));
+      }
+      else{
+        return new Response('ERROR', Response::HTTP_ERROR);
+      }
+    }
+
+    /**
      * @Route("/detail/content/{idPub}")
      */
     public function detailContentAction(Request $request, $idPub){
@@ -340,6 +360,20 @@ class DefaultController extends Controller
          $connTarget = null;
         }
        return $this->redirect("/perfil");
+     }
+
+     /**
+     * @Route("/user/set/privacidad")
+     */
+     public function userSetPrivacidadAction(Request $request){
+       $usuario = $this->getUser()->getId();
+       $status = $request->query->get("status");
+       $connTarget = $this->connectToDB();
+       $query = $connTarget->prepare("CALL setPrivacy(:id, :status)");
+       $query->bindParam(":id", $usuario);
+       $query->bindParam(":status", $status);
+       $query->execute();
+       return new Response('OK', Response::HTTP_OK);
      }
     //PAGES
 
@@ -794,10 +828,24 @@ class DefaultController extends Controller
       //ADMIN
 
       /**
-      * @Routr("/admin/set/block")
+      * @Route("/admin/set/block")
       */
       public function setBlockUser(Request $request){
         $parameters = $request->request;
-        $dateFin = $parameter->get()
+        $dateFin = $parameters->get('date');
+        $comentario = $parameters->get('comentario');
+        $reporte = $parameters->get('idReporte');
+        $reportado = $parameters->get('idUsuarioReporte');
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("CALL blockUser(:reporte, :usuarioReportado, :comentario, :tiempo)");
+        $query->bindParam(":reporte", $reporte);
+        $query->bindParam(":usuarioReportado", $reportado);
+        $query->bindParam(":comentario", $comentario);
+        $query->bindParam(":tiempo", $dateFin);
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result =  $query->fetchAll();
+
+        return $this->redirect("/admin");
       }
 }

@@ -15,6 +15,7 @@
                 <th>Visto</th>
                 <th>Descripcion</th>
                 <th>Tiempo bloqueo</th>
+                <th>Comentario adicional(opcional)</th>
                 <th>Bloquear</th>
             </tr>
             {% for reporte in reportes %}
@@ -22,8 +23,11 @@
                   <td><button><img src="{{asset('bundles/photom/images/lineaA.png')}}"></button></td>
                   <td> {{reporte.nombreUsuario}} ha sido reportado por <a href="/detail/content/{{ reporte.idContenidoReportado }}">{{ reporte.nombreRazon }}</a></td>
                   <form class="blockUser" action="/admin/set/block" method="post">
-                    <td><input type="datetime" placeholder="04/08/2016" name="date" id="date"></td>
+                    <td><input type="date" placeholder="04/08/2016" name="date" id="date"></td>
+                    <td><input type="text" name="comentario" value=""><td>
                     <td><button type="submit" id="block-user"><img src="{{asset('bundles/photom/images/bloquear.png')}}"></button></td>
+                    <input type="hidden" name="idReporte" value="{{ reporte.idReporte }}">
+                    <input type="hidden" name="idUsuarioReporte" value="{{ reporte.idContenidoReportado }}">
                   </form>
               </tr>
             {% endfor %}
