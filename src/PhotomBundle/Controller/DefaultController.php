@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        // $username = "superphoton";
-        // $password = "Homecoming#96";
-        $username = 'root';
-        $password = "homecoming96";
+        $username = "superphoton";
+        $password = "Homecoming#96";
+        // $username = 'root';
+        // $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -796,6 +796,14 @@ class DefaultController extends Controller
             $commentsResult[$keyC]['FotoComentarista'] = base64_encode($commen['FotoComentarista']);
           }
           $connTarget = null;
+          if($post['username_canonical'] == $this->getUser()->getUsernameCanonical()){
+            $own = true;
+            $resultPosts[$key]['own'] = $own;
+          }
+          else{
+            $own = false;
+            $resultPosts[$key]['own'] = $own;
+          }
           array_push($resultPosts[$key], $commentsResult);
         }
         return $this->render('PhotomBundle::Search.html.twig', array(
