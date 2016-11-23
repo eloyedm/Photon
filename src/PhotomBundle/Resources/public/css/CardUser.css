@@ -112,6 +112,12 @@ button {
 .list-group-comments li {
     float: none;
     margin-top: 0;
+    height: auto;
+}
+
+.fechaComentario{
+    float: right;
+    font-size: 12px;
 }
 
 .list-group-comments .list-group-item img {

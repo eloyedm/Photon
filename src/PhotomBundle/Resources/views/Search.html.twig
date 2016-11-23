@@ -18,6 +18,18 @@
 <section id="searchResultsContainer">
   <div class="">
     Estos fueron los resultados de tu busqueda
+
+    <div class="serchDates">
+      <form class="dates" action="/search" method="get">
+        <div class="fechaInicio">
+
+        </div>
+        <span> Fecha inicio</span><br><input type="date" name="fechaIni" value="">
+        <span> Fecha final</span><br><input type="date" name="fechaFin" value="">
+
+        <button type="submit" name="button"></button>
+      </form>
+    </div>
   </div>
   <section id="usersResults">
     {% for user in usuarios %}
