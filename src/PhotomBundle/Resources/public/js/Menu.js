@@ -59,8 +59,6 @@ define(['jquery', 'notificationView'],  function($, notificationView){
       }
 
     });
-
-
   }, 5000)
 
 

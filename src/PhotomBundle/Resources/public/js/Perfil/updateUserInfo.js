@@ -15,6 +15,8 @@ define(['jquery'],  function($) {
       $(".container-infoUser").prepend(saveButton);
       saveButton.click(function(){
         console.log($("#info-birthDate input").val());
+        var valor = 0;
+        valor = $(".info-privacidad input").checked == true ? 1: 0;
         if(confirm("¿Estas seguro de que quieres guardar los cambios?")){
           $.ajax({
             method: "POST",
@@ -24,12 +26,14 @@ define(['jquery'],  function($) {
               "title": $("#info-title input").val(),
               "userName": $("#username-profile").text(),
               "name": $("#info-name input").val(),
+              "gender": $("#info-gender").val(),
               "birthDate": $("#info-birthDate input").val(),
-              "country": $("#info-country input").val(),
+              "country": $("#country").val(),
               "city": $("#info-city input").val(),
               "work": $("#info-work input").val(),
               "email": $("#info-email input").val(),
-              "about": $("#info-about input").val()
+              "about": $("#info-about input").val(),
+              "privacy": valor
             },
             success: function(data){
               console.log(data);
@@ -42,6 +46,8 @@ define(['jquery'],  function($) {
         }
       });
       $(".user-info").removeAttr("readonly");
+      $("#country").attr("disabled", false);
+      $("#info-gender").removeClass("hidden");
       $(".user-info#username-profile").attr("contentEditable", "true");
     });
 

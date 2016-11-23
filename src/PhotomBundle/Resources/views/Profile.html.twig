@@ -114,9 +114,15 @@
                      </div>
                      <div id="info-birthDate"><t>Fecha Nacimiento: </t><t> <input type="date" class="user-info" readonly="true" value="{{ fechaNacimiento }}"</t>
                      </div>
-                     <div id="info-country"><t>Pais: </t><t> <input type="text" class="user-info" readonly="true" value="México" ></t>
+                     <div id="info-country"><t>Pais: </t>
+                       <select disabled id="country" value={{ usuario.idPaisUsuario}}>
+                         {% for pais in paises %}
+                          <option value="{{ pais.idPais}}">{{ pais.nombrePais }}</option>
+                         {% endfor %}
+                       </select>
+                    </t>
                      </div>
-                     <div id="info-city"><t>Ciudad: </t><t><input type="text" class="user-info" readonly="true" value="Monterrey"></t>
+                     <div id="info-city"><t>Domicilio: </t><t><input type="text" class="user-info" readonly="true" value="{{ domicilio }}"></t>
                      </div>
                      <div id="info-work"><t>Empresa: </t><t><input type="text" class="user-info" readpnly="true" value="Milenio" ></t></div>
                      <div id="info-email"><t>Email: </t><t> <input tpye="email" class="user-info" readonly="true" value="{{ usuario.email }}"></t>
@@ -128,6 +134,10 @@
                        {% else %}
                        <i class="fa fa-venus" aria-hidden="true"></i>
                        {% endif %}
+                       <select id="info-gender" class="hidden" default=name="gender">
+                        <option value=0> M </option>
+                        <option value=1> F </option>
+                       </select>
                      </div>
                    </div>
                  </div>

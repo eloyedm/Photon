@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        $username = "superphoton";
-        $password = "Homecoming#96";
-        // $username = 'root';
-        // $password = "homecoming96";
+        // $username = "superphoton";
+        // $password = "Homecoming#96";
+        $username = 'root';
+        $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -262,16 +262,12 @@ class DefaultController extends Controller
       $usuario = $usuario->getId();
       $seguido = $request->query->get('seguirA');
       $connTarget = $this->connectToDB();
-      // $query = $connTarget->prepare("SELECT id FROM Usuario WHERE username_canonical = :usuario");
-      // $query->bindParam(":usuario", $seguido);
-      // $query->execute();
       $query = $connTarget->prepare("CALL followUser(:name, :id, @res)");
       $query->bindParam(":name", $seguido);
       $query->bindParam(":id", $usuario);
       $query->execute();
       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
       $result =  $query->fetchAll();
-      $connTarget = null;
       $connTarget = null;
       return new JsonResponse(array(
         'status' => $result[0]['isFollowing'],
@@ -288,24 +284,28 @@ class DefaultController extends Controller
        $title = $parameters->get("title");
        $userName = $parameters->get("userName");
        $name = $parameters->get("name");
+       $gender = $parameters->get("gender");
        $birthDate = $parameters->get("birthDate");
        $country = $parameters->get("country");
-       $city = $parameters->get("city");
+       $domicilio = $parameters->get("city");
        $work = $parameters->get("work");
        $email = $parameters->get("email");
        $about = $parameters->get("about");
-
-       dump($usuario, $userName, $name, $birthDate, $country, $city, $work, $email, $about);
-       die();
-      //  $connTarget = $this->connectToDB();
-      //  $query = $connTarget->prepare("UPDATE Usuario SET username= :userName, nombreUsuario= :name, email= :email, descripcionUsuario=:about WHERE id=:usuario");
-      //  $query->bindParam(":usuario", $usuario);
-      //  $query->bindParam(":userName", $userName);
-      //  $query->bindParam(":name", $nombreUsuario);
-      //  $query->bindParam(":email", $email);
-      //  $query->bindParam(":about", $about);
-      //  $query->execute();
-      //  $connTarget = null;
+       $privacy = $parameters->get("privacy");
+       $connTarget = $this->connectToDB();
+       $query = $connTarget->prepare("CALL updateUser(:usuario, :userName, :email, :name, :gender, :date, :home, :privacy, :about, :country) ");
+       $query->bindParam(":usuario", $usuario);
+       $query->bindParam(":userName", $userName);
+       $query->bindParam(":name", $name);
+       $query->bindParam(":email", $email);
+       $query->bindParam(":gender", $gender);
+       $query->bindParam(":date", $birthDate);
+       $query->bindParam(":home", $domicilio);
+       $query->bindParam(":privacy", $privacy);
+       $query->bindParam(":about", $about);
+       $query->bindParam(":country", $country);
+       $query->execute();
+       $connTarget = null;
       return new JsonResponse(array(
         'usuario' => $usuario,
         'title' => $title,
@@ -313,10 +313,11 @@ class DefaultController extends Controller
         'name' => $name,
         'birthDate' => $birthDate,
         'country' => $country,
-        'city' => $city,
+        'domicilio' => $domicilio,
         'work' => $work,
         'email' => $email,
-        'about' => $about
+        'about' => $about,
+        'gender' => $gender
       ));
      }
 
@@ -482,7 +483,7 @@ class DefaultController extends Controller
             $pregunta = $key;
             $query->execute();
           }
-          return $this->redirect("/");
+          return $this->redirect("/perfil");
         }
 
       }
@@ -594,8 +595,8 @@ class DefaultController extends Controller
         $publicaciones =  $queryPublicaciones->fetchAll();
         $connTarget = null;
         foreach ($publicaciones as $key => $value) {
-          $newPostImage = $this->resizeImage($value['perfilUsuario'],0.3);
-          $publicaciones[$key]['perfilUsuario'] = base64_encode($newPostImage);
+          // $newPostImage = $this->resizeImage($value['perfilUsuario'],0.3);
+          $publicaciones[$key]['perfilUsuario'] = base64_encode($value['perfilUsuario']);
           $publicaciones[$key]['imagenContenido'] = base64_encode($value['imagenContenido']);
           if($value['username_canonical'] == $this->getUser()->getUsernameCanonical()){
             $own = true;
@@ -606,13 +607,20 @@ class DefaultController extends Controller
             $publicaciones[$key]['own'] = $own;
           }
         }
+        $connTarget = $this->connectToDB();
+        $queryPaises = $connTarget->prepare("SELECT idPais, nombrePais FROM getPaises");
+        $queryPaises->execute();
+        $paises = $queryPaises->setFetchMode(PDO::FETCH_ASSOC);
+        $paises =  $queryPaises->fetchAll();
+        $connTarget = null;
         return $this->render('PhotomBundle::Profile.html.twig',
           array(
             'usuario'=> $result[0],
             'editable' => true,
             'seguidores' => $seguidores,
             'seguidos' => $seguidos,
-            'publicaciones' => $publicaciones
+            'publicaciones' => $publicaciones,
+            'paises' => $paises
           ));
       }
 
@@ -740,6 +748,18 @@ class DefaultController extends Controller
       */
       public function searchAction(Request $request){
         $search = $request->query->get('busqueda');
+        $fechaIni = '2016-01-01';
+        $fechaFin = '2016-01-01';
+        $fechaIniTemp = $request->query->get('fechaIni');
+        $fechaFinTemp = $request->query->get('fechaFin');
+        $filtroFecha = 0;
+        if($fechaIniTemp != NULL){
+          $fechaIni = $fechaIniTemp;
+        }
+        if($fechaFinTemp != NULL){
+          $fechaFin = $fechaFinTemp;
+          $filtroFecha= 1;
+        }
         $connTarget = $this->connectToDB();
         $usuario = $this->getUser()->getId();
         $queryUsers = $connTarget->prepare("CALL findUser(:search, :user)");
@@ -753,15 +773,18 @@ class DefaultController extends Controller
         }
         $connTarget = null;
         $connTarget = $this->connectToDB();
-        $queryPosts = $connTarget->prepare("CALL findContent(:search, 0, '2016-01-01', '2016-01-01')");
+        $queryPosts = $connTarget->prepare("CALL findContent(:search, :filtro, :fechaIn, :fechaFi)");
         $queryPosts->bindParam(":search", $search);
+        $queryPosts->bindParam(":filtro", $filtroFecha);
+        $queryPosts->bindParam(":fechaIn", $fechaIni);
+        $queryPosts->bindParam(":fechaFi", $fechaFin);
         $queryPosts->execute();
         $resultPosts = $queryPosts->setFetchMode(PDO::FETCH_ASSOC);
         $resultPosts =  $queryPosts->fetchAll();
         $connTarget = null;
         foreach ($resultPosts as $key => $post) {
           $resultPosts[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
-            $resultPosts[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
+          $resultPosts[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
           $idPub = $resultPosts[$key]['idContenido'];
           $connTarget = $this->connectToDB();
           $comments = $connTarget->prepare("CALL displayPublicacionesAmigos(:Pub)");
@@ -794,8 +817,6 @@ class DefaultController extends Controller
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result =  $query->fetchAll();
         $session = $this->get('session');
-        dump($session->get('notifId'));
-        dump(end($result)['idNotificacion']);
         if($session->get('notifId')){
           if($session->get('notifId') != end($result)['idNotificacion']){
             $this->get('session')->set('notifId', end($result)['idNotificacion']);

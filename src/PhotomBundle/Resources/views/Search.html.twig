@@ -27,12 +27,19 @@
         </div>
         <div class="dataContainer">
           <ul class="userData">
-            <li><a href="/perfil/{{ user.username_canonical}}"> {{ user.nombreUsuario }} </a></li>
+            <li class="usernameCanonical" data="{{ user.username_canonical }}"><a href="/perfil/{{ user.username_canonical}}"> {{ user.nombreUsuario }} </a></li>
             <li> {{ user.descripcionUsuario }} </li>
             <li> {{ user.email }} </li>
-            <li> {{ user['getLikes(id)'] }} </li>
-            <li> {{ user['getVideos(id)'] }}</li>
-            <li> {{ user['getImages(id)'] }}</li>
+            <li> {{ user.Likes }} </li>
+            <li> {{ user.Videos }}</li>
+            <li> {{ user.Images }}</li>
+            {% if user.FriendZone == 1  %}
+              <li class="followSearchUser followedUser"> <i class="fa fa-check-circle" aria-hidden="true"></i><span>Siguiendo</span> </li>
+            {% elseif user.FriendZone == 0 %}
+              <li class="followSearchUser followUser"> <i class="fa fa-plus-circle" aria-hidden="true"></i><span>Seguir</span> </li>
+            {% else %}
+              <li class="followSearch"> <span> Solicitud Pendiente </span> </li>
+            {% endif %}
           </ul>
         </div>
       </div>

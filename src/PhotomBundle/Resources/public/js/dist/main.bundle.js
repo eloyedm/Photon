@@ -84,6 +84,38 @@
 	      }
 	    });
 
+	    $(".followSearchUser").click(function(e){
+	      var that = this
+	      var nombreUsuario = $(that).siblings(".usernameCanonical").attr("data");
+	      $.ajax({
+	        type  : "GET",
+	        url   : "/users/follow",
+	        data  : {
+	          "seguirA" : nombreUsuario
+	        },
+	        datatype: "json",
+	        success: function(data){
+	          console.log(data);
+	          if(data.status == 0){
+	            console.log(data);
+	            $(that).removeClass("followUser").addClass("followedUser");
+	            var icono = $(that).find("i");
+	            icono.removeClass("fa-plus-circle").addClass("fa-check-circle");
+	            var texto = $(that).find("span");
+	            texto.text("Siguiendo");
+	          }
+	          else if (data.status == 1) {
+	            console.log(data);
+	            $(that).removeClass("followedUser").addClass("followUser");
+	            var icono = $(that).find("i");
+	            icono.removeClass("fa-check-circle").addClass("fa-plus-circle");
+	            var texto = $(that).find("span");
+	            texto.text("Seguir");
+	          }
+	        }
+	      });
+	    });
+
 	  });
 	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
 
@@ -14122,8 +14154,6 @@
 	      }
 
 	    });
-
-
 	  }, 5000)
 
 
