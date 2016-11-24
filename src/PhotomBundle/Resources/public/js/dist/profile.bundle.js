@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(9), __webpack_require__(7), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, updateUserInfo, menu, cardPost) {
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2),__webpack_require__(9), __webpack_require__(7), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, updateUserInfo, menu, cardPost) {
 	$(document).ready(function() {
 	      $("#notificationLink").click(function()
 	                                 {

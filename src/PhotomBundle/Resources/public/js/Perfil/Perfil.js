@@ -1,4 +1,4 @@
-define(['jquery', 'updateUserInfo', 'menu', 'cardPost'],  function($, updateUserInfo, menu, cardPost) {
+define(['jquery', 'Backbone','updateUserInfo', 'menu', 'cardPost'],  function($, updateUserInfo, menu, cardPost) {
 $(document).ready(function() {
       $("#notificationLink").click(function()
                                  {

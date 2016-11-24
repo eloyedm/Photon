@@ -186,3 +186,70 @@ button {
   color: black;
 }
 /*Aqui empiez el css del modal*/
+.fadedBackground{
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  background-color: rgba(64,64,64,.8);
+}
+
+.modalContent{
+  background-color: white;
+  width: 80%;
+  height: 75%;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
+}
+
+.modalHead{
+  font-family: "Rockwell";
+  padding: 3% 4%;
+  height: 10%;
+  font-size: 16px;
+  color: #5BC0DF;
+}
+
+.modalBody{
+  /*height: 57%;*/
+  max-height: 60%;
+  padding: 0 4%;
+  overflow: scroll;
+}
+
+.modalFoot{
+  height: 10%;
+  padding: 2% 4%;
+  position: absolute;
+  bottom: 0;
+  width: 92%;
+}
+
+.listaRazones{
+  margin: 0;
+  padding: 0 3%;
+}
+
+.contenedorRazon{
+  margin: 2%;
+}
+
+.checkRazon{
+  width:20px;
+  height: 20px;
+}
+
+.descripcionRazon{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: 15px;
+  font-family: "Rockwell";
+}
+
+.modalFoot > .public-button{
+  width: 30%;
+  float: right;
+}
