@@ -127,7 +127,7 @@
                      <div id="info-work"><t>Empresa: </t><t><input type="text" class="user-info" readpnly="true" value="Milenio" ></t></div>
                      <div id="info-email"><t>Email: </t><t> <input tpye="email" class="user-info" readonly="true" value="{{ usuario.email }}"></t>
                      </div>
-                     <div id="info-about"><t>Sobre ti: </t><t> <input type="textarea" class="user-info"  readonly="true" value="Me gustan los libros y dross"</t></div>
+                     <div id="info-about"><t>Sobre ti: </t><t> <input type="textarea" class="user-info"  readonly="true" value="{{ usuario.descripcionUsuario }}"</t></div>
                      <div><t>Genero: </t>
                        {% if usuario.generoUsuario == 0 %}
                        <i class="fa fa-mars" aria-hidden="true"></i>
