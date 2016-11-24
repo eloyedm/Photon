@@ -218,6 +218,43 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/content/edit/publication")
+     */
+    public function contentEditAction(Request $request){
+      $text = $request->request->get('newText');
+      $idPub = $request->request->get("idPub");
+      $image = $request->files->get('newImage');
+      $type = explode("/", $image->getMimeType());
+      $type = $type[0];
+      if( $type == 'image' ){
+        $connTarget = $this->connectToDB();
+        $file_content = file_get_contents($image->getPathName());
+        $query = $connTarget->prepare("CALL updateContent(:pub, :descripcion, :imagen, NULL)");
+        $query->bindParam(':pub', $idPub);
+        $query->bindParam(':descripcion', $text);
+        $query->bindParam(':imagen', $file_content);
+        $query->execute();
+        $connTarget = null;
+      }
+      elseif ($tpye == 'video') {
+        $fotoName = md5(uniqid()).'.'.$image->guessExtension();
+        $image->move($this->getParameter('videos_directorio'), $fotoName);
+        $connTarget = $this->connectToDB();
+        $query = $connTarget->prepare("CALL updateContent(:pub, :descripcion, NULL, :video)");
+        $query->bindParam(':pub', $idPub);
+        $query->bindParam(':descripcion', $text);
+        $query->bindParam(':video', $image);
+        $query->execute();
+        $connTarget = null;
+      }
+      else{
+        return new Response('ERROR', Response::HTTP_ERROR);
+      }
+
+      return $this->redirect("/perfil");
+    }
+
+    /**
      * @Route("/detail/content/{idPub}")
      */
     public function detailContentAction(Request $request, $idPub){

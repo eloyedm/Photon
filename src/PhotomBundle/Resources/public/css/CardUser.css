@@ -177,4 +177,12 @@ button {
   position: absolute;
 }
 
+.editarContenido{
+  float: right;
+  color: black;
+}
+
+.editarContenido > i{
+  color: black;
+}
 /*Aqui empiez el css del modal*/

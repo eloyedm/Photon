@@ -13,7 +13,8 @@
             </div>
             <div class="descritpion-user-publication"><p class="description-video">{{ publicacion.descripcionContenido}} </p>
               {% if publicacion.own == true %}
-              <button type="button" class="borrarContenido" name="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+                <button type="button" class="editarContenido" name="button"><i class="fa fa-pencil" aria-hidden="true"></i></button>
+                <button type="button" class="borrarContenido" name="button"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
               {% endif %}
             </div>
             {% if publicacion.imagenContenido != NULL %}
