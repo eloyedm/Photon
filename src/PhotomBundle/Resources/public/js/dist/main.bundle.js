@@ -14201,7 +14201,7 @@
 	        });
 
 	        var link = $("<a />",{
-	          href: "/detail/content/"+this.contenido
+	          href: "/detail/content/"+this.idNotif+"/"+this.contenido
 	        });
 
 	        link.append(contenidoNotif);

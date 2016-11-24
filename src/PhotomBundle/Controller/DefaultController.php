@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        $username = "superphoton";
-        $password = "Homecoming#96";
-        // $username = 'root';
-        // $password = "homecoming96";
+        // $username = "superphoton";
+        // $password = "Homecoming#96";
+        $username = 'root';
+        $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -98,9 +98,16 @@ class DefaultController extends Controller
         }
         array_push($result[$key], $commentsResult);
       }
+      $connTarget = $this->connectToDB();
+      $notifications = $connTarget->prepare("CALL getNotificationUSer(:idUsuario)");
+      $notifications->bindParam(":idUsuario", $id);
+      $notifications->execute();
+      $notifList = $notifications->setFetchMode(PDO::FETCH_ASSOC);
+      $notifList = $notifications->fetchAll();
       return $this->render('PhotomBundle::Home.html.twig', array(
         "inicio" => $result,
-        "friends" => $friendsList
+        "friends" => $friendsList,
+        'notifications' => $notifList
       ));
     }
 
@@ -276,16 +283,36 @@ class DefaultController extends Controller
       $query->execute();
       $resultComentarios = $query->setFetchMode(PDO::FETCH_ASSOC);
       $resultComentarios =  $query->fetchAll();
+      $connTarget = null;
       foreach ($resultComentarios as $key => $value) {
-        $resultComentarios[$keyC]['FotoComentarista'] = base64_encode($value['FotoComentarista']);
+        $resultComentarios[$key]['FotoComentarista'] = base64_encode($value['FotoComentarista']);
       }
       array_push($result[0], $resultComentarios);
       $result[0]['idContenido'] = $idPub;
       $result[0]['username_canonical'] = $name;
       $result[0]['own'] = true;
+      $connTarget = $this->connectToDB();
+      $notifications = $connTarget->prepare("CALL getNotificationUSer(:idUsuario)");
+      $notifications->bindParam(":idUsuario", $id);
+      $notifications->execute();
+      $notifList = $notifications->setFetchMode(PDO::FETCH_ASSOC);
+      $notifList = $notifications->fetchAll();
       return $this->render("PhotomBundle::DetailPost.html.twig", array(
-        'inicio' => $result
+        'inicio' => $result,
+
+        'notifications' => $notifList
       ));
+    }
+
+    /**
+     * @Route("/detail/content/{idNotif}/{idPub}")
+     */
+    public function detailContentReadAction(Request $request,$idNotif, $idPub){
+      $connTarget = $this->connectToDB();
+      $query = $connTarget->prepare("CALL updateNotification(:pub)");
+      $query->bindParam(":pub", $idNotif);
+      $query->execute();
+      return $this->redirect("/detail/content/".$idPub);
     }
 
     //USERS
@@ -650,6 +677,12 @@ class DefaultController extends Controller
         $paises = $queryPaises->setFetchMode(PDO::FETCH_ASSOC);
         $paises =  $queryPaises->fetchAll();
         $connTarget = null;
+        $connTarget = $this->connectToDB();
+        $notifications = $connTarget->prepare("CALL getNotificationUSer(:idUsuario)");
+        $notifications->bindParam(":idUsuario", $id);
+        $notifications->execute();
+        $notifList = $notifications->setFetchMode(PDO::FETCH_ASSOC);
+        $notifList = $notifications->fetchAll();
         return $this->render('PhotomBundle::Profile.html.twig',
           array(
             'usuario'=> $result[0],
@@ -657,7 +690,8 @@ class DefaultController extends Controller
             'seguidores' => $seguidores,
             'seguidos' => $seguidos,
             'publicaciones' => $publicaciones,
-            'paises' => $paises
+            'paises' => $paises,
+            'notifications' => $notifList
           ));
       }
 

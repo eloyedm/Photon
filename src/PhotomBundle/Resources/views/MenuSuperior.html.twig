@@ -35,6 +35,19 @@
                           <div id="notificationsBody" class="notifications">
                               <ul class="friend-list-solicitud">
                                   <li>
+                                    {% for notification in notifications %}
+                                    <a href="/detail/content/{{notification.idNotificacion}}/{{notification.idContenidoNotificacion}}">
+                                      <div class="notificacion">
+                                        <span>{{ notification.nombreUsuario}}</span>
+                                        {% if notification.gustaNotificacion == "" %}
+                                          <span> comentu tu contenido </span>
+                                        {% else %}
+                                          <span> le gusto tu contenido</span>
+
+                                        {% endif %}
+                                      </div>
+                                      </a>
+                                    {% endfor %}
                                   </li>
                               </ul>
                           </div>

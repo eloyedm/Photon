@@ -1,4 +1,4 @@
-define(['jquery', 'updateUserInfo', 'menu'],  function($, updateUserInfo, menu) {
+define(['jquery', 'updateUserInfo', 'menu', 'cardPost'],  function($, updateUserInfo, menu, cardPost) {
 $(document).ready(function() {
       $("#notificationLink").click(function()
                                  {

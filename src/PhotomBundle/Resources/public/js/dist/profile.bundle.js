@@ -44,7 +44,7 @@
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(9), __webpack_require__(7)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, updateUserInfo, menu) {
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(9), __webpack_require__(7), __webpack_require__(4)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, updateUserInfo, menu, cardPost) {
 	$(document).ready(function() {
 	      $("#notificationLink").click(function()
 	                                 {
@@ -13923,9 +13923,268 @@
 
 
 /***/ },
-/* 4 */,
-/* 5 */,
-/* 6 */,
+/* 4 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(1), __webpack_require__(2), __webpack_require__(5), __webpack_require__(6)], __WEBPACK_AMD_DEFINE_RESULT__ = function($, backbone, commentView, reportModalView) {
+	  $(document).ready(function(){
+	    $(document).keypress(function(e) {
+	        if(e.which == 13 && $("#comment-input:focus").length > 0) {
+	          var commentSelected = $("#comment-input:focus");
+	          var idPub = $(commentSelected).parent().parent().siblings(".idPub").text();
+
+	          if($(commentSelected).val() != "" && idPub != null){
+	            $.ajax({
+	              method: "POST",
+	              url: "/content/addComment",
+	              data: {
+	                "idPub": idPub,
+	                "comment": $(commentSelected).val()
+	              },
+	              success: function(data){
+	                console.log(data);
+	                var comentario = new commentView({
+	                  "autor": data.usuario,
+	                  "comentario": data.com,
+	                  "image": data.image,
+	                  "link": data.link
+	                });
+	                comentario.$el.css("display", "none");
+	                $(commentSelected).parent().siblings(".comentarios").find("ul.list-group-comments").prepend(comentario.$el);
+	                hashtags(comentario.$el.find(".comment"));
+	                $(commentSelected).val("");
+	                comentario.$el.fadeIn();
+	              }
+	            });
+	          }
+	          else{
+	            alert("No puedes postear comentarios vacios");
+	          }
+	        }
+	    });
+
+	    $(".like-button").click(function(){
+	      var idPub = $(this).parent().parent().siblings(".idPub").text();
+	      var button = this
+	      if(idPub != null){
+	        $.ajax({
+	          method: "POST",
+	          url: "/content/like",
+	          data: {
+	            "idPub": idPub
+	          },
+	          success: function(data){
+	            $(button).find("i").css("color", "blue");
+	          }
+	        });
+	      }
+	    });
+
+	    $(".dislike-button").click(function(){
+	      var idPub = $(this).parent().parent().siblings(".idPub").text();
+	      var objReportModal = new reportModalView({
+	        'idPub': idPub
+	      });
+	      $("body").append(objReportModal.$el);
+	    });
+
+	    $(".comment").each(function(){
+	      hashtags(this);
+	    });
+
+	  });
+
+	  function hashtags(comment){
+	    var content = $(comment).text();
+	    var tag = content.split("#");
+	    var hashArr = []
+	    if(tag.length >= 2){
+	      for(var i = 0; i < tag.length; i++){
+	        var hash = tag[i].split(" ")[0];
+	        hashArr.push(hash);
+	      }
+	    }
+	    var newContent = "";
+	    for(var j = 0; j < hashArr.length; j++){
+	      content = content.replace("#"+hashArr[j], '<span class="hashtag">#' + hashArr[j] + '</span>' );
+
+	    }
+	    $(comment).html(content);
+	  }
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function(backbone) {
+	    var commentView = Backbone.View.extend({
+	      tagName: "li",
+	      usuario: "",
+	      comentario: "",
+	      foto: "",
+	      link: "",
+	      initialize: function(datosComentario){
+	        this.usuario = datosComentario["autor"];
+	        this.comentario = datosComentario["comentario"];
+	        this.foto = datosComentario["image"];
+	        this.link = datosComentario["link"];
+	        this.render();
+	      },
+	      render: function(){
+	        this.$el.addClass("list-group-item text-left");
+
+	        var usrImg = $("<img />", {
+	          class: "img-thumbnail",
+	          src: "data:image/jpeg;base64,"+ this.foto
+	        });
+
+	        var postUs = $("<div />", {
+	          class: "post-user"
+	        });
+
+	        var labelName = $("<label>", {
+	          class: "name",
+	          text: this.usuario
+	        });
+
+	        var labelComment = $("<label>", {
+	          class: "comment",
+	          text: this.comentario
+	        });
+
+	        postUs.append(labelName,labelComment);
+	        this.$el.append(usrImg, postUs);
+	      }
+	    });
+	  return commentView;
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
+/* 6 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;!(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(2)], __WEBPACK_AMD_DEFINE_RESULT__ = function(backbone) {
+	  var reportModalView = Backbone.View.extend({
+	    tagName: "div",
+	    class: "fadedBackground",
+	    targetPub: "",
+	    reasons: "",
+
+	    events: {
+	      "click": "closeModal",
+	      "click .modalContent": "keepModal",
+	      "click .public-button": "sendReport"
+	    },
+
+	    initialize: function(params){
+	      this.targetPub = params["idPub"];
+	      this.getReasons();
+	    },
+
+	    getReasons: function(){
+	      var that = this;
+	      $.ajax({
+	        type  : "POST",
+	        url   : "/report/reasons",
+	        datatype: "json",
+	        success: function(data){
+	          that.reasons = data.razones;
+	          that.createModal();
+	        }
+	      });
+	    },
+
+	    createModal: function(){
+	      this.$el.addClass("fadedBackground");
+	      var modalContent = $("<div />", {
+	        class: "modalContent"
+	      });
+
+	      var modalHead = $("<div />", {
+	        text: "Por que deseas reportar esta publicación?",
+	        class: "modalHead"
+	      });
+
+	      var modalBody = $("<div />", {
+	        class: "modalBody"
+	      });
+
+	      var modalFoot = $("<div />", {
+	        class: "modalFoot"
+	      });
+	      modalContent.append(modalHead, modalBody, modalFoot);
+
+	      var listaRazones = $("<ul />", {
+	        class: "listaRazones"
+	      });
+	      modalBody.append(listaRazones);
+	      $.each(this.reasons, function(){
+	        var contenedorRazon = $("<li />", {
+	          class: "contenedorRazon"
+	        });
+	        var checkRazon = $("<input />", {
+	          type: "radio",
+	          class: "checkRazon",
+	          value: this.idRazon,
+	          name : "razonReporte"
+	        });
+
+	        var descripcionRazon = $("<span />", {
+	          text: this.descripcionRazon,
+	          class: "descripcionRazon"
+	        });
+	        contenedorRazon.append(checkRazon,descripcionRazon);
+	        listaRazones.append(contenedorRazon);
+	      });
+
+	      var botonReportar = $("<button />", {
+	        type: "button",
+	        text: "Reportar",
+	        class: "public-button"
+	      })
+	      modalFoot.append(botonReportar);
+
+	      this.$el.append(modalContent);
+	    },
+
+	    closeModal: function(){
+	      this.$el.fadeOut("slow", function(){
+	        this.$el.remove();
+	      });
+	    },
+
+	    keepModal: function(event){
+	      event.stopPropagation();
+	    },
+
+	    sendReport: function(){
+	      var reasonReported = $(".checkRazon:checked").val();
+	      var that = this;
+	      if(confirm("¿Estas seguro de que quieres reportar este contenido?")){
+	        console.log("si mandar");
+	        $.ajax({
+	          method: "POST",
+	          url: "/report/sendReport",
+	          data: {
+	            "idPub": that.targetPub,
+	            "idReason": reasonReported
+	          },
+	          success: function(data){
+	            that.$el.fadeOut();
+	          }
+	        });
+	      }
+	    }
+	  });
+
+	  return reportModalView;
+	}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+
+
+/***/ },
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -14037,7 +14296,7 @@
 	        });
 
 	        var link = $("<a />",{
-	          href: "/detail/content/"+this.contenido
+	          href: "/detail/content/"+this.idNotif+"/"+this.contenido
 	        });
 
 	        link.append(contenidoNotif);
