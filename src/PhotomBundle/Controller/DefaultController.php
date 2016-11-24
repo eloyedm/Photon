@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        // $username = "superphoton";
-        // $password = "Homecoming#96";
-        $username = 'root';
-        $password = "homecoming96";
+        $username = "superphoton";
+        $password = "Homecoming#96";
+        // $username = 'root';
+        // $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -741,7 +741,7 @@ class DefaultController extends Controller
       */
       public function profileAction()
       {
-        return $this->redirect('/complete/registration/info');
+        return $this->redirect('/register/confirmed');
       }
 
 
