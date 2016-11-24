@@ -36,6 +36,13 @@ a {
   margin: 0;
   width: 255px;
   background-color: #ABC545;
+  font-size: 24px;
+  font-family: "Rockwell";
+  color: white;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 #container-form {
