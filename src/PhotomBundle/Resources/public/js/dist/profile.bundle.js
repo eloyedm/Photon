@@ -14331,7 +14331,12 @@
 	      saveButton.click(function(){
 	        console.log($("#info-birthDate input").val());
 	        var valor = 0;
-	        valor = $(".info-privacidad input").checked == true ? 1: 0;
+	        if($("#privacidad").is(':checked')){
+	          valor = 1;
+	        }else{
+	          valor = 0;
+	        }
+	        console.log(valor);
 	        if(confirm("¿Estas seguro de que quieres guardar los cambios?")){
 	          $.ajax({
 	            method: "POST",
@@ -14339,7 +14344,7 @@
 	            datatype: "json",
 	            data: {
 	              "title": $("#info-title input").val(),
-	              "userName": $("#username-profile").text(),
+	              "userName": $("#usernameEdit").val(),
 	              "name": $("#info-name input").val(),
 	              "gender": $("#info-gender").val(),
 	              "birthDate": $("#info-birthDate input").val(),
@@ -14354,6 +14359,7 @@
 	              console.log(data);
 	              $(".user-info#username-profile").removeAttr("contentEditable");
 	              $(".user-info").attr("readonly", "true");
+	                $("#usernameEdit").attr("readonly", "true");
 	              $("#saveInfoButton").remove();
 	              alert("Tu información ha sido actualizada");
 	            }
@@ -14361,6 +14367,7 @@
 	        }
 	      });
 	      $(".user-info").removeAttr("readonly");
+	      $("#usernameEdit").removeAttr("readonly");
 	      $("#country").attr("disabled", false);
 	      $("#info-gender").removeClass("hidden");
 	      $(".user-info#username-profile").attr("contentEditable", "true");

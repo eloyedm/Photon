@@ -13,7 +13,7 @@ define(['jquery'],  function($) {
             "user": user
           },
           success: function(data){
-            $('#container').css({"visibility":"hidden"});
+            $('#container').css({"visibility":"hidden","margin-top":"-100px"})
             console.log(data.questions);
             $.each(data.questions, function(){
               var container = $("<div />", {
@@ -65,14 +65,16 @@ define(['jquery'],  function($) {
             });
 
             var nuevaPass = $('<input />', {
-              type: "text",
-              name: "nuevaPass"
+              type: "password",
+              name: "nuevaPass",
+              placeholder: "Nueva Contraseña",
+              required:true
             });
 
             $(".updatePass").append(usuarioName,nuevaPass,enviar);
           },
           error: function(){
-            alert("EL usuario es incorrecto o no existe");
+            alert("El usuario es incorrecto o no existe");
           }
         });
       }

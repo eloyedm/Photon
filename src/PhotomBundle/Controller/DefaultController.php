@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-        $username = "superphoton";
-        $password = "Homecoming#96";
-        // $username = 'root';
-        // $password = "homecoming96";
+      //  $username = "superphoton";
+      //  $password = "Homecoming#96";
+         $username = 'sandy';
+         $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -49,19 +49,16 @@ class DefaultController extends Controller
       // die();
       $connTarget = $this->connectToDB();
       $id = $this->getUser()->getId();
-      // $query = $connTarget->prepare("SELECT idUsuarioContenido, username, imagenContenido, descripcioncontenido, idContenido FROM Contenido JOIN Usuario ON Contenido.idUsuarioContenido = Usuario.id ORDER BY idContenido DESC");
-      // $query->execute();
-      // $result = $query->setFetchMode(PDO::FETCH_ASSOC);
-      // $result =  $query->fetchAll();$post['perfilUsuario']
-      // foreach ($result as $key => $post) {
-      //   $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
-      // }
-
+      $userInfo = $connTarget->prepare("CALL getHome(:idUsuario)");
+      $userInfo->bindParam(":idUsuario", $id);
+      $userInfo->execute();
+      $userInfomini = $userInfo->setFetchMode(PDO::FETCH_ASSOC);
+      $userInfomini = $userInfo->fetchAll();
+      $connTarget = null;
+      $connTarget = $this->connectToDB();
       $query = $connTarget->prepare("CALL getPublicationsFriends(:idUsuario)");
       $query->bindParam(":idUsuario", $id);
       $query->execute();
-      // $query = $connTarget->prepare("SELECT @res");
-      // $query->execute();
       $result = $query->setFetchMode(PDO::FETCH_ASSOC);
       $result = $query->fetchAll();
       $connTarget = null;
@@ -73,9 +70,9 @@ class DefaultController extends Controller
       $friendsList = $friends->fetchAll();
       $connTarget = null;
       foreach ($result as $key => $post) {
-        $newImage = $this->resizeImage($post['perfilUsuario'], 0.1);
+      //  $newImage = $this->resizeImage($post['perfilUsuario'], 0.1);
         $result[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
-        $result[$key]['perfilUsuario'] = base64_encode($newImage);
+        $result[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
         $idPub = $result[$key]['idContenido'];
         $connTarget = $this->connectToDB();
         $comments = $connTarget->prepare("CALL displayPublicacionesAmigos(:Pub)");
@@ -84,8 +81,8 @@ class DefaultController extends Controller
         $commentsResult = $comments->setFetchMode(PDO::FETCH_ASSOC);
         $commentsResult = $comments->fetchAll();
         foreach($commentsResult as $keyC => $commen){
-          $newComment = $this->resizeImage($commen['FotoComentarista'], 0.1);
-          $commentsResult[$keyC]['FotoComentarista'] = base64_encode($newComment);
+          //$newComment = $this->resizeImage($commen['FotoComentarista'], 0.1);
+          $commentsResult[$keyC]['FotoComentarista'] = base64_encode($commen['FotoComentarista']);
         }
         $connTarget = null;
         if($post['username_canonical'] == $this->getUser()->getUsernameCanonical()){
@@ -107,9 +104,11 @@ class DefaultController extends Controller
       return $this->render('PhotomBundle::Home.html.twig', array(
         "inicio" => $result,
         "friends" => $friendsList,
-        'notifications' => $notifList
+        'notifications' => $notifList,
+        'infoUser'=> $userInfomini
       ));
     }
+
 
     //CONTENT
 
@@ -343,16 +342,13 @@ class DefaultController extends Controller
      */
      public function usersEditarAction(Request $request){
        $parameters = $request->request;
-
        $usuario = $this->getUser()->getId();
-       $title = $parameters->get("title");
        $userName = $parameters->get("userName");
        $name = $parameters->get("name");
        $gender = $parameters->get("gender");
        $birthDate = $parameters->get("birthDate");
        $country = $parameters->get("country");
        $domicilio = $parameters->get("city");
-       $work = $parameters->get("work");
        $email = $parameters->get("email");
        $about = $parameters->get("about");
        $privacy = $parameters->get("privacy");
@@ -372,16 +368,15 @@ class DefaultController extends Controller
        $connTarget = null;
       return new JsonResponse(array(
         'usuario' => $usuario,
-        'title' => $title,
         'username' => $userName,
         'name' => $name,
         'birthDate' => $birthDate,
         'country' => $country,
         'domicilio' => $domicilio,
-        'work' => $work,
         'email' => $email,
         'about' => $about,
-        'gender' => $gender
+        'gender' => $gender,
+        'privacy' => $privacy
       ));
      }
 
@@ -500,15 +495,6 @@ class DefaultController extends Controller
         $usuario = $this->getUser()->getId();
         $fecha = $parameter->get('fechaNacimiento');
         $domicilio = $parameter->get('domicilio');
-        // $encoder_service = $this->get("security.encoder_factory");
-        // $user = $this->getUser();
-        // $encoder = $encoder_service->getEncoder($user);
-        //
-        // $encoded_pass = $encoder->encodePassword($domicilio, $user->getSalt());
-        // $contra = 'contraeloy';
-        // dump($domicilio);
-        // dump($encoder->isPasswordValid($user->getPassword(), $domicilio, $user->getSalt()));
-        // die();
         $descripcion = $parameter->get('descripcion');
         $privacidad = $parameter->get('privacidad');
         $pais = $parameter->get('pais');
@@ -605,11 +591,11 @@ class DefaultController extends Controller
           $user  = $user_manager->findUserByUsername($usuario);
           $encoder_service = $this->get('security.encoder_factory');
           $encoder = $encoder_service->getEncoder($user);
-          $encoded_pass = $encoder->encodePassword($pass, $user->getSalt());
+        //  $encoded_pass = $encoder->encodePassword($pass, $user->getSalt());
           $connTarget = $this->connectToDB();
           $query = $connTarget->prepare("CALL updatePassword(:usuario, :password)");
           $query->bindParam(":usuario", $usuario);
-          $query->bindParam(":password", $encoded_pass);
+          $query->bindParam(":password", $pass);
           $query->execute();
           return $this->redirect("/login");
         }
@@ -650,7 +636,6 @@ class DefaultController extends Controller
         foreach ($seguidos as $key => $value) {
           $seguidos[$key]['perfilUsuario'] = base64_encode($value['perfilUsuario']);
         }
-
         $connTarget = $this->connectToDB();
         $queryPublicaciones = $connTarget->prepare("CALL getPublicationsPropia(:idUsuario)");
         $queryPublicaciones->bindParam(":idUsuario", $usuario);
@@ -659,9 +644,20 @@ class DefaultController extends Controller
         $publicaciones =  $queryPublicaciones->fetchAll();
         $connTarget = null;
         foreach ($publicaciones as $key => $value) {
-          // $newPostImage = $this->resizeImage($value['perfilUsuario'],0.3);
           $publicaciones[$key]['perfilUsuario'] = base64_encode($value['perfilUsuario']);
           $publicaciones[$key]['imagenContenido'] = base64_encode($value['imagenContenido']);
+           $idPubP = $publicaciones[$key]['idContenido'];
+           $connTarget = $this->connectToDB();
+           $commentsP = $connTarget->prepare("CALL displayPublicacionesAmigos(:Pub)");
+           $commentsP->bindParam(":Pub", $idPubP);
+           $commentsP->execute();
+           $commentsResult = $commentsP->setFetchMode(PDO::FETCH_ASSOC);
+           $commentsResult = $commentsP->fetchAll();
+           foreach($commentsResult as $keyC => $commen){
+          //   $newComment = $this->resizeImage($commen['FotoComentarista'], 0.1);
+             $commentsResult[$keyC]['FotoComentarista'] = base64_encode($commen['FotoComentarista']);
+           }
+           $connTarget = null;
           if($value['username_canonical'] == $this->getUser()->getUsernameCanonical()){
             $own = true;
             $publicaciones[$key]['own'] = $own;
@@ -670,6 +666,7 @@ class DefaultController extends Controller
             $own = false;
             $publicaciones[$key]['own'] = $own;
           }
+          array_push($publicaciones[$key], $commentsResult);
         }
         $connTarget = $this->connectToDB();
         $queryPaises = $connTarget->prepare("SELECT idPais, nombrePais FROM getPaises");
@@ -791,7 +788,6 @@ class DefaultController extends Controller
       */
       public function liveSearchAction(Request $request){
         $searchTerm = $request->query->get('term');
-        // $searchTerm = "%".$searchTerm."%";
         $connTarget = $this->connectToDB();
         $usuario = $this->getUser()->getId();
         $queryUsers = $connTarget->prepare("CALL findUser(:search, :user)");
@@ -803,11 +799,6 @@ class DefaultController extends Controller
         foreach ($resultUsers as $key => $post) {
           $resultUsers[$key]['perfilUsuario'] = base64_encode($post['perfilUsuario']);
         }
-        // $query = $connTarget->prepare("SELECT nombreUsuario, username_canonical FROM Usuario WHERE nombreUsuario LIKE :search");
-        // dump($resultUsers, $searchTerm);
-        // die();
-
-        // $queryContent = $connTarget->prepare("CALL")
         $connTarget = null;
         return new JsonResponse(array(
           'resultados' => $resultUsers
@@ -877,9 +868,16 @@ class DefaultController extends Controller
           }
           array_push($resultPosts[$key], $commentsResult);
         }
+        $connTarget = $this->connectToDB();
+        $notifications = $connTarget->prepare("CALL getNotificationUser(:user)");
+        $notifications->bindParam(":user", $usuario);
+        $notifications->execute();
+        $notifList = $notifications->setFetchMode(PDO::FETCH_ASSOC);
+        $notifList = $notifications->fetchAll();
         return $this->render('PhotomBundle::Search.html.twig', array(
           'usuarios' => $resultUsers,
-          'posts' => $resultPosts
+          'posts' => $resultPosts,
+          'notifications' => $notifList
         ));
       }
 

@@ -7,13 +7,17 @@
     border: 1px solid rgba(000,000,000,0.1);
     float: right;
     color: #373836;
-    margin-right: 25%;
+    margin-right: 15%;
 }
 
 .card {
     width: 100%;
     height: 100%;
     float: left;
+}
+
+.name{
+      margin: 2px;
 }
 
 .descritpion-user-publication {
@@ -27,7 +31,7 @@
     margin-left: 0%;
     display: inline;
     float: left;
-    margin-top: 1%;
+    margin-top: 3%;
     margin-bottom: 0%;
 }
 
@@ -134,18 +138,20 @@ button {
 .post-user {
     padding-left: 9%;
     padding-top: 2%;
+    margin-top: 4px;
 }
 
 .list-group-comments .name {
     font-weight: normal;
     font-size: 74%;
+    margin-top: 3px;
 }
 .name {
     color: #5bc0de;
     text-align: center;
     font-family: "Rockwell";
     float: left;
-    /*margin-top: 8%;*/
+    margin-top: 8%;
     margin-left: 1%;
 }
 

@@ -97,7 +97,8 @@ nav{
     padding: 0;
     overflow: hidden;
     border: none;
-    background-color: transparent;
+    background-color: #FFF;
+
 }
 
 .phrase-publication{
@@ -569,12 +570,12 @@ list-group-item img {
 
 #username-profile{
     float: left;
-    font-size: 26px;
+    font-size: 20px;
     margin-top: 38%;
     font-family: "Rockwell";
     color: black;
     position: absolute;;
-    left: 150px;
+    left: 120px;
     bottom: 10px;
 }
 
@@ -610,7 +611,7 @@ list-group-item img {
 
 ul.tab li a {
     display: inline-block;
-    color: white;
+    color: #ABC545;
     text-align: center;
     padding: 14px 0px;
     text-decoration: none;

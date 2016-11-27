@@ -19,22 +19,13 @@
     <div class="container-infoUser">
       </div>
     </div>
-    <div class="container-friend">
-      <div>
-          <t>Amigos
-          </t>
-      </div>
-      {% for amigos in friends %}
-        <a href="/perfil/{{ amigos.username_canonical }}"><img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg"></a>
-      {% endfor %}
-    </div>
     </sidebar>
     <sidebar class="container-adbar">
     </sidebar>
 <section class="container-publicationprofile">
       <div class="container-public-user">
         <div class="phrase-publication">
-          <span id="user-name">Usuario
+          <span id="user-name">{{infoUser[0]['username']}}
           </span>
           <tr>
             <span id="user-phrase">dile al mundo lo que sientes...

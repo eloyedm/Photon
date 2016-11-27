@@ -73,7 +73,7 @@
                 </form>
               {% endif %}
               <img src="{{ perfil }}" id="user-profile-pic"></img>
-              <t id="username-profile" class="user-info"> {{ usuario.username }}</t>
+              <t id="username-profile" class="user-info"> <input  style="width: 106px; background-color: transparent; border: none;font-size: 37px;"type="text" id="usernameEdit" readonly = "true" value= {{ usuario.username }}></t>
            </div>
        <div class="user-tabs">
            <ul class="tab">
@@ -102,9 +102,9 @@
 
                       <div class="info-privacidad">
                         {% if usuario.privacidadUsuario == 1 %}
-                        <input type="checkbox" name="privacidad" checked value="1">
+                        <input type="checkbox" name="privacidad" id="privacidad" checked value="1">
                         {% else %}
-                          <input type="checkbox" name="privacidad" value="">
+                        <input type="checkbox" name="privacidad" id="privacidad" value="0">
                         {% endif %}
                         <span> Cuenta publica </span>
                       </div>
@@ -124,7 +124,6 @@
                      </div>
                      <div id="info-city"><t>Domicilio: </t><t><input type="text" class="user-info" readonly="true" value="{{ domicilio }}"></t>
                      </div>
-                     <div id="info-work"><t>Empresa: </t><t><input type="text" class="user-info" readpnly="true" value="Milenio" ></t></div>
                      <div id="info-email"><t>Email: </t><t> <input tpye="email" class="user-info" readonly="true" value="{{ usuario.email }}"></t>
                      </div>
                      <div id="info-about"><t>Sobre ti: </t><t> <input type="textarea" class="user-info"  readonly="true" value="{{ usuario.descripcionUsuario }}"</t></div>
@@ -134,25 +133,16 @@
                        {% else %}
                        <i class="fa fa-venus" aria-hidden="true"></i>
                        {% endif %}
-                       <select id="info-gender" class="hidden" default=name="gender">
+                       <select id="info-gender" class="hidden" name="gender">
+                          {% if usuario.generoUsuario == 0 %}
                         <option value=0> M </option>
+                        {% else %}
                         <option value=1> F </option>
+                        {% endif %}
                        </select>
                      </div>
                    </div>
                  </div>
-               </div>
-               <div class="container-friend">
-                   <div>
-                       <t>Seguidores
-                       </t>
-                   </div>
-                     <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-                    <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-                  <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-                   <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-                   <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
-                  <img class="img-thumbnail"  src="http://bootdey.com/img/Content/user_1.jpg">
                </div>
              </sidebar>
              <sidebar class="container-adbar">

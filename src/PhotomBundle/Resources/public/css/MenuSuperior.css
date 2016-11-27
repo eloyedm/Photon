@@ -1,6 +1,14 @@
 .hidden{
   display: none;
 }
+
+.notificacion{
+  text-align: center;
+    border-bottom: 1px solid #dddddd;
+    font-size: small;
+    padding: 2%;
+}
+
 nav {
     background-color: #0092B2;
     position: relative;
@@ -22,6 +30,7 @@ li {
     float: left;
     margin-top: 0.5%;
     height:100%;
+    width: 100%;
     overflow: hidden;
 }
 
@@ -191,9 +200,12 @@ a {
 
 .notificationCard{
   position: fixed;
-  width: 10%;
-  height: 5%;
+    background-color: #ABC545;
+  width: auto;
+  height: auto%;
   left: 2%;
   bottom: 2%;
+  font-style: italic;
+  font-family: "Rockwell";
   box-shadow: 5px 5px 5px 5px #888888;
 }
