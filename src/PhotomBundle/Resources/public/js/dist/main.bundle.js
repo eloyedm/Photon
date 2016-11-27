@@ -52,6 +52,63 @@
 	      $("#notification_count").fadeOut("slow");
 	      return false;
 	  });
+	  $(".borrarContenido").click(function(){
+	    var idPub = $(this).parent().parent().find(".idPub").text();
+	    var card = $(this).parent().parent().parent();
+	    console.log(idPub);
+	    $.ajax({
+	      type: "GET",
+	      url: "/delete/content",
+	      data: {
+	        "idPub": idPub
+	      },
+	      success: function(){
+	        console.log(card);
+	      card.remove();
+	      }
+	    });
+	  });
+
+	  $(".editarContenido").click(function(){
+	    var idPub = $(this).parent().parent().find(".idPub").text();
+	    console.log($(this).siblings("descripcion-video"));
+	    var form = $("<form />", {
+	      enctype: "multipart/form-data",
+	      method: "post",
+	      action: "/content/edit/publication"
+	    });
+
+	    var newImage = $("<input />", {
+	      type: "file",
+	      name: "newImage",
+	      class: "newImage",
+	      required: "true",
+	      css: {
+	        "float": "right"
+	      }
+	    });
+	    var newText = $("<input />", {
+	      type: "text",
+	      name: "newText",
+	      class: "newText",
+	      value: $(this).siblings("p").text()
+	    });
+
+	    var idPubNew = $("<input />", {
+	      type: "hidden",
+	      name: "idPub",
+	      value: idPub
+	    });
+
+	    var butmitBut = $("<button />", {
+	      type:"submit",
+	      value: "Actualizar",
+	      text: "actualizar"
+	    })
+
+	    form.append(newText, newImage, butmitBut, idPubNew);
+	    $(this).parent().parent().parent().prepend(form);
+	  });
 
 	  $(document).click(function(event)
 	                    {

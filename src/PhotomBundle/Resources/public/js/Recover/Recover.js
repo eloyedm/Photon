@@ -38,7 +38,7 @@ define(['jquery'],  function($) {
                 id: "respuesta"+this.idPregunta,
                 class: "respuesta",
                 readonly: true,
-                name: "respuesta"+this.idPregunta
+                name: "respuesta"
               });
 
               container.append(radio,pregunta,respuesta);

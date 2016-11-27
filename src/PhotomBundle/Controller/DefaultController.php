@@ -19,7 +19,7 @@ class DefaultController extends Controller
         $servername = "localhost";
       //  $username = "superphoton";
       //  $password = "Homecoming#96";
-         $username = 'sandy';
+         $username = 'root';
          $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
@@ -570,13 +570,13 @@ class DefaultController extends Controller
       }
 
       /**
-      * @Route("/update/password")
+      * @Route("/recover/update/password")
       */
       public function updatePassword(Request $request){
         $parameter = $request->request;
         $usuario = $parameter->get('usuario');
         $pregunta  = $parameter->get('pregunta');
-        $respuesta = $parameter->get('respuesta'.$pregunta);
+        $respuesta = $parameter->get('respuesta');
         $pass = $parameter->get('nuevaPass');
         $connTarget = $this->connectToDB();
         $query = $connTarget->prepare("SELECT questionCorrect(:usuario, :respuesta, :pregunta) AS question");
@@ -591,11 +591,11 @@ class DefaultController extends Controller
           $user  = $user_manager->findUserByUsername($usuario);
           $encoder_service = $this->get('security.encoder_factory');
           $encoder = $encoder_service->getEncoder($user);
-        //  $encoded_pass = $encoder->encodePassword($pass, $user->getSalt());
+          $encoded_pass = $encoder->encodePassword($pass, $user->getSalt());
           $connTarget = $this->connectToDB();
           $query = $connTarget->prepare("CALL updatePassword(:usuario, :password)");
           $query->bindParam(":usuario", $usuario);
-          $query->bindParam(":password", $pass);
+          $query->bindParam(":password", $encoded_pass);
           $query->execute();
           return $this->redirect("/login");
         }
