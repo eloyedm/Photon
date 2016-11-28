@@ -17,10 +17,10 @@ class DefaultController extends Controller
 
     public function connectToDB(){
         $servername = "localhost";
-      //  $username = "superphoton";
-      //  $password = "Homecoming#96";
-         $username = 'root';
-         $password = "homecoming96";
+       $username = "superphoton";
+       $password = "Homecoming#96";
+        //  $username = 'root';
+        //  $password = "homecoming96";
         $conn = new PDO("mysql:host=$servername;dbname=photon", $username, $password);
         // set the PDO error mode to exception
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -676,7 +676,7 @@ class DefaultController extends Controller
         $connTarget = null;
         $connTarget = $this->connectToDB();
         $notifications = $connTarget->prepare("CALL getNotificationUSer(:idUsuario)");
-        $notifications->bindParam(":idUsuario", $id);
+        $notifications->bindParam(":idUsuario", $usuario);
         $notifications->execute();
         $notifList = $notifications->setFetchMode(PDO::FETCH_ASSOC);
         $notifList = $notifications->fetchAll();
@@ -701,19 +701,65 @@ class DefaultController extends Controller
          return $this->redirect("/perfil");
        }
        $connTarget = $this->connectToDB();
-       $query = $connTarget->prepare("SELECT id, username, nombreUsuario, perfilUsuario,email, generoUsuario FROM Usuario WHERE username_canonical = :usuario");
+       $query = $connTarget->prepare("CALL perfilOtros(:usuario)");
        $query->bindParam(":usuario", $visitado);
        $query->execute();
        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
        $result =  $query->fetchAll();
        $connTarget = null;
-       if( $this->getUser()->getId() == $result[0]['id']){
-         return $this->redirect('/perfil');
+
+       $result[0]['perfilUsuario'] = base64_encode($result[0]['perfilUsuario']);
+       $connTarget = $this->connectToDB();
+       $queryPublications = $connTarget->prepare("CALL getPublicationsPropia(:usuario)");
+       $queryPublications->bindParam(":usuario", $result[0]['id']);
+       $queryPublications->execute();
+       $publications = $queryPublications->setFetchMode(PDO::FETCH_ASSOC);
+       $publications = $queryPublications->fetchAll();
+       $connTarget = null;
+       foreach ($publications as $key => $post) {
+         $newImage = $this->resizeImage($post['perfilUsuario'], 0.2);
+         $publications[$key]['imagenContenido'] = base64_encode($post['imagenContenido']);
+         $publications[$key]['perfilUsuario'] = base64_encode($newImage);
+         $idPub = $publications[$key]['idContenido'];
+         $connTarget = $this->connectToDB();
+         $comments = $connTarget->prepare("CALL displayPublicacionesAmigos(:Pub)");
+         $comments->bindParam(":Pub", $idPub);
+         $comments->execute();
+         $commentsResult = $comments->setFetchMode(PDO::FETCH_ASSOC);
+         $commentsResult = $comments->fetchAll();
+         foreach($commentsResult as $keyC => $commen){
+           $newComment = $this->resizeImage($commen['FotoComentarista'], 0.1);
+           $commentsResult[$keyC]['FotoComentarista'] = base64_encode($newComment);
+         }
+         $connTarget = null;
+         $publications[$key]['own'] = false;
+         array_push($publications[$key], $commentsResult);
        }
+
+       $connTarget = $this->connectToDB();
+       $queryPaises = $connTarget->prepare("SELECT idPais, nombrePais FROM getPaises");
+       $queryPaises->execute();
+       $paises = $queryPaises->setFetchMode(PDO::FETCH_ASSOC);
+       $paises =  $queryPaises->fetchAll();
+       $connTarget = null;
+
+       $usuario = $this->getUser()->getId();
+       $visita = $result[0]['id'];
+       $connTarget = $this->connectToDB();
+       $isFriend = $connTarget->prepare("SELECT getFriendZone(:visita, :usuario) AS Amigo");
+       $isFriend->bindParam(":usuario",$usuario);
+       $isFriend->bindParam(":visita", $visita);
+       $isFriend->execute();
+       $resultFriend = $isFriend->setFetchMode(PDO::FETCH_ASSOC);
+       $resultFriend = $isFriend->fetchAll();
+       $connTarget = null;
        return $this->render('PhotomBundle::Profile.html.twig',
           array(
             'usuario' => $result[0],
-            'editable' => false
+            'publicaciones' => $publications,
+            'editable' => false,
+            'paises' => $paises,
+            'friended' => $resultFriend[0]['Amigo']
           ));
      }
 
@@ -727,7 +773,7 @@ class DefaultController extends Controller
         $query->execute();
         $result = $query->setFetchMode(PDO::FETCH_ASSOC);
         $result = $query->fetchAll();
-        dump($result);
+
         return $this->render('PhotomBundle::HomeAdmin.html.twig', array(
           'reportes' => $result
         ));
@@ -820,7 +866,7 @@ class DefaultController extends Controller
         }
         if($fechaFinTemp != NULL){
           $fechaFin = $fechaFinTemp;
-          $filtroFecha= 1;
+          $filtroFecha = 1;
         }
         $connTarget = $this->connectToDB();
         $usuario = $this->getUser()->getId();
@@ -923,6 +969,20 @@ class DefaultController extends Controller
 
       }
 
+      /**
+      * @Route("/notifications/readall")
+      */
+      public function readNotifications(){
+        $usuario = $this->getuser()->getId();
+        $connTarget = $this->connectToDB();
+        $usuario = $this->getUser()->getId();
+        $query = $connTarget->prepare("CALL readAll(:user)");
+        $query->bindParam(":user", $usuario);
+        $query->execute();
+        $result = $query->setFetchMode(PDO::FETCH_ASSOC);
+        $result =  $query->fetchAll();
+        return new Response('OK', Response::HTTP_OK);
+      }
       //ADMIN
 
       /**

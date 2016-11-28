@@ -34,7 +34,6 @@
 {% else %}
   {% set publicaciones = publicaciones %}
 {% endif %}
-
 {% block head %}
   <title>Photon</title>
 {% endblock %}
@@ -80,13 +79,31 @@
                <li><a href="#" class="tablinks" data="profile" >Perfil</a></li>
                <li><a href="#" class="tablinks" data="followers" >Seguidores</a></li>
               <li><a href="#" class="tablinks" data="following" >Seguidos</a></li>
-               <li><a href="#" class="tablinks" data="notification">Notificaciones</a></li>
+              {% if editable == true %}
+                <li><a href="#" class="tablinks" data="notification">Notificaciones</a></li>
+              {% endif %}
            </ul>
        </div>
-       <div class="follow">
-         <i class="fa fa-plus-circle"></i>
-         Follow
-       </div>
+       {% if editable == false and friended is defined %}
+          {% if friended == NULL %}
+            <button type="button" id="follower" class="follow" value="Seguir">
+              <i class="fa fa-plus-circle"></i>
+              Seguir
+            </button>
+          {% endif %}
+          {% if friended == 1 %}
+            <button type="button" id="follower"class="followed" value="Siguiendo">
+              <i class="fa fa-check-circle"></i>
+              Siguiendo
+            </button>
+          {% endif %}
+          {% if friended == 2 %}
+          <button type="button" id="follower" class="pending" value="Pendiente" style="mouse-events:none">
+            <i class="fa fa-spinner"></i>
+            Pendiente
+          </button>
+          {% endif %}
+       {% endif %}
      </section>
     <section  class="container-profile-publication">
             <sidebar class="container-sidebar">
@@ -163,13 +180,14 @@
                        </ul>
                       </section>
     <section id="profile" class="container-publicationprofile">
-             <div class="container-public-user">
+            {% if editable == true %}
+              <div class="container-public-user">
                <div class="phrase-publication">
                  <span id="user-name">Usuario
                  </span>
                  <tr>
-                   <span id="user-phrase">dile al mundo lo que sientes...
-                   </span>
+                 <span id="user-phrase">dile al mundo lo que sientes...
+                 </span>
                </div>
                <div class="container-publication">
                    <div class="public-photo-video">
@@ -193,29 +211,52 @@
                    </div>
                </div>
              </div>
+             {% endif %}
              <div id="phrase-content">TU MUNDO ACTUALIZADO</div>
            {# no variables will be accessible #}
            {% for publicacion in publicaciones %}
              {% include 'PhotomBundle::CardPosts.html.twig' with {'publicacion': publicacion} %}
            {% endfor %}
            </section>
-    <section id="notification" class="container-notificationsuser">
-                       <table class="list-friend">
-                           <tr>
-                               <th>
-                                   <input type="checkbox">
-                               </th>
-                               <th colspan="2">
-                               Notificaciones
-                                </th>
-                           </tr>
-                           <tr>
-                               <td><button><img src="{{ asset('bundles/photom/images/lineaA.png')}}"></button></td>
-                               <td>Tu publicacion ha sido comentada por <t class="usuario-notificacion">Usuario</t></td>
-                           </tr>
-                       </table>
-                       <div> <button class="see-all">Todos leidos</button></div>
-                   </section>
+           {% if editable == true %}
+           <section id="notification" class="container-notificationsuser">
+             <table class="list-friend">
+                 <tr>
+                     <th>
+                         <button id="leertodas"type="button" name="leidas" value="Marcar todas como leidas" >Marcar como leidas</button>
+                     </th>
+                     <th colspan="2">
+                     Notificaciones
+                      </th>
+                 </tr>
+                 <tr>
+                     <td><button><img src="{{ asset('bundles/photom/images/lineaA.png')}}"></button></td>
+                     <td class="notificacionCell">Tu publicacion ha sido comentada por <t class="usuario-notificacion">Usuario</t></td>
+                 </tr>
+                 {% for notification in notifications %}
+                  <tr>
+                   <td><button><img src="{{ asset('bundles/photom/images/lineaA.png')}}"></button></td>
+                   {% if notification.leidaNotificacion == 1 %}
+                      <td class="notificacionCell notificacionLeida">
+                     {% else %}
+                      <td class="notificacionCell">
+                   {% endif %}
+
+                     <a href="/detail/content/{{notification.idNotificacion}}/{{notification.idContenidoNotificacion}}">
+                      <span>{{ notification.nombreUsuario}}</span>
+                      {% if notification.gustaNotificacion == "" %}
+                        <span> comentu tu contenido </span>
+                      {% else %}
+                        <span> le gusto tu contenido</span>
+                      {% endif %}
+                    </a>
+                   </td>
+                  </tr>
+                 {% endfor %}
+             </table>
+             <div> <button class="see-all">Todos leidos</button></div>
+           </section>
+           {% endif %}
     <section id="following" class="container-following">
           <ul class="list-group">
                 <li href="#" class="list-group-item title">

@@ -1,3 +1,7 @@
+{% if notifications is not defined %}
+  {% set notifications = "" %}
+{% endif %}
+
 {% block stylesheets %}
 <link href="{{ asset('bundles/photom/css/MenuSuperior.css')}}" rel="stylesheet" type="text/css"/>
 <link href="{{ asset('bundles/photom/css/font-awesome.css')}}" rel="stylesheet" type="text/css"/>
@@ -37,7 +41,11 @@
                                   <li>
                                     {% for notification in notifications %}
                                     <a href="/detail/content/{{notification.idNotificacion}}/{{notification.idContenidoNotificacion}}">
+                                      {% if notification.leidaNotificacion == 1%}
+                                      <div class="notificacion notificacionLeida">
+                                        {% else %}
                                       <div class="notificacion">
+                                        {% endif %}
                                         <span>{{ notification.nombreUsuario}}</span>
                                         {% if notification.gustaNotificacion == "" %}
                                           <span> comentu tu contenido </span>

@@ -22,12 +22,13 @@
     <div class="serchDates">
       <form class="dates" action="/search" method="get">
         <div class="fechaInicio">
-
+          <span> Fecha inicio</span><br><input type="date" name="fechaIni" value="">
         </div>
-        <span> Fecha inicio</span><br><input type="date" name="fechaIni" value="">
-        <span> Fecha final</span><br><input type="date" name="fechaFin" value="">
-
-        <button type="submit" name="button"></button>
+        <div class="fechaFinal">
+          <span> Fecha final</span><br><input type="date" name="fechaFin" value="">
+        </div>
+        <input type="text" name="nuevaBusqueda" value="">
+        <button type="submit" name="button">Buscar </button>
       </form>
     </div>
   </div>

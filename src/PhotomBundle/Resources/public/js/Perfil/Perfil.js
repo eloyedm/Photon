@@ -33,7 +33,7 @@ $(document).ready(function() {
       }
     });
 
-    $(".follow").click(function(){
+    $("#follower").click(function(){
       var nombreUsuario = window.location.pathname;
       nombreUsuario = nombreUsuario.split("/");
       nombreUsuario = nombreUsuario[nombreUsuario.length -1];
@@ -47,14 +47,19 @@ $(document).ready(function() {
         datatype: "json",
         success: function(data){
           if(data.status == 0){
-            $(".follow").removeClass("follow").addClass("followed");
+            $(".follow").removeClass("follow").addClass("followed").text("Siguiendo");
             var icono = $(".followed").find("i");
             icono.removeClass("fa-plus-circle").addClass("fa-check-circle");
           }
-          else if (data.statu == 1) {
-            $(".followed").removeClass("followed").addClass("follow");
+          else if (data.status == 1) {
+            $(".followed").removeClass("followed").addClass("follow").text("Seguir");
             var icono = $(".follow").find("i");
             icono.removeClass("fa-check-circle").addClass("fa-plus-circle");
+          }
+          else if (data.status == 2) {
+            $(".follow").removeClass("follow").addClass("pending").text("Pendiente");
+            var icono = $(".pending").find("i");
+            icono.removeClass("fa-plus-circle").addClass("fa-spinner");
           }
         }
       });
@@ -132,6 +137,16 @@ $(document).ready(function() {
         }
       });
     });
+
+    $("#leertodas").click(function(){
+      $.ajax({
+        type: "GET",
+        url: "/notifications/readall",
+        success: function(){
+          $(".notificacionCell:not(.notificacionLeida)").addClass("notificacionLeida");
+        }
+      });
+    })
 });
 function changetab(evt, tabName) {
     if(tabName.localeCompare("followers") == 0)
